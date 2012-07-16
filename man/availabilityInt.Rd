@@ -1,0 +1,23 @@
+\encoding{UTF-8}
+\name{availabilityInt}
+\alias{availabilityInt}
+\title{Internal function for availability}
+\description{Internal function for \code{\link{availability}}}
+\usage{availabilityInt(v.set, dir.set, ts, start.year, start.month, num.months, period.days)}
+\arguments{
+  \item{v.set}{Dataset containing wind speed data to be used.}
+  \item{dir.set}{Dataset containing wind direction data to be used.}
+  \item{ts}{Time stamp}
+  \item{start.year}{First year of measurement period.}
+  \item{start.month}{First month of measurement period.}
+  \item{num.months}{Number of months.}
+  \item{period.days}{Days of measurement period.}
+}
+\value{Returns a list of:
+  \item{total}{Total availability}
+  \item{daily}{Daily availability}
+}
+\author{Christian Graul}
+\seealso{\code{\link{availability}}}
+\keyword{methods}
+\keyword{internal}
