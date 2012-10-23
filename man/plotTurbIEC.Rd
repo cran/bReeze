@@ -39,6 +39,7 @@ International Electrotechnical Commission (2005) IEC 61400-1 Wind Turbines -- Pa
 \author{Christian Graul}
 \seealso{\code{\link{createMast}}}
 \examples{
+\dontrun{
 # load and prepare data
 data(winddata)
 set40 <- createSet(height=40, v.avg=winddata[,2], v.std=winddata[,5])
@@ -53,12 +54,13 @@ neubuerg <- clean(neubuerg)
 plotTurbIEC(neubuerg, set=1)
 
 # customize bars
-\dontrun{plotTurbIEC(neubuerg, set=1, col="gray", border="black", space=0.6, 
+plotTurbIEC(neubuerg, set=1, col="gray", border="black", space=0.6, 
 	cex=1.2)
 plotTurbIEC(neubuerg, set=2, col="brown", border="brown", space=0.1)
 
 # customize lines
 plotTurbIEC(neubuerg, set=1, line="darkgreen", lty="dashed", lwd=0.5:2.5)
-plotTurbIEC(neubuerg, set=2, line=c(3,4,2), lty=c(3,2,1), lwd=2, cex=0.8)}
+plotTurbIEC(neubuerg, set=2, line=c(3,4,2), lty=c(3,2,1), lwd=2, cex=0.8)
+}
 }
 \keyword{methods}

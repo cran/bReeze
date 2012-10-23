@@ -19,6 +19,7 @@ The following graphical parameters can optionally be added to customize the plot
 \author{Christian Graul}
 \seealso{\code{\link{aep}}}
 \examples{
+\dontrun{
 # load and prepare data
 data(winddata)
 set1 <- createSet(height=40, v.avg=winddata[,2], dir.avg=winddata[,14])
@@ -35,10 +36,11 @@ neubuerg.aep <- aep(neubuerg.wp, pw.56, 71)
 
 # plot AEP
 plotAep(neubuerg.aep)
-\dontrun{plotAep(neubuerg.aep, show.total=FALSE)	# omit total AEP
+plotAep(neubuerg.aep, show.total=FALSE)	# omit total AEP
 
 # change colour and text size
 plotAep(neubuerg.aep, col=gray(5:0 / 5), 0.8)
-plotAep(neubuerg.aep, col=rainbow(5), cex=1.1)}
+plotAep(neubuerg.aep, col=rainbow(5), cex=1.1)
+}
 }
 \keyword{methods}

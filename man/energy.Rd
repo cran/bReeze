@@ -33,6 +33,7 @@ Troen, I., Petersen, E.L. (1989) \emph{European Wind Atlas}. Tønder: Laursen
 \author{Christian Graul}
 \seealso{\code{\link{weibull}}, \code{\link{plotEnergy}}}
 \examples{
+\dontrun{
 # load and prepare data
 data(winddata)
 set1 <- createSet(height=40, v.avg=winddata[,2], v.std=winddata[,5],
@@ -68,5 +69,6 @@ neubuerg.e.4 <- energy(neubuerg.wb, rho=1.115, bins=NULL)
 # compare output
 neubuerg.e.3
 neubuerg.e.4
+}
 }
 \keyword{methods}

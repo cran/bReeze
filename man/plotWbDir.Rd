@@ -21,6 +21,7 @@ The following graphical parameters can optionally be added to customize the plot
 \author{Christian Graul}
 \seealso{\code{\link{weibull}}}
 \examples{
+\dontrun{
 # load and prepare data
 data(winddata)
 set1 <- createSet(height=40, v.avg=winddata[,2], dir.avg=winddata[,14])
@@ -35,12 +36,13 @@ neubuerg.wb <- weibull(neubuerg, 1)
 plotWbDir(neubuerg.wb)
 
 # show parameters in legend
-\dontrun{plotWbDir(neubuerg.wb, show.ak=TRUE)
+plotWbDir(neubuerg.wb, show.ak=TRUE)
 
 # customize plot
 plotWbDir(neubuerg.wb, col=c(rainbow(12), gray(0.4)), 
 	lty=c(rep(3, 12), 1), lwd=c(rep(1, 12), 2), cex=1.2)
 plotWbDir(neubuerg.wb, lty=c(2,2,3,3,3,4,4,4,5,5,5,2,1), 
-	lwd=rep(1, 12), cex=0.9)}
+	lwd=rep(1, 12), cex=0.9)
+}
 }
 \keyword{methods}

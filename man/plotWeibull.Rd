@@ -23,6 +23,7 @@ The following graphical parameters can optionally be added to customize the plot
 \author{Christian Graul}
 \seealso{\code{\link{weibull}}}
 \examples{
+\dontrun{
 # load and prepare data
 data(winddata)
 set1 <- createSet(height=40, v.avg=winddata[,2], dir.avg=winddata[,14])
@@ -37,7 +38,7 @@ neubuerg.wb <- weibull(neubuerg, 1)
 plotWeibull(neubuerg.wb)
 
 # show parameters in legend
-\dontrun{plotWeibull(neubuerg.wb, show.ak=TRUE)
+plotWeibull(neubuerg.wb, show.ak=TRUE)
 
 # customize bars
 plotWeibull(neubuerg.wb, col="lightgray", border="darkgray")
@@ -45,6 +46,7 @@ plotWeibull(neubuerg.wb, col=3, border="white", cex=1.2)
 
 # customize line
 plotWeibull(neubuerg.wb, line="black", lty="dotdash", lwd=2, cex=0.7)
-plotWeibull(neubuerg.wb, line="orange", lty=2, lwd=1.5)}
+plotWeibull(neubuerg.wb, line="orange", lty=2, lwd=1.5)
+}
 }
 \keyword{methods}

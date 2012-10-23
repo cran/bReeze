@@ -28,6 +28,7 @@ Brower, M., Marcus, M., Taylor, M., Bernadett, D., Filippelli, M., Beaucage, P.,
 \author{Christian Graul}
 \seealso{\code{\link{createMast}}, \code{\link{plotFrequency}}}
 \examples{
+\dontrun{
 # load and prepare data
 data(winddata)
 set40 <- createSet(height=40, v.avg=winddata[,2], dir.avg=winddata[,14])
@@ -53,7 +54,7 @@ neubuerg.freq.3
 
 
 # use different datasets for wind speed and direction
-\dontrun{neubuerg.freq.4 <- frequency(neubuerg, 3)	# no direction in dataset}
+neubuerg.freq.4 <- frequency(neubuerg, 3)	# error: no direction in dataset
 neubuerg.freq.4 <- frequency(neubuerg, v.set=3, dir.set=2)
 
 # compare output
@@ -80,5 +81,6 @@ neubuerg.freq.9 <- frequency(neubuerg, v.set=1, bins=NULL)
 neubuerg.freq.7
 neubuerg.freq.8
 neubuerg.freq.9
+}
 }
 \keyword{methods}

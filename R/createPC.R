@@ -1,5 +1,5 @@
 createPC <-
-function(v, p, cp, ct, rho=1.225, rated.p) {
+function(v, p, cp, ct, rho=1.225, rated.p, desc) {
 ###	creating power curve object
 
 	if(missing(v)) stop("Wind speed 'v' is mandatory\n")
@@ -13,7 +13,8 @@ function(v, p, cp, ct, rho=1.225, rated.p) {
 	if(missing(ct)) ct <- NULL
 	if(!is.null(ct)) if(!is.vector(ct)) stop("'ct' requires numeric vector\n")
 	if(!is.null(ct)) if(length(v)!=length(ct)) stop("Different vector length of 'v' and 'cp'\n")
-	if(missing(rated.p)) rated.p <- NULL
+	if(missing(rated.p)) rated.p <- max(p, na.rm=TRUE)
+	if(missing(desc)) desc <- NULL
 	
 	pc <- data.frame(cbind(v, p, cp, ct))
 	names <- c("v", "P")
@@ -22,7 +23,8 @@ function(v, p, cp, ct, rho=1.225, rated.p) {
 	names(pc) <- names
 	attr(pc, "units") <- c("m/s", "kW", "-")
 	attr(pc, "rho") <- rho
-	if(!is.null(rated.p)) attr(pc, "rated.power") <- rated.p
+	attr(pc, "rated.power") <- rated.p
+	if(!is.null(desc)) attr(pc, "description") <- desc
 	attr(pc, "call") <- list(func="createPC")
 	
 	return(pc)

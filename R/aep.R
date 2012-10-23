@@ -25,6 +25,7 @@ function(profile, pc, hub.h, rho=1.225, avail=1, bins=c(5,10,15,20), sectoral=FA
 	dir.set <- attr(profile, "call")$dir.set
 	num.sectors <- attr(profile, "call")$num.sectors
 	rho.pc <- attr(pc, "rho")
+	rated.p <- attr(pc, "rated.power")
 	
 	sector.width <- 360/num.sectors
 	sectors <- seq(0, 360-sector.width, by=sector.width)
@@ -83,7 +84,6 @@ function(profile, pc, hub.h, rho=1.225, avail=1, bins=c(5,10,15,20), sectoral=FA
 		if(low<high) sector.idx <- dir>=low & dir<high
 		else sector.idx <- dir>=low | dir<high
 			
-			
 		aep.tbl$wind.speed[i] <- mean(v.hh[sector.idx], na.rm=TRUE)
 		aep.tbl$operation[i] <- op <- round(length(v.hh[sector.idx])/length(v.hh)*8760)
 		wb.par <- weibullInt(v.hh[sector.idx], FALSE)
@@ -105,7 +105,12 @@ function(profile, pc, hub.h, rho=1.225, avail=1, bins=c(5,10,15,20), sectoral=FA
 	attr(aep.tbl$wind.speed, "unit") <- "m/s"
 	attr(aep.tbl$operation, "unit") <- "h/a"
 	attr(aep.tbl$total, "unit") <- "MWh/a"
-	attr(aep.tbl, "call") <- list(func="aep", profile=deparse(substitute(profile)), pc=deparse(substitute(pc)), hub.h=hub.h, rho=rho, avail=avail, bins=bins)
 	
-	return(aep.tbl)	
+	cap <- round(aep.tbl$total[num.sectors+1] / (rated.p*0.001*8760), digits=3)
+	
+	aep <- list(aep=aep.tbl, capacity=cap)
+	
+	attr(aep, "call") <- list(func="aep", profile=deparse(substitute(profile)), pc=deparse(substitute(pc)), hub.h=hub.h, rho=rho, avail=avail, bins=bins)
+	
+	return(aep)	
 }

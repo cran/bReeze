@@ -25,6 +25,7 @@ The following graphical parameters can optionally be added to customize the plot
 \author{Christian Graul}
 \seealso{\code{\link{createMast}}}
 \examples{
+\dontrun{
 # load and prepare data
 data(winddata)
 set40 <- createSet(height=40, v.avg=winddata[,2], dir.avg=winddata[,14])
@@ -37,7 +38,7 @@ neubuerg <- clean(neubuerg)
 
 # plot all datasets
 plotDay(neubuerg, signal="v")
-\dontrun{plotDay(neubuerg, signal="dir")
+plotDay(neubuerg, signal="dir")
 
 # plot one dataset
 plotDay(neubuerg, set=1, signal="v")
@@ -49,6 +50,7 @@ plotDay(neubuerg, set=2, signal="v",
 plotDay(neubuerg, signal="dir", 
 	col="brown", lwd=3, lty=c(2,3))
 plotDay(neubuerg, signal="dir", 
-	col=c("darkgray", "lightgray"), lwd=c(3,2), lty=3)}
+	col=c("darkgray", "lightgray"), lwd=c(3,2), lty=3)
+}
 }
 \keyword{methods}

@@ -12,7 +12,7 @@ A collection of functions to analyse, visualize and interpret wind data and to c
   \tab Package: \tab bReeze\cr
   \tab Type: \tab Package\cr
   \tab Version: \tab 0.1-1\cr
-  \tab Date: \tab 2012-07-16\cr
+  \tab Date: \tab 2012-10-23\cr
   \tab License: \tab GPL (>= 2)\cr
 }
 Wind power is a global source of energy which attracts a large share of investments in renewables. Project sites with high wind potential do not only minimise the financial risk but increase the efficiency in carbon footprint reduction. Hence a thorough productivity analysis of a wind project is essential, regarding both economic and environmental aspects. The evaluation of the potential of a site requires a wind resource assessment, which is best based on data gained by a local measurement campaign. A methodology of processing the measured data has been established, resulting in a better understanding of the wind conditions of a site and therefore a more reliable estimation of energy production.
@@ -59,4 +59,39 @@ metmast <- createMast(time.stamp=ts, loc=NULL,
 
 # plot time series of met mast signals
 plotTimeSeries(metmast)
+
+# calculate availability of pairs of wind speed and direction
+availability(metmast)
+
+# calculate monthly means of wind speed
+monthStats(metmast)
+
+# calculate directional frequency and mean wind speed
+frequency(metmast, 1)
+
+# calculate turbulence intensity
+turbulence(metmast, 1)
+
+# calculate weibull parameters
+wb <- weibull(metmast, 1)
+wb
+
+# calculate total wind energy content
+energy(wb)
+
+# calculate wind profile
+pf <- profile(metmast, v.set=c(1,2), dir.set=1, num.sectors=12)
+pf
+
+# import power curve
+pc <- readPC(system.file(package="bReeze", "powercurves", 
+	"Enercon_E126_7.5MW.pow"))
+pc
+
+# calculate annual energy production
+aep <- aep(pf, pc, 135)
+aep
+
+# plot AEP
+plotAep(aep)
 }

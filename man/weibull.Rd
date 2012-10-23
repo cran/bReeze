@@ -29,11 +29,12 @@ Brower, M., Marcus, M., Taylor, M., Bernadett, D., Filippelli, M., Beaucage, P.,
 
 Langreder, W. (2010) Wind Resource and Site Assessment. In: Wei Tong (Ed.), Wind Power Generation and Wind Turbine Design, Chapter 2, p. 49--87, Southampton: WIT Press
 
-Weibull, W. (1951) A Statistical Distribution Function of Wide Applicability. \emph{Journal of Applied Mechanics -- Trans. ASME} \bold{18} (3), 293--297
+Weibull, W. (1951) A Statistical Distribution Function of Wide Applicability. \emph{Journal of Applied Mechanics -- Trans. ASME} \bold{18}(3), 293--297
 }
 \author{Christian Graul}
 \seealso{\code{\link{createMast}}, \code{\link{plotWeibull}}}
 \examples{
+\dontrun{
 # load and prepare data
 data(winddata)
 set40 <- createSet(height=40, v.avg=winddata[,2], dir.avg=winddata[,14])
@@ -64,5 +65,6 @@ neubuerg.wb.4 <- weibull(mast=neubuerg, v.set=1, num.sectors=16)
 # compare output
 neubuerg.wb
 neubuerg.wb.4
+}
 }
 \keyword{methods}

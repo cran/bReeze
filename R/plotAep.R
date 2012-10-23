@@ -7,6 +7,7 @@ function(aep, show.total=TRUE, ...) {
 	if(is.null(attr(aep, "call")$func)) stop(paste(substitute(aep), "is no aep object\n"))
 	if(attr(aep, "call")$func!="aep") stop(paste(substitute(aep), "is no aep object\n"))
 	
+	aep <- aep$aep
 	dim.data <- dim(aep)
 	num.sectors <- dim.data[1] - 1
 	num.classes <- dim.data[2] - 3

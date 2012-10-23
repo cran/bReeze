@@ -31,10 +31,12 @@ It contains measured wind speed and wind direction in a 10 minute interval, coll
   }
 }
 \examples{
+\dontrun{
 # load example data
 data(winddata)
 
 # display the structure of the data
 str(winddata)
+}
 }
 \keyword{datasets}

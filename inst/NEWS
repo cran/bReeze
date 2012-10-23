@@ -1,3 +1,26 @@
+bReeze 0.1-1 [2012-10-21]
+-------------------------
+
+* aep: capacity factor added to the output
+
+* availability: two bugs fixed - slightly wrong availability values 
+  in some cases of missing samples; error in calculation for sets
+  with just one signal 
+
+* clean: wind speed limit for calculation of turbulence intensity
+  can now be adjusted by the user
+  
+* createPC: if rated.p is not given, rated power is now
+  automatically set to the maximum power value; desc parameter for
+  name and/or description of a wind turbine added
+  
+* formatTS: available patterns cleaned up and internal handling
+  enhanced; possible error in pattern selection fixed
+
+* plotTimeSeries: bug fixed - blocking of '00:00:00' time stamps 
+  for the start and end parameters
+
+
 bReeze 0.1-0 [2012-07-10]
 -------------------------
 

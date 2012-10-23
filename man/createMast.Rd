@@ -25,6 +25,7 @@ Measurements of wind speed in several heights is required for the computation of
 \author{Christian Graul}
 \seealso{\code{\link{POSIXlt}}, \code{\link{formatTS}}, \code{\link{createSet}}}
 \examples{
+\dontrun{
 # load data, prepare sets and time stamp
 data(winddata)
 set40 <- createSet(height=40, v.avg=winddata[,2], v.std=winddata[,5],
@@ -52,5 +53,6 @@ neubuerg.3 <- createMast(time.stamp=ts, loc=c(49.8909,11.4017),
 # compare names
 names(neubuerg.2$sets)	# default names
 names(neubuerg.3$sets)
+}
 }
 \keyword{methods}

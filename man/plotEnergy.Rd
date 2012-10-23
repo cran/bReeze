@@ -19,6 +19,7 @@ The following graphical parameters can optionally be added to customize the plot
 \author{Christian Graul}
 \seealso{\code{\link{energy}}}
 \examples{
+\dontrun{
 # load and prepare data
 data(winddata)
 set40 <- createSet(height=40, v.avg=winddata[,2], dir.avg=winddata[,14])
@@ -36,14 +37,14 @@ neubuerg.e.2 <- energy(neubuerg.wb, bins=NULL)	# no binning
 
 # plot energy rose
 plotEnergy(neubuerg.e)
-\dontrun{plotEnergy(neubuerg.e.2)
+plotEnergy(neubuerg.e.2)
 
 # omit total amount
 plotEnergy(neubuerg.e, show.total=FALSE)
 
 # change colour and text size
 plotEnergy(neubuerg.e, col=gray(4:1 / 5), cex=0.9)
-plotEnergy(neubuerg.e.2, col="limegreen", cex=1.3)}
-
+plotEnergy(neubuerg.e.2, col="limegreen", cex=1.3)
+}
 }
 \keyword{methods}

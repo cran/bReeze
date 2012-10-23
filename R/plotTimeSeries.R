@@ -21,11 +21,11 @@ function(mast, set, signal=c("v.avg", "dir.avg", "turb.int"), start, end, ...) {
 
 	# match start and end date
 	if(start<time.stamp[1] | start>time.stamp[num.samples]) stop("Specified 'start' not in period\n")
-	match.date <- difftime(time.stamp, ISOdatetime(1,1,1,0,0,0), tz="GMT", units="days") - difftime(strptime(start, "%Y-%m-%d %H:%M:%S"), ISOdatetime(1,1,1,0,0,0), tz="GMT", units="days")
+	match.date <- difftime(time.stamp, ISOdatetime(1,1,1,0,0,0), tz="GMT", units="days") - difftime(start, ISOdatetime(1,1,1,0,0,0), tz="GMT", units="days")
 	start <- which(abs(as.numeric(match.date)) == min(abs(as.numeric(match.date))))
 	
 	if(end<time.stamp[1] | end>time.stamp[num.samples]) stop("Specified 'end' not in period\n")
-	match.date <- difftime(time.stamp, ISOdatetime(1,1,1,0,0,0), tz="GMT", units="days") - difftime(strptime(end, "%Y-%m-%d %H:%M:%S"), ISOdatetime(1,1,1,0,0,0), tz="GMT", units="days")
+	match.date <- difftime(time.stamp, ISOdatetime(1,1,1,0,0,0), tz="GMT", units="days") - difftime(end, ISOdatetime(1,1,1,0,0,0), tz="GMT", units="days")
 	end <- which(abs(as.numeric(match.date)) == min(abs(as.numeric(match.date))))
 	
 	# get units

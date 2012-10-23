@@ -27,7 +27,7 @@ function(mast, v.set, dir.set) {
 		if(is.null(mast$sets[[v.set]]$data$v.avg)) stop("'v.set' does not contain average wind speed data\n")
 		if(is.null(mast$sets[[dir.set]]$data$dir.avg)) stop("'dir.set' does not contain average wind direction data\n")
 		if(is.null(attr(mast$sets[[v.set]]$data, "cleaned")) | is.null(attr(mast$sets[[dir.set]]$data, "cleaned"))) cat("Set(s) not cleaned - the use of clean is recommended to avoid overestimated availability\n")
-		avail <- list(availabilityInt(mast$sets[[v.set]], mast$sets[[dir.set]], mast$time.stamp, start.year, start.month, num.months, period.days))
+		avail <- list(availabilityInt(mast$sets[[v.set]]$data$v.avg, mast$sets[[dir.set]]$data$dir.avg, mast$time.stamp, start.year, start.month, num.months, period.days))
 		if(v.set==dir.set) names(avail) <- names(mast$sets)[v.set]
 		else names(avail) <- paste(names(mast$sets)[v.set], "_", names(mast$sets)[dir.set], sep="")
 	} else { # all sets

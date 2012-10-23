@@ -3,14 +3,15 @@
 \alias{createPC}
 \title{Creation of power curve objects}
 \description{Creates power curve objects, characterizing wind turbines.}
-\usage{createPC(v, p, cp, ct, rho=1.225, rated.p)}
+\usage{createPC(v, p, cp, ct, rho=1.225, rated.p, desc)}
 \arguments{
   \item{v}{Wind speed in m/s as numeric vector.}
   \item{p}{Corresponding power in kW as numeric vector of same length as \code{v}.}
   \item{cp}{Power coefficient as numeric vector of same length as \code{v} (optional).}
   \item{ct}{Thrust coefficient as numeric vector of same length as \code{v} (optional).}
   \item{rho}{Air density as numeric value. Default is \code{1.225} kg/m3 according to the International Standard Atmosphere (ISA) at sea level and 15 degrees Celsius.}
-  \item{rated.p}{Rated power of wind turbine as string (optional).}
+  \item{rated.p}{Rated power of wind turbine in kW as numeric value. If not given, the rated power is set to the maximum value of \code{p}.}
+  \item{desc}{Plain text information about the wind turbine as string (optional).}
 }
 \details{
 \emph{Power curve}
@@ -46,6 +47,7 @@ Ragheb, M., Ragheb, A.M. (2011) Wind Turbines Theory -- The Betz Equation and Op
 \author{Christian Graul}
 \seealso{\code{\link{readPC}}}
 \examples{
+\dontrun{
 # minimal theoretic power curve
 pc <- createPC(1:25, c(0, 0, seq(0, 1000, length.out=8), rep(1000, 15)))
 	
@@ -64,10 +66,12 @@ ct <- c(0.653, NA, 0.698, NA, 0.705, NA, 0.713, NA, 0.720, NA, 0.723,
 	NA, 0.242, NA, 0.199, NA, 0.168, NA, 0.146, NA, 0.128, NA, 0.115, 
 	NA, 0.103, NA, 0.094, NA, 0.086, NA, 0.079, NA, 0.073)
 	
-pc.2 <- createPC(v=v, p=p, cp=cp, ct=ct, rho=1.195, rated.p="900 kW")
+pc.2 <- createPC(v=v, p=p, cp=cp, ct=ct, rho=1.195, rated.p=900, 
+	desc="PowerWind 56")
 
 # compare power curves
 pc
 pc.2
+}
 }
 \keyword{methods}

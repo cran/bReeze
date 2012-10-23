@@ -20,6 +20,7 @@ The following graphical parameters can optionally be added to customize the plot
 \author{Christian Graul}
 \seealso{\code{\link{availability}}}
 \examples{
+\dontrun{
 # load and prepare data
 data(winddata)
 set1 <- createSet(height=40, v.avg=winddata[,2], dir.avg=winddata[,14])
@@ -34,10 +35,11 @@ neubuerg.avail <- availability(neubuerg)
 
 # plot availability
 plotAvailability(neubuerg.avail)
-\dontrun{plotAvailability(avail=neubuerg.avail, set=2)	# one dataset
+plotAvailability(avail=neubuerg.avail, set=2)	# one dataset
 
 # change colours, borders and text size
 plotAvailability(avail=neubuerg.avail, col=c("green", "yellow", "red"))
-plotAvailability(avail=neubuerg.avail, set=1, border="white", cex=1.2)}
+plotAvailability(avail=neubuerg.avail, set=1, border="white", cex=1.2)
+}
 }
 \keyword{methods}

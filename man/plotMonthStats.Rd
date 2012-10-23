@@ -20,6 +20,7 @@ The following graphical parameters can optionally be added to customize the plot
 \author{Christian Graul}
 \seealso{\code{\link{monthStats}}}
 \examples{
+\dontrun{
 data(winddata)
 set40 <- createSet(height=40, v.avg=winddata[,2])
 set30 <- createSet(height=30, v.avg=winddata[,6])
@@ -36,12 +37,13 @@ neubuerg.stats <- monthStats(neubuerg)
 plotMonthStats(neubuerg.stats)
 
 # plot one dataset
-\dontrun{plotMonthStats(neubuerg.stats, set=1)
+plotMonthStats(neubuerg.stats, set=1)
 
 # change colour, labels and text size
 plotMonthStats(neubuerg.stats, col=c(gray(0.4), gray(0.6)), cex=1.2, 
 	ylab=list(rep("Wind speed [m/s]", 3), c("40 m", "30 m", "20 m")))
 plotMonthStats(neubuerg.stats, set=1, col=c(2,3), cex=0.8, 
-	ylab=list("C1.A1", "Velocity [m/s]"))}
+	ylab=list("C1.A1", "Velocity [m/s]"))
+}
 }
 \keyword{methods}

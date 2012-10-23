@@ -34,6 +34,7 @@ Returns a dataset object which is a list of:
 \author{Christian Graul}
 \seealso{\code{\link{createMast}}}
 \examples{
+\dontrun{
 # load data
 data(winddata)
 
@@ -49,5 +50,6 @@ set.2 <- createSet(height=40, desc=
 # view structure
 str(set)
 str(set.2)
+}
 }
 \keyword{methods}

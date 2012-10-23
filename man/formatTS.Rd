@@ -30,6 +30,7 @@ For details see \code{\link{strptime}}.
 \author{Christian Graul}
 \seealso{\code{\link{POSIXlt}}, \code{\link{strptime}}, \code{\link{createMast}}}
 \examples{
+\dontrun{
 # load and prepare data
 data(winddata)
 
@@ -37,7 +38,7 @@ data(winddata)
 time.stamp <- formatTS(winddata[,1])
 
 # format time stamp with given pattern
-\dontrun{time.stamp.2 <- formatTS(winddata[,1], "\%d.\%m.\%Y \%H:\%M")
+time.stamp.2 <- formatTS(winddata[,1], "\%d.\%m.\%Y \%H:\%M")
 
 # wrong pattern (\%y)
 time.stamp.2 <- formatTS(winddata[,1], "\%d.\%m.\%y \%H:\%M")
@@ -46,6 +47,7 @@ time.stamp.2 <- formatTS(winddata[,1], "\%d.\%m.\%y \%H:\%M")
 ts <- c("TS 08/2012-10 8h10m30s", "TS 08/2012-10 8h20m30s", 
 	"TS 08/2012-10 8h30m30s")
 time.stamp.3 <- formatTS(ts)	# pattern not found
-time.stamp.3 <- formatTS(ts, "TS \%m/\%Y-\%d \%Hh\%Mm\%Ss")}
+time.stamp.3 <- formatTS(ts, "TS \%m/\%Y-\%d \%Hh\%Mm\%Ss")
+}
 }
 \keyword{methods}

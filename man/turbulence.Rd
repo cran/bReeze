@@ -34,6 +34,7 @@ Langreder, W. (2010) Wind Resource and Site Assessment. In: Wei Tong (Ed.), Wind
 \author{Christian Graul}
 \seealso{\code{\link{createMast}}, \code{\link{plotTurbulence}}}
 \examples{
+\dontrun{
 # load and prepare data
 data(winddata)
 set40 <- createSet(height=40, v.avg=winddata[,2], v.std=winddata[,5],
@@ -69,5 +70,6 @@ neubuerg.ti.5 <- turbulence(mast=neubuerg, turb.set=1, bins=NULL)
 # note: bins exceeding maximum wind speed of the data dropped
 neubuerg.ti.4
 neubuerg.ti.5
+}
 }
 \keyword{methods}

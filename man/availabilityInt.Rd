@@ -3,7 +3,7 @@
 \alias{availabilityInt}
 \title{Internal function for availability}
 \description{Internal function for \code{\link{availability}}}
-\usage{availabilityInt(v.set, dir.set, ts, start.year, start.month, num.months, period.days)}
+\usage{availabilityInt(v.avg, dir.avg, ts, start.year, start.month, num.months, period.days)}
 \arguments{
   \item{v.set}{Dataset containing wind speed data to be used.}
   \item{dir.set}{Dataset containing wind direction data to be used.}

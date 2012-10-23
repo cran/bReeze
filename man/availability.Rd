@@ -1,7 +1,7 @@
 \encoding{UTF-8}
 \name{availability}
 \alias{availability}
-\title{Calculate availability for pairs of wind speed and direction}
+\title{Calculation of availability for pairs of wind speed and direction}
 \description{Calculates the availability for pairs of wind speed and wind direction of a met mast.}
 \usage{availability(mast, v.set, dir.set)}
 \arguments{
@@ -27,6 +27,7 @@ Brower, M., Marcus, M., Taylor, M., Bernadett, D., Filippelli, M., Beaucage, P.,
 \author{Christian Graul}
 \seealso{\code{\link{createMast}}, \code{\link{clean}}, \code{\link{plotAvailability}}}
 \examples{
+\dontrun{
 # load and prepare data
 data(winddata)
 set40 <- createSet(height=40, v.avg=winddata[,2], v.std=winddata[,5],
@@ -53,6 +54,7 @@ neubuerg.avail$set40$daily
 # since it does not contain wind direction data
 
 # calculate availability for 'set20' using wind direction data from 'set30'
-\dontrun{set20.avail <- availability(mast=neubuerg, v.set=3, dir.set=2)}
+set20.avail <- availability(mast=neubuerg, v.set=3, dir.set=2)
+}
 }
 \keyword{methods}

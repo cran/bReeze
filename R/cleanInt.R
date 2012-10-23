@@ -17,10 +17,10 @@ function(dat, v.avg.min, v.avg.max, dir.clean, turb.clean, icing) {
 		dat$dir.avg[dat$dir.avg<0 | dat$dir.avg>360] <- NA
 		if(replaced>0) cat(paste(replaced, "samples outside the range of 0-360 replaced by 'NA' in average wind direction\n"))
 	}
-	if(turb.clean & !is.null(dat$turb.int)) {
-		replaced <- length(dat$turb.int[dat$v.avg<4])
-		dat$turb.int[dat$v.avg<4] <- NA
-		if(replaced>0) cat(paste(replaced, "samples with average wind speed lower than 4 m/s replaced by 'NA' in turbulence intensity\n"))
+	if(!is.null(turb.clean) & !is.null(dat$turb.int)) {
+		replaced <- length(dat$turb.int[dat$v.avg<turb.clean])
+		dat$turb.int[dat$v.avg<turb.clean] <- NA
+		if(replaced>0) cat(paste(replaced, "samples with average wind speed lower than", turb.clean, "m/s replaced by 'NA' in turbulence intensity\n"))
 	}
 	if(icing & !is.null(dat$dir.avg) & !is.null(dat$dir.std)) {
 		replaced <- length(dat$dir.avg[dat$dir.std==0])

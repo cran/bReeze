@@ -18,6 +18,7 @@ Brower, M., Marcus, M., Taylor, M., Bernadett, D., Filippelli, M., Beaucage, P.,
 \author{Christian Graul}
 \seealso{\code{\link{createMast}}, \code{\link{plotMonthStats}}}
 \examples{
+\dontrun{
 # load and prepare data
 data(winddata)
 set40 <- createSet(height=40, v.avg=winddata[,2])
@@ -37,5 +38,6 @@ neubuerg.stats.2 <- monthStats(mast=neubuerg, set=1)
 # compare output
 neubuerg.stats
 neubuerg.stats.2
+}
 }
 \keyword{methods}

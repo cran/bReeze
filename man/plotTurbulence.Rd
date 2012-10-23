@@ -18,6 +18,7 @@ The following graphical parameters can optionally be added to customize the plot
 \author{Christian Graul}
 \seealso{\code{\link{turbulence}}}
 \examples{
+\dontrun{
 # load and prepare data
 data(winddata)
 set1 <- createSet(height=40, v.avg=winddata[,2], v.std=winddata[,5], 
@@ -33,7 +34,8 @@ neubuerg.ti <- turbulence(neubuerg, 1)
 plotTurbulence(neubuerg.ti)
 
 # change colour and text size
-\dontrun{plotTurbulence(neubuerg.ti, col="darkgray", cex=1.3)
-plotTurbulence(neubuerg.ti, col=3, cex=0.9)}
+plotTurbulence(neubuerg.ti, col="darkgray", cex=1.3)
+plotTurbulence(neubuerg.ti, col=3, cex=0.9)
+}
 }
 \keyword{methods}

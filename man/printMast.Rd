@@ -22,6 +22,7 @@
 \author{Christian Graul}
 \seealso{\code{\link{createMast}}}
 \examples{
+\dontrun{
 # load and prepare data
 data(winddata)
 set40 <- createSet(height=40, v.avg=winddata[,2], v.std=winddata[,5],
@@ -43,5 +44,6 @@ printMast(neubuerg.3)
 # get cleaning info
 printMast(neubuerg)$cleaned
 printMast(neubuerg.2)$cleaned
+}
 }
 \keyword{methods}

@@ -1,7 +1,7 @@
 \encoding{UTF-8}
 \name{profile}
 \alias{profile}
-\title{Calculate wind profile}
+\title{Calculation of wind profile}
 \description{Calculates a wind profile, using on the Hellman exponential law.}
 \usage{profile(mast, v.set, dir.set, num.sectors=12, alpha=NULL)}
 \arguments{
@@ -41,6 +41,7 @@ International Electrotechnical Commission (2005) IEC 61400-12 Wind Turbines -- P
 \author{Christian Graul}
 \seealso{\code{\link{createMast}}, \code{\link{plotProfile}}}
 \examples{
+\dontrun{
 # load and prepare data
 data(winddata)
 set40 <- createSet(height=40, v.avg=winddata[,2], dir.avg=winddata[,14])
@@ -71,5 +72,6 @@ neubuerg.wp.5 <- profile(neubuerg, v.set=c(1,2), dir.set=1, num.sectors=8)
 neubuerg.wp.3	# 40 m and 30 m dataset
 neubuerg.wp.4	# 40 m and 20 m dataset
 neubuerg.wp.5
+}
 }
 \keyword{methods}

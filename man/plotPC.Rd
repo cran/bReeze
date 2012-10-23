@@ -22,6 +22,7 @@ The following graphical parameters can optionally be added to customize the plot
 \author{Christian Graul}
 \seealso{\code{\link{createPC}}, \code{\link{readPC}}}
 \examples{
+\dontrun{
 # create power curve
 v <- seq(3, 25, 0.5)
 p <- c(5, 15.5, 32, 52, 71, 98, 136, 182, 230, 285, 345, 419, 497, 594, 
@@ -35,13 +36,14 @@ p <- c(5, 15.5, 32, 52, 71, 98, 136, 182, 230, 285, 345, 419, 497, 594,
 
 # plot power curve with and without coefficients
 plotPC(my.pc)
-\dontrun{plotPC(my.pc, cp=FALSE, ct=FALSE)
+plotPC(my.pc, cp=FALSE, ct=FALSE)
 
 # customize plot
 plotPC(my.pc, cp=FALSE, ct=FALSE, col="red", lwd=2, cex=1.2)
 plotPC(my.pc, col=c("red", gray(0.4), gray(0.4)), lty=c(1,5,4), 
 	lwd=c(2,1,1))
 plotPC(my.pc, ct=FALSE, col=c("red", "darkblue"), lty=c(1,2), 
-	lwd=c(1.5,1.5), cex=0.9)}
+	lwd=c(1.5,1.5), cex=0.9)
+}
 }
 \keyword{methods}

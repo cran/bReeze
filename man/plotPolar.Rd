@@ -22,6 +22,7 @@ The following graphical parameters can optionally be added to customize the plot
 \author{Christian Graul}
 \seealso{\code{\link{createMast}}}
 \examples{
+\dontrun{
 # load and prepare data
 data(winddata)
 set40 <- createSet(height=40, v.avg=winddata[,2], dir.avg=winddata[,14])
@@ -34,12 +35,13 @@ neubuerg <- clean(neubuerg)
 
 # plot v vs. dir
 plotPolar(neubuerg)
-\dontrun{plotPolar(neubuerg, v.set=3, dir.set=2)
+plotPolar(neubuerg, v.set=3, dir.set=2)
 
 # customize plot
 plotPolar(neubuerg, col="black", pch=1)
 plotPolar(neubuerg, col=2, pch="*")
 plotPolar(neubuerg, pch="+", cex=1.2, cex.pts=0.8)
-plotPolar(neubuerg, pch="+", cex=0.8, cex.pts=1.2)}
+plotPolar(neubuerg, pch="+", cex=0.8, cex.pts=1.2)
+}
 }
 \keyword{methods}

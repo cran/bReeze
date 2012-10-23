@@ -6,8 +6,8 @@ function(time.stamp, pattern) {
 	ts <- nts <- NULL
 	
 	if(missing(pattern)) { # search for pattern
-		pattern <- c("%d.%m.%Y %H:%M", "%Y.%d.%m %H:%M", "%Y.%d.%m %H:%M", "%d.%m.%Y %H:%M:%S", "%d.%m.%Y %H:%M:%S", "%Y.%d.%m %H:%M:%S", "%Y.%d.%m %H:%M:%S", "%d.%m.%y %H:%M", "%d.%m.%y %H:%M", "%y.%d.%m %H:%M", "%y.%d.%m %H:%M", "%d.%m.%y %H:%M:%S", "%d.%m.%y %H:%M:%S", "%y.%d.%m %H:%M:%S", "%y.%d.%m %H:%M:%S", "%d-%m-%Y %H:%M", "%d-%m-%Y %H:%M", "%Y-%d-%m %H:%M", "%Y-%d-%m %H:%M", "%Y-%m-%d %H:%M", "%d-%m-%Y %H:%M:%S", "%d-%m-%Y %H:%M:%S", "%Y-%m-%d %H:%M:%S", "%Y-%d-%m %H:%M:%S", "%d-%m-%y %H:%M", "%d-%m-%y %H:%M", "%y-%d-%m %H:%M", "%y-%d-%m %H:%M", "%d-%m-%y %H:%M:%S", "%d-%m-%y %H:%M:%S", "%y-%d-%m %H:%M:%S", "%y-%d-%m %H:%M:%S", "%d/%m/%Y %H:%M", "%d/%m/%Y %H:%M", "%Y/%d/%m %H:%M", "%Y/%d/%m %H:%M", "%d/%m/%Y %H:%M:%S", "%d/%m/%Y %H:%M:%S", "%Y/%d/%m %H:%M:%S", "%Y/%d/%m %H:%M:%S", "%d/%m/%y %H:%M", "%d/%m/%y %H:%M", "%y/%d/%m %H:%M", "%y/%d/%m %H:%M", "%d/%m/%y %H:%M:%S", "%d/%m/%y %H:%M:%S", "%y/%d/%m %H:%M:%S", "%y/%d/%m %H:%M:%S", "%d_%m_%Y %H:%M", "%d_%m_%Y %H:%M", "%Y_%d_%m %H:%M", "%Y_%d_%m %H:%M", "%d_%m_%Y %H:%M:%S", "%d_%m_%Y %H:%M:%S", "%Y_%d_%m %H:%M:%S", "%Y_%d_%m %H:%M:%S", "%d_%m_%y %H:%M", "%d_%m_%y %H:%M", "%y_%d_%m %H:%M", "%y_%d_%m %H:%M", "%d_%m_%y %H:%M:%S", "%d_%m_%y %H:%M:%S", "%y_%d_%m %H:%M:%S", "%y_%d_%m %H:%M:%S", "%d%m%Y %H:%M", "%d%m%Y %H:%M", "%Y%d%m %H:%M", "%Y%d%m %H:%M", "%d%m%Y %H:%M:%S", "%d%m%Y %H:%M:%S", "%Y%d%m %H:%M:%S", "%Y%d%m %H:%M:%S", "%d%m%y %H:%M", "%d%m%y %H:%M", "%y%d%m %H:%M", "%y%d%m %H:%M", "%d%m%y %H:%M:%S", "%d%m%y %H:%M:%S", "%y%d%m %H:%M:%S", "%y%d%m %H:%M:%S")
-		
+		pattern.list <- read.table(system.file(package="bReeze", "ts_patterns", "patterns.txt"), sep=",")
+		pattern <- as.vector(unlist(pattern.list))
 		for(i in 1:length(pattern)) {
 			nts <- strptime(time.stamp[1], pattern[i])
 			if(is.na(nts)) {

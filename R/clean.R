@@ -1,5 +1,5 @@
 clean <-
-function(mast, set, v.avg.min=0.4, v.avg.max=50, dir.clean=TRUE, turb.clean=TRUE, icing=FALSE) {
+function(mast, set, v.avg.min=0.4, v.avg.max=50, dir.clean=TRUE, turb.clean=4, icing=FALSE) {
 ### cleaning faulty values of mast, set or specified set of mast
 	
 	r <- NULL

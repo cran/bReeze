@@ -18,6 +18,7 @@ The following graphical parameters can optionally be added to customize the plot
 \author{Christian Graul}
 \seealso{\code{\link{frequency}}}
 \examples{
+\dontrun{
 # load and prepare data
 data(winddata)
 set40 <- createSet(height=40, v.avg=winddata[,2], dir.avg=winddata[,14])
@@ -34,10 +35,11 @@ neubuerg.freq.2 <- frequency(neubuerg, 1, bins=NULL)
 
 # plot frequency
 plotFrequency(neubuerg.freq)
-\dontrun{plotFrequency(neubuerg.freq.2)
+plotFrequency(neubuerg.freq.2)
 
 # customize plot
 plotFrequency(neubuerg.freq, col=rainbow(5))
-plotFrequency(neubuerg.freq.2, col=gray(0.4), cex=1.5)}
+plotFrequency(neubuerg.freq.2, col=gray(0.4), cex=1.5)
+}
 }
 \keyword{methods}

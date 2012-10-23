@@ -24,6 +24,7 @@ The following graphical parameters can optionally be added to customize the plot
 \author{Christian Graul}
 \seealso{\code{\link{profile}}}
 \examples{
+\dontrun{
 # load and prepare data
 data(winddata)
 set40 <- createSet(height=40, v.avg=winddata[,2], dir.avg=winddata[,14])
@@ -41,7 +42,7 @@ neubuerg.wp <- profile(neubuerg, v.set=c(1,2), dir.set=1)
 plotProfile(neubuerg.wp)
 
 # plot only one sector
-\dontrun{row.names(neubuerg.wp$profile)	# available sectors
+row.names(neubuerg.wp$profile)	# available sectors
 plotProfile(neubuerg.wp, sector=3)	# ENE by sector number
 plotProfile(neubuerg.wp, sector="ene")	# ENE by sector code
 plotProfile(neubuerg.wp, sector="all")	# general profile
@@ -55,6 +56,7 @@ plotProfile(neubuerg.wp, sector="s", col=1, lty=4, lwd=2, cex=1.3,
 plotProfile(neubuerg.wp, col=rainbow(13), lty=c(rep(3,12),1), 
 	lwd=c(rep(0.8,12), 1.5), ylim=c(0,100))
 plotProfile(neubuerg.wp, measured=FALSE, col=c(gray(1:12 / 13), "black"), 
-	lty=1, lwd=c(rep(1,12), 3), xlim=c(1,10))}
+	lty=1, lwd=c(rep(1,12), 3), xlim=c(1,10))
+}
 }
 \keyword{methods}

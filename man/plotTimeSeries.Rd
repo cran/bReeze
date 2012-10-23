@@ -27,6 +27,7 @@ The following graphical parameters can optionally be added to customize the plot
 \author{Christian Graul}
 \seealso{\code{\link{createMast}}}
 \examples{
+\dontrun{
 # load and prepare data
 data(winddata)
 set40 <- createSet(height=40, v.avg=winddata[,2], v.max=winddata[,3], 
@@ -41,7 +42,7 @@ neubuerg <- clean(neubuerg)
 
 # plot time series
 plotTimeSeries(neubuerg)
-\dontrun{plotTimeSeries(neubuerg, set=1)
+plotTimeSeries(neubuerg, set=1)
 
 # change signals 
 plotTimeSeries(neubuerg, signal=c("v.avg", "v.min", "v.max", "v.std"))
@@ -59,6 +60,7 @@ plotTimeSeries(neubuerg, set=1, signal="v.max",
 plotTimeSeries(neubuerg, col=gray(1:3 / 4), lty=c(1,2,3), 
 	start="2009-12-01 00:10:00", end="2009-12-01 23:50:00")
 plotTimeSeries(neubuerg, col=c("blue", "red", "green"), lty=c(2,2,2))
-plotTimeSeries(neubuerg, signal="dir.avg", cex=1.3, ylab="Direction [°]")}
+plotTimeSeries(neubuerg, signal="dir.avg", cex=1.3, ylab="Direction [°]")
+}
 }
 \keyword{methods}

@@ -1,5 +1,5 @@
 availabilityInt <-
-function(v.set, dir.set, ts, start.year, start.month, num.months, period.days) {
+function(v.avg, dir.avg, ts, start.year, start.month, num.months, period.days) {
 ### internal function for calculation of availability
 
 	num.samples <- length(ts)
@@ -28,7 +28,7 @@ function(v.set, dir.set, ts, start.year, start.month, num.months, period.days) {
 		yr <- as.numeric(strsplit(row.names(avail)[m], "-")[[1]][1])
 		mon <- as.numeric(strsplit(row.names(avail)[m], "-")[[1]][2])
 		for(d in 2:32) {
-			avail[m,d] <- nrow(v.set$data[ts$year==yr-1900 & ts$mon==mon-1 & ts$mday==d-1 & !is.na(v.set$data$v.avg) & !is.na(dir.set$data$dir.avg),])
+			avail[m,d] <- length(v.avg[ts$year==yr-1900 & ts$mon==mon-1 & ts$mday==d-1 & !is.na(v.avg) & !is.na(dir.avg)])
 		}
 		if(any(mon==c(1,3,5,7,8,10,12))) days <- 31
 		if(any(mon==c(4,6,9,11))) days <- 30
@@ -46,7 +46,7 @@ function(v.set, dir.set, ts, start.year, start.month, num.months, period.days) {
 		avail[m,1] <- round(sum(avail[m,2:(days+1)]) / (days*daily.samples), 3)
 	}
 	
-	availability <- sum(!is.na(v.set$data$v.avg) & !is.na(dir.set$data$dir.avg)) / num.samples
+	availability <- sum(!is.na(v.avg) & !is.na(dir.avg)) / (period.days*daily.samples)
 	total <- data.frame(availability=round(availability, 3), effective.period=availability*period.days, total.period=period.days)
 	
 	attr(avail, "num.daily.samples") <- daily.samples
