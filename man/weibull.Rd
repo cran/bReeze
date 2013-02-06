@@ -3,12 +3,15 @@
 \alias{weibull}
 \title{Calculation of Weibull parameters}
 \description{Calculates the shape parameters (k) and scale parameters (A) of the Weibull distribution per direction sector.}
-\usage{weibull(mast, v.set, dir.set, num.sectors=12)}
+\usage{weibull(mast, v.set, dir.set, num.sectors=12,
+  digits=3, print=TRUE)}
 \arguments{
   \item{mast}{Met mast object created by \code{\link{createMast}}.}
   \item{v.set}{Set used for wind speed as numeric value (optional, if dir.set is given).}
   \item{dir.set}{Set used for wind direction as integer value (optional, if \code{v.set} is given).}
   \item{num.sectors}{Number of wind direction sectors as integer value. One of \code{4}, \code{8}, \code{12} or \code{16}. Default is \code{12}.}
+  \item{digits}{Number of decimal places to be used for results as numeric value. Default is \code{3}.}
+  \item{print}{If \code{TRUE}, results are printed directly.}
 }
 \details{
 To evaluate the potential energy production of a site the observed data of a particular measurement period must be generalized to a wind speed distribution. This is commonly done by fitting the Weibull function to the data. The two-parametered Weibull distribution is expressed mathematically as:
@@ -32,7 +35,7 @@ Langreder, W. (2010) Wind Resource and Site Assessment. In: Wei Tong (Ed.), Wind
 Weibull, W. (1951) A Statistical Distribution Function of Wide Applicability. \emph{Journal of Applied Mechanics -- Trans. ASME} \bold{18}(3), 293--297
 }
 \author{Christian Graul}
-\seealso{\code{\link{createMast}}, \code{\link{plotWeibull}}}
+\seealso{\code{\link{createMast}}, \code{\link{plotWeibull}}, \code{\link{printObject}}}
 \examples{
 \dontrun{
 # load and prepare data
@@ -40,31 +43,24 @@ data(winddata)
 set40 <- createSet(height=40, v.avg=winddata[,2], dir.avg=winddata[,14])
 set30 <- createSet(height=30, v.avg=winddata[,6], dir.avg=winddata[,16])
 set20 <- createSet(height=20, v.avg=winddata[,10])
-ts <- formatTS(winddata[,1])
-neubuerg <- createMast(time.stamp=ts, loc=NULL, desc=NULL, 
-	set40, set30, set20)
-neubuerg <- clean(neubuerg)
+ts <- formatTS(time.stamp=winddata[,1])
+neubuerg <- createMast(time.stamp=ts, set40, set30, set20)
+neubuerg <- clean(mast=neubuerg)
 
 # calculate Weibull parameters
-neubuerg.wb <- weibull(neubuerg, 1)
+weibull(mast=neubuerg, v.set=1)
 
 # if only one of v.set and dir.set is given, 
 # the dataset is assigned to both
-neubuerg.wb.2 <- weibull(mast=neubuerg, v.set=1)
-neubuerg.wb.3 <- weibull(mast=neubuerg, dir.set=1)
-
-# compare output
-neubuerg.wb
-neubuerg.wb.2
-neubuerg.wb.3
-
+weibull(mast=neubuerg, v.set=1)
+weibull(mast=neubuerg, dir.set=1)
 
 # change number of direction sectors
-neubuerg.wb.4 <- weibull(mast=neubuerg, v.set=1, num.sectors=16)
+weibull(mast=neubuerg, v.set=1, num.sectors=16)
 
-# compare output
-neubuerg.wb
-neubuerg.wb.4
+# change number of digits and hide results
+weibull(mast=neubuerg, v.set=1, digits=2)
+weibull(mast=neubuerg, v.set=1, print=FALSE)
 }
 }
 \keyword{methods}

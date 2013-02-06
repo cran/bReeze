@@ -18,10 +18,16 @@ function(v, p, cp, ct, rho=1.225, rated.p, desc) {
 	
 	pc <- data.frame(cbind(v, p, cp, ct))
 	names <- c("v", "P")
-	if(!is.null(cp)) names <- append(names, "cp")
-	if(!is.null(ct)) names <- append(names, "ct")
+	attr(pc, "units") <- c("m/s", "kW")
+	if(!is.null(cp)) {
+		names <- append(names, "cp")
+		attr(pc, "units") <- append(attr(pc, "units"), "-")
+	}
+	if(!is.null(ct)) {
+		names <- append(names, "ct")
+		attr(pc, "units") <- append(attr(pc, "units"), "-")
+	}
 	names(pc) <- names
-	attr(pc, "units") <- c("m/s", "kW", "-")
 	attr(pc, "rho") <- rho
 	attr(pc, "rated.power") <- rated.p
 	if(!is.null(desc)) attr(pc, "description") <- desc

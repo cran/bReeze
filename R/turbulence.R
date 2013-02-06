@@ -1,19 +1,19 @@
 turbulence <-
-function(mast, turb.set, dir.set, num.sectors=12, bins=c(5,10,15,20)) {
+function(mast, turb.set, dir.set, num.sectors=12, bins=c(5,10,15,20), digits=3, print=TRUE) {
 ### calculating mean wind speed and turbulence intensity of sectors
 
 	if(is.null(attr(mast, "call"))) stop(paste(substitute(mast), "is no mast object"))
 	if(attr(mast, "call")$func!="createMast") stop(paste(substitute(mast), "is no mast object"))
 	num.sets <- length(mast$sets)
-	if(!missing(turb.set) & missing(dir.set)) dir.set <- turb.set
-	if(missing(turb.set) & !missing(dir.set)) turb.set <- dir.set
+	if(!missing(turb.set) && missing(dir.set)) dir.set <- turb.set
+	if(missing(turb.set) && !missing(dir.set)) turb.set <- dir.set
 	
 	if(!is.numeric(num.sectors)) stop("'num.sectors' must be numeric\n")
-	if(num.sectors%%4!=0 | num.sectors<4 | num.sectors>16) stop("Inapplicable number of sectors - choose 4, 8, 12 or 16\n")
+	if(num.sectors%%4!=0 || num.sectors<4 || num.sectors>16) stop("Inapplicable number of sectors - choose 4, 8, 12 or 16\n")
 	if(!is.numeric(turb.set)) stop("'turb.set' must be numeric\n")
-	if(turb.set<=0 | turb.set>num.sets) stop("'turb.set' not found\n")
+	if(turb.set<=0 || turb.set>num.sets) stop("'turb.set' not found\n")
 	if(!is.numeric(dir.set)) stop("'dir.set' must be numeric\n")
-	if(dir.set<=0 | dir.set>num.sets) stop("'dir.set' not found\n")
+	if(dir.set<=0 || dir.set>num.sets) stop("'dir.set' not found\n")
 	if(is.null(mast$sets[[turb.set]]$data$turb.int)) stop("Specified set does not contain turbulence intensity data\n")
 	if(is.null(mast$sets[[dir.set]]$data$dir.avg)) stop("Specified set does not contain wind direction data\n")
 	if(any(bins<0)) stop("'bins' must be NULL or a vector of positives\n")
@@ -32,7 +32,7 @@ function(mast, turb.set, dir.set, num.sectors=12, bins=c(5,10,15,20)) {
 			}
 		}
 	}
-	if(!is.null(bins)) if(num.classes==2 & bins[num.classes]>=v.max) stop("Only one wind class found\n")
+	if(!is.null(bins)) if(num.classes==2 && bins[num.classes]>=v.max) stop("Only one wind class found\n")
 	
 	turb.tbl <- matrix(NA, nrow=num.sectors+1, ncol=num.classes+1)
 	# indices for valid data
@@ -88,7 +88,8 @@ function(mast, turb.set, dir.set, num.sectors=12, bins=c(5,10,15,20)) {
 	for(i in 1:length(turb.tbl)) turb.tbl[,i][is.nan(turb.tbl[,i]) | turb.tbl[,i]==0] <- NA
 	if(sum(turb.tbl[,length(turb.tbl)], na.rm=TRUE)==0) turb.tbl[,length(turb.tbl)] <- NULL
 	
-	attr(turb.tbl, "call") <- list(func="turbulence", mast=deparse(substitute(mast)), turb.set=turb.set, dir.set=dir.set, num.sectors=num.sectors, bins=bins)
-	
-	return(round(turb.tbl, 3))
+	attr(turb.tbl, "call") <- list(func="turbulence", mast=deparse(substitute(mast)), turb.set=turb.set, dir.set=dir.set, num.sectors=num.sectors, bins=bins, digits=digits, print=print)
+	turb.tbl <- round(turb.tbl, digits)
+	if(print) printObject(turb.tbl)
+	invisible(turb.tbl)
 }

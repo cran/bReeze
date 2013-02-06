@@ -18,10 +18,25 @@ plotTimeSeries(mast, set, signal=c("v.avg", "dir.avg", "turb.int"),
 \section{Optional graphical parameters}{
 The following graphical parameters can optionally be added to customize the plot:
   \itemize{
-  	\item \code{col}: Vector of colours -- one for each set plotted.
+    \item \code{bty}: Type of box to be drawn around the plot region. Allowed values are \code{"o"} (the default), \code{"l"}, \code{"7"}, \code{"c"}, \code{"u"}, or \code{"]"}. The resulting box resembles the corresponding upper case letter. A value of \code{"n"} suppresses the box. 
+    \item \code{bty.leg}: Type of box to be drawn around the legend. Allowed values are \code{"n"} (no box, the default) and \code{"o"}.
+    \item \code{cex}: Amount by which text on the plot should be scaled relative to the default (which is \code{1}), as numeric. To be used for scaling of all texts at once.
+	\item \code{cex.axis}: Amount by which axis annotations should be scaled, as numeric value.
+    \item \code{cex.lab}: Amount by which axis labels should be scaled, as numeric value.
+    \item \code{cex.leg}: Amount by which legend text should be scaled, as numeric value.
+    \item \code{col}: Vector of colours, one for each set plotted.
+	\item \code{col.axis}: Colour to be used for axis annotations -- default is \code{"black"}.
+	\item \code{col.box}: Colour to be used for the box around the plot region (if \code{bty}) -- default is \code{"black"}.
+    \item \code{col.lab}: Colour to be used for axis labels -- default is \code{"black"}.
+    \item \code{col.leg}: Colour to be used for legend text -- default is \code{"black"}.
+    \item \code{col.ticks}: Colours for the axis line and the tick marks respectively -- default is \code{"black"}.
+    \item \code{las}: Style of axis labels. One of \code{0} (always parallel to the axis, default), \code{1} (always horizontal), \code{2} (always perpendicular to the axis), \code{3} (always vertical).
+    \item \code{legend}: If \code{TRUE} (the default) a legend is drawn.
     \item \code{lty}: Vector of line types -- one for each set plotted. See \code{par} for available line types.
-    \item \code{cex}: Numeric value, giving the amount by which text on the plot should be scaled relative to the default (which is 1).
-    \item \code{ylab}: String vector of labels for the y axis.
+    \item \code{mar}: A numerical vector of the form c(bottom, left, top, right) which gives the number of lines of margin to be specified on the four sides of the plot (only for plots with one dataset) -- default is \code{c(1, 4.5, 0, 1)}.
+    \item \code{mgp}: A numerical vector of the form c(label, annotation, line), which gives the margin line for the axis label, axis annotation and axis line. The default is \code{c(2.5, 0.7, 0)}.
+	\item \code{ylab}: String vector of labels for the y axis.
+	\item \code{x.intersp}: Horizontal interspacing factor for legend text, as numeric -- default is \code{0.4}.
   }
 }
 \author{Christian Graul}
@@ -31,36 +46,37 @@ The following graphical parameters can optionally be added to customize the plot
 # load and prepare data
 data(winddata)
 set40 <- createSet(height=40, v.avg=winddata[,2], v.max=winddata[,3], 
-	v.min=winddata[,4], v.std=winddata[,5], dir.avg=winddata[,14])
+  v.min=winddata[,4], v.std=winddata[,5], dir.avg=winddata[,14])
 set30 <- createSet(height=30, v.avg=winddata[,6], v.std=winddata[,9], 
-	dir.avg=winddata[,16])
+  dir.avg=winddata[,16])
 set20 <- createSet(height=20, v.avg=winddata[,10], v.std=winddata[,13])
-ts <- formatTS(winddata[,1])
-neubuerg <- createMast(time.stamp=ts, loc=NULL, desc=NULL, 
-	set40, set30, set20)
-neubuerg <- clean(neubuerg)
+ts <- formatTS(time.stamp=winddata[,1])
+neubuerg <- createMast(time.stamp=ts, set40, set30, set20)
+neubuerg <- clean(mast=neubuerg)
 
 # plot time series
-plotTimeSeries(neubuerg)
-plotTimeSeries(neubuerg, set=1)
+plotTimeSeries(mast=neubuerg)
+plotTimeSeries(mast=neubuerg, set=1, legend=FALSE)
 
 # change signals 
-plotTimeSeries(neubuerg, signal=c("v.avg", "v.min", "v.max", "v.std"))
-plotTimeSeries(neubuerg, signal=c("turb.int"))
-plotTimeSeries(neubuerg, set=1, signal=c("v.avg", "dir.avg"))
+plotTimeSeries(mast=neubuerg, signal=c("v.avg", "v.min", "v.max", 
+  "v.std"))
+plotTimeSeries(mast=neubuerg, signal=c("turb.int"))
+plotTimeSeries(mast=neubuerg, set=1, signal=c("v.avg", "dir.avg"))
 
 # change time scale
-plotTimeSeries(neubuerg, start="2010-01-01 00:10:00")
-plotTimeSeries(neubuerg, start="2009-10-11 00:10:00", 
-	end="2009-10-11 23:50:00")
-plotTimeSeries(neubuerg, set=1, signal="v.max", 
-	start="2009-12-27 16:30:00", end="2009-12-27 18:30:00")
+plotTimeSeries(mast=neubuerg, start="2010-01-01 00:10:00")
+plotTimeSeries(mast=neubuerg, start="2009-10-11 00:10:00", 
+  end="2009-10-11 23:50:00")
+plotTimeSeries(mast=neubuerg, set=1, signal="v.max", 
+  start="2009-12-27 16:30:00", end="2009-12-27 18:30:00")
 
 # customize plot
-plotTimeSeries(neubuerg, col=gray(1:3 / 4), lty=c(1,2,3), 
-	start="2009-12-01 00:10:00", end="2009-12-01 23:50:00")
-plotTimeSeries(neubuerg, col=c("blue", "red", "green"), lty=c(2,2,2))
-plotTimeSeries(neubuerg, signal="dir.avg", cex=1.3, ylab="Direction [°]")
+plotTimeSeries(mast=neubuerg, bty="n", bty.leg="o", cex.axis=1.2, 
+  cex.lab=1.4, cex.leg=1.2, col=c("darkblue", "red2", "darkgreen"), 
+  col.axis="darkgray", col.lab="darkgray", col.leg="darkgray", 
+  col.ticks="darkgray", las=0, lty=rep(1.5,3), mar=c(0.5,4,0,0.5), 
+  mgp=c(2,0.5,0), ylab=c("v [m/s]","dir [deg]","ti [-]"), x.intersp=1)
 }
 }
 \keyword{methods}

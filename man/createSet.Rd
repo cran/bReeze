@@ -32,7 +32,7 @@ Returns a dataset object which is a list of:
   \item{data}{Data of measured signals.}
 }
 \author{Christian Graul}
-\seealso{\code{\link{createMast}}}
+\seealso{\code{\link{createMast}}, \code{\link{printObject}}}
 \examples{
 \dontrun{
 # load data
@@ -43,13 +43,13 @@ set <- createSet(height=40, v.avg=winddata[,2])
 
 # detailed dataset
 set.2 <- createSet(height=40, desc=
-	"C1: cup anemometer (SN: 4.3250.128), A1: wind vane (SN: 4.2800.205)", 
-	v.avg=winddata[,2], v.max=winddata[,3], v.min=winddata[,4], 
-	v.std=winddata[,5], dir.avg=winddata[,14], dir.std=winddata[,15])
+  "C1: cup anemometer (SN: 4.3250.128), A1: wind vane (SN: 4.2800.205)", 
+  v.avg=winddata[,2], v.max=winddata[,3], v.min=winddata[,4], 
+  v.std=winddata[,5], dir.avg=winddata[,14], dir.std=winddata[,15])
 
-# view structure
-str(set)
-str(set.2)
+# print
+printObject(object=set)
+printObject(object=set.2)
 }
 }
 \keyword{methods}

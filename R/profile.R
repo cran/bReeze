@@ -1,5 +1,5 @@
 profile <-
-function(mast, v.set, dir.set, num.sectors=12, alpha=NULL) {
+function(mast, v.set, dir.set, num.sectors=12, alpha=NULL, digits=3, print=TRUE) {
 ###	computing profile from mast data
 	
 	if(is.null(attr(mast, "call"))) stop(paste(substitute(mast), "is no mast object"))
@@ -7,13 +7,13 @@ function(mast, v.set, dir.set, num.sectors=12, alpha=NULL) {
 	num.sets <- length(mast$sets)
 	if(missing(v.set)) stop("Please choose one or two sets in 'v.set'\n")
 	if(any(!is.numeric(v.set)==TRUE)) stop("'v.set' must be numeric\n")
-	if(any(v.set<=0) | any(v.set>num.sets)) stop("'v.set' not found\n")
+	if(any(v.set<=0) || any(v.set>num.sets)) stop("'v.set' not found\n")
 	for(i in 1:length(v.set)) if(is.null(mast$sets[[v.set[i]]]$data$v.avg)) stop(paste("Set", v.set[i], "does not contain average wind speed data\n"))
-	if(length(dir.set)>1 | !is.numeric(dir.set)) stop("'dir.set' must be one numeric value\n")
-	if(dir.set<=0 | dir.set>num.sets) stop("'dir.set' not found\n")
+	if(length(dir.set)>1 || !is.numeric(dir.set)) stop("'dir.set' must be one numeric value\n")
+	if(dir.set<=0 || dir.set>num.sets) stop("'dir.set' not found\n")
 	if(is.null(mast$sets[[dir.set]]$data$dir.avg)) stop(paste("'dir.set' does not contain average wind direction data\n"))
 	if(!is.numeric(num.sectors)) stop("'num.sectors' must be numeric\n")
-	if(num.sectors%%4!=0 | num.sectors<4 | num.sectors>16) stop("Inapplicable number of sectors - choose 4, 8, 12 or 16\n")
+	if(num.sectors%%4!=0 || num.sectors<4 || num.sectors>16) stop("Inapplicable number of sectors - choose 4, 8, 12 or 16\n")
 	
 	sector.width <- 360/num.sectors
 	sectors <- seq(0, 360-sector.width, by=sector.width)
@@ -47,6 +47,7 @@ function(mast, v.set, dir.set, num.sectors=12, alpha=NULL) {
 		profile[num.sectors+1,2] <- mean(v1, na.rm=TRUE)
 		names(profile) <- c("alpha", "v.ref")
 		row.names(profile) <- r.names
+		attr(profile, "units") <- c("-", attr(mast$sets[[v.set[1]]]$data$v.avg, "unit"))
 	} else if(length(v.set)>1) {
 		if(length(v.set)>2) {
 			cat("Only one or two sets are supported to calculate the profile - the first two sets from 'v.set' are used\n")
@@ -76,10 +77,12 @@ function(mast, v.set, dir.set, num.sectors=12, alpha=NULL) {
 		profile[num.sectors+1,2] <- mean(v1, na.rm=TRUE)
 		names(profile) <- c("alpha", "v.ref")
 		row.names(profile) <- r.names
+		attr(profile, "units") <- c("-", attr(mast$sets[[v.set[1]]]$data$v.avg, "unit"))
 	}
 	
-	profile <- list(profile=round(profile, 3), h.ref=h1)
-	attr(profile, "call") <- list(func="profile", mast=deparse(substitute(mast)), v.set=v.set, dir.set=dir.set, num.sectors=num.sectors, alpha=alpha)
+	profile <- list(profile=round(profile, digits), h.ref=h1)
+	attr(profile, "call") <- list(func="profile", mast=deparse(substitute(mast)), v.set=v.set, dir.set=dir.set, num.sectors=num.sectors, alpha=alpha, digits=digits, print=print)
 	
-	return(profile)
+	if(print) printObject(profile)
+	invisible(profile)
 }

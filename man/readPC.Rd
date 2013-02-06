@@ -63,19 +63,19 @@ http://www.wind-power-program.com/download.htm
 \note{
 All power curves are provided without any warranty of accuracy and timeliness. Reliable data can only be received from the respective manufacturer directly. 
 }
-\seealso{\code{\link{createPC}}, for creation of your own power curve object}
+\seealso{\code{\link{createPC}}, for creation of your own power curve object, \code{\link{printObject}}}
 \examples{
 \dontrun{
 # import power curve from bReeze wtg file
-vestas.v90 <- readPC(system.file(package="bReeze", "powercurves", 
-	"Vestas_V90_2.0MW.wtg"))
+vestas.v90 <- readPC(file=system.file(package="bReeze", "powercurves", 
+  "Vestas_V90_2.0MW.wtg"))
 
 # import power curve from bReeze pow file
-repower.mm92 <- readPC(system.file(package="bReeze", "powercurves", 
-	"Repower_MM92_2.0MW.pow"))
+repower.mm92 <- readPC(file=system.file(package="bReeze", "powercurves", 
+  "Repower_MM92_2.0MW.pow"))
 
 # import power curve from user file
-my.pc <- readPC("~/Projects/bReeze/Sandbox/myPowerCurve.wtg")
+# e.g.: my.pc <- readPC(file="~/Projects/bReeze/Sandbox/myPowerCurve.wtg")
 }
 }
 \keyword{methods}

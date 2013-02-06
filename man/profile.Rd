@@ -1,15 +1,18 @@
 \encoding{UTF-8}
 \name{profile}
 \alias{profile}
-\title{Calculation of wind profile}
+\title{Calculate wind profile}
 \description{Calculates a wind profile, using on the Hellman exponential law.}
-\usage{profile(mast, v.set, dir.set, num.sectors=12, alpha=NULL)}
+\usage{profile(mast, v.set, dir.set, num.sectors=12, alpha=NULL,
+  digits=3, print=TRUE)}
 \arguments{
   \item{mast}{Met mast object created by \code{\link{createMast}}.}
   \item{v.set}{Set(s) to be used for wind speed as integer vector. If one single dataset is given, the same Hellman exponent is assumed for each sector and can be specified using \code{alpha} (see Details for empirical values). If two or more datasets are given, the Hellman exponent is calculated for each sector. If more than two datasets are given, currently only the first two datasets are used.}
   \item{dir.set}{Set to be used for wind direction as integer value.}
   \item{num.sectors}{Number of wind direction sectors as integer value. One of \code{4}, \code{8}, \code{12} or \code{16}. Default is \code{12}.}
   \item{alpha}{Hellman exponent. Optional and only used if a single dataset is given in \code{v.set}. If \code{alpha} is \code{NULL}, \code{0.2} is used as default.}
+  \item{digits}{Number of decimal places to be used for results as numeric value. Default is \code{3}.}
+  \item{print}{If \code{TRUE}, results are printed directly.}
 }
 \details{
 The average wind speed as a function of height above ground gives a site's wind profile. For reasons of cost-efficiency met mast heights are usually below hub heights of modern wind turbines, thus measured wind speeds must be extrapolated by based wind profile. A common method is the Hellman exponential law or power law, defined as:
@@ -29,7 +32,7 @@ If the wind speed is only known for one height, \eqn{\alpha}{alpha} must be esti
 \value{
 Returns a list of:
   \item{profile}{Data frame containing alpha and reference wind speed for each direction sector.}
-  \item{h.ref}{Reference height of the profile (the height of the first given dataset in \code{v.set}.}
+  \item{h.ref}{Reference height of the profile (the height of the first given dataset in \code{v.set}).}
 }
 \references{
 Bañuelos-Ruedas, F., Camacho, C.A., Rios-Marcuello, S. (2011) Methodologies Used in the Extrapolation of Wind Speed Data at Different Heights and Its Impact in the Wind Energy Resource Assessment in a Region. In: Gastón O. Suvire (Ed.), Wind Farm -- Technical Regulations, Potential Estimation and Siting Assessment, Chapter 4, p. 97--114, InTech
@@ -39,7 +42,7 @@ Brower, M., Marcus, M., Taylor, M., Bernadett, D., Filippelli, M., Beaucage, P.,
 International Electrotechnical Commission (2005) IEC 61400-12 Wind Turbines -- Part 12-1: Power Performance Measurements of Electricity Producing Wind Turbines. IEC Standard
 }
 \author{Christian Graul}
-\seealso{\code{\link{createMast}}, \code{\link{plotProfile}}}
+\seealso{\code{\link{createMast}}, \code{\link{plotProfile}}, \code{\link{printObject}}}
 \examples{
 \dontrun{
 # load and prepare data
@@ -47,31 +50,24 @@ data(winddata)
 set40 <- createSet(height=40, v.avg=winddata[,2], dir.avg=winddata[,14])
 set30 <- createSet(height=30, v.avg=winddata[,6], dir.avg=winddata[,16])
 set20 <- createSet(height=20, v.avg=winddata[,10], v.std=winddata[,13])
-ts <- formatTS(winddata[,1])
-neubuerg <- createMast(time.stamp=ts, loc=NULL, desc=NULL, 
-	set40, set30, set20)
-neubuerg <- clean(neubuerg)
+ts <- formatTS(time.stamp=winddata[,1])
+neubuerg <- createMast(time.stamp=ts, set40, set30, set20)
+neubuerg <- clean(mast=neubuerg)
 
 # create profile based on one height
-neubuerg.wp <- profile(neubuerg, v.set=1, dir.set=1)	# default alpha=0.2
-neubuerg.wp.2 <- profile(neubuerg, v.set=1, dir.set=1, alpha=0.15)
-
-# compare influence of alpha
-neubuerg.wp
-neubuerg.wp.2
-
+profile(mast=neubuerg, v.set=1, dir.set=1)	# default alpha=0.2
+profile(mast=neubuerg, v.set=1, dir.set=1, alpha=0.15)
 
 # calculate profiles based on two heights
-neubuerg.wp.3 <- profile(neubuerg, v.set=c(1,2), dir.set=1)
-neubuerg.wp.4 <- profile(neubuerg, v.set=c(1,3), dir.set=1)
+profile(mast=neubuerg, v.set=c(1,2), dir.set=1)
+profile(mast=neubuerg, v.set=c(1,3), dir.set=1)
 
 # change number of direction sectors
-neubuerg.wp.5 <- profile(neubuerg, v.set=c(1,2), dir.set=1, num.sectors=8)
+profile(mast=neubuerg, v.set=c(1,2), dir.set=1, num.sectors=8)
 
-# compare calculated profiles
-neubuerg.wp.3	# 40 m and 30 m dataset
-neubuerg.wp.4	# 40 m and 20 m dataset
-neubuerg.wp.5
+# change number of digits and hide results
+profile(mast=neubuerg, v.set=1, dir.set=1, digits=2)
+profile(mast=neubuerg, v.set=1, dir.set=1, print=FALSE)
 }
 }
 \keyword{methods}

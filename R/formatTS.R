@@ -14,7 +14,7 @@ function(time.stamp, pattern) {
 				if(substr(pattern[i], nchar(pattern[i]), nchar(pattern[i]))=="S") nts <- strptime(paste(time.stamp[1], "00:00:00"), pattern[i])
 				if(substr(pattern[i], nchar(pattern[i]), nchar(pattern[i]))=="M") nts <- strptime(paste(time.stamp[1], "00:00"), pattern[i])
 			}
-			if(!is.na(nts) & substr(nts,1,2)!="00") {
+			if(!is.na(nts) && substr(nts,1,2)!="00") {
 				nts <- strptime(time.stamp, pattern[i])
 				if(any(is.na(nts)==TRUE)) {
 					if(substr(pattern[i], nchar(pattern[i]), nchar(pattern[i]))=="S") nts[which(is.na(nts)==TRUE)] <- strptime(paste(time.stamp[which(is.na(nts)==TRUE)], "00:00:00"), pattern[i])

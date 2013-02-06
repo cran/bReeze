@@ -1,13 +1,15 @@
 \encoding{UTF-8}
 \name{availability}
 \alias{availability}
-\title{Calculation of availability for pairs of wind speed and direction}
+\title{Calculate availability for pairs of wind speed and direction}
 \description{Calculates the availability for pairs of wind speed and wind direction of a met mast.}
-\usage{availability(mast, v.set, dir.set)}
+\usage{availability(mast, v.set, dir.set, digits=1, print=TRUE)}
 \arguments{
   \item{mast}{Met mast object created by \code{\link{createMast}}.}
   \item{v.set}{Set to be used for wind speed as integer value. Argument is optional -- if missing, all sets containing wind speed and wind direction data are used.}
   \item{dir.set}{Set to be used for wind direction as integer value. Argument is optional -- if missing, the set used for wind speed data will also be used for wind direction.}
+  \item{digits}{Number of decimal places to be used for results as numeric value. Default is \code{1}.}
+  \item{print}{If \code{TRUE}, results are printed directly.}
 }
 \details{
 The availability is the number of pairs of valid wind speed and valid wind direction data samples as a percentage of the total possible for the measurement period, i.e.:
@@ -25,23 +27,23 @@ Causes of invalid or missing data are manifold. Typical causes are icing and def
 Brower, M., Marcus, M., Taylor, M., Bernadett, D., Filippelli, M., Beaucage, P., Hale, E., Elsholz, K., Doane, J., Eberhard, M., Tensen, J., Ryan, D. (2010) Wind Resource Assessment Handbook. http://www.awstruepower.com/wp-content/uploads/2012/01/10-30_wind-resource-handbook.pdf
 }
 \author{Christian Graul}
-\seealso{\code{\link{createMast}}, \code{\link{clean}}, \code{\link{plotAvailability}}}
+\seealso{\code{\link{createMast}}, \code{\link{clean}}, \code{\link{plotAvailability}}, \code{\link{printObject}}}
 \examples{
 \dontrun{
 # load and prepare data
 data(winddata)
 set40 <- createSet(height=40, v.avg=winddata[,2], v.std=winddata[,5],
-dir.avg=winddata[,14])
+  dir.avg=winddata[,14])
 set30 <- createSet(height=30, v.avg=winddata[,6], v.std=winddata[,9],
-dir.avg=winddata[,16])
+  dir.avg=winddata[,16])
 set20 <- createSet(height=20, v.avg=winddata[,10], v.std=winddata[,13])
-ts <- formatTS(winddata[,1])
-neubuerg <- createMast(time.stamp=ts, loc=NULL, desc=NULL, 
-	set40=set40, set30=set30, set20=set20)
-neubuerg <- clean(neubuerg)
+ts <- formatTS(time.stamp=winddata[,1])
+neubuerg <- createMast(time.stamp=ts, set40=set40, set30=set30, 
+  set20=set20)
+neubuerg <- clean(mast=neubuerg)
 
 # calculate availability
-neubuerg.avail <- availability(neubuerg)
+neubuerg.avail <- availability(mast=neubuerg)
 
 # compare the total availability of 'set40' and 'set30'
 neubuerg.avail$set40$total

@@ -1,19 +1,19 @@
 frequency <-
-function(mast, v.set, dir.set, num.sectors=12, bins=c(5,10,15,20)) {
+function(mast, v.set, dir.set, num.sectors=12, bins=c(5,10,15,20), digits=3, print=TRUE) {
 ### calculating mean wind speed and frequency of sectors
 
 	if(is.null(attr(mast, "call"))) stop(paste(substitute(mast), "is no mast object"))
 	if(attr(mast, "call")$func!="createMast") stop(paste(substitute(mast), "is no mast object"))
 	num.sets <- length(mast$sets)
-	if(!missing(v.set) & missing(dir.set)) dir.set <- v.set
-	if(missing(v.set) & !missing(dir.set)) v.set <- dir.set
+	if(!missing(v.set) && missing(dir.set)) dir.set <- v.set
+	if(missing(v.set) && !missing(dir.set)) v.set <- dir.set
 	
 	if(!is.numeric(num.sectors)) stop("'num.sectors' must be numeric\n")
-	if(num.sectors%%4!=0 | num.sectors<4 | num.sectors>16) stop("Inapplicable number of sectors - choose 4, 8, 12 or 16\n")
+	if(num.sectors%%4!=0 || num.sectors<4 | num.sectors>16) stop("Inapplicable number of sectors - choose 4, 8, 12 or 16\n")
 	if(!is.numeric(v.set)) stop("'v.set' must be numeric\n")
-	if(v.set<=0 | v.set>num.sets) stop("'v.set' not found\n")
+	if(v.set<=0 || v.set>num.sets) stop("'v.set' not found\n")
 	if(!is.numeric(dir.set)) stop("'dir.set' must be numeric\n")
-	if(dir.set<=0 | dir.set>num.sets) stop("'dir.set' not found\n")
+	if(dir.set<=0 || dir.set>num.sets) stop("'dir.set' not found\n")
 	if(is.null(mast$sets[[v.set]]$data$v.avg)) stop("Specified set does not contain average wind speed data\n")
 	if(is.null(mast$sets[[dir.set]]$data$dir.avg)) stop("Specified set does not contain wind direction data\n")
 	if(any(bins<0)) stop("'bins' must be NULL or a vector of positives\n")
@@ -32,11 +32,11 @@ function(mast, v.set, dir.set, num.sectors=12, bins=c(5,10,15,20)) {
 			}
 		}
 	}
-	if(!is.null(bins)) if(num.classes==2 & bins[num.classes]>=v.max) stop("Only one wind class found\n")
+	if(!is.null(bins)) if(num.classes==2 && bins[num.classes]>=v.max) stop("Only one wind class found\n")
 	
 	freq.tbl <- matrix(NA, nrow=num.sectors+1, ncol=num.classes+2)
 	# index for valid data
-	idx.val <- !is.na(mast$sets[[v.set]]$data$v.avg) & !is.na(mast$sets[[dir.set]]$data$dir.avg)
+	idx.val <- !is.na(mast$sets[[v.set]]$data$v.avg) & !is.na(mast$sets[[dir.set]]$data$dir.avg) & mast$sets[[v.set]]$data$v.avg >= 0
 	
 	for(s in 1:num.sectors) {
 		# index for direction
@@ -78,7 +78,11 @@ function(mast, v.set, dir.set, num.sectors=12, bins=c(5,10,15,20)) {
 	for(i in 1:length(freq.tbl)) freq.tbl[,i][is.nan(freq.tbl[,i]) | freq.tbl[,i]==0] <- NA
 	if(sum(freq.tbl[,length(freq.tbl)], na.rm=TRUE)==0) freq.tbl[,length(freq.tbl)] <- NULL
 	
-	attr(freq.tbl, "call") <- list(func="frequency", mast=deparse(substitute(mast)), v.set=v.set, dir.set=dir.set, num.sectors=num.sectors, bins=bins)
+	unit <-
+	attr(freq.tbl, "units") <- c(attr(mast$sets[[v.set]]$data$v.avg, "unit"), "%")
+	attr(freq.tbl, "call") <- list(func="frequency", mast=deparse(substitute(mast)), v.set=v.set, dir.set=dir.set, num.sectors=num.sectors, bins=bins, digits=digits, print=print)
 	
-	return(round(freq.tbl, 3))
+	freq.tbl <- round(freq.tbl, digits)
+	if(print) printObject(freq.tbl)
+	invisible(freq.tbl)
 }

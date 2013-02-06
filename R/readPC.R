@@ -9,14 +9,15 @@ function(file) {
 	if(type==".pow") {
 		pow <- read.table(file, as.is=TRUE)
 		cut.out <- as.numeric(pow[4,1])
-		if(is.na(cut.out) | is.null(cut.out)) stop("Cannot handle file")
+		if(is.na(cut.out) || is.null(cut.out)) stop("Cannot handle file")
 		v <- seq(1, cut.out, 1)
 		p <- tail(pow, -1)
 		options(warn=-1)
 		if(is.na(as.numeric(tail(p, 1)))) p <- head(p, -1)
 		options(warn=1)
 		p <- as.numeric(p[5:(cut.out+4),1])
-		r <- createPC(v, p, rho=1.225)
+		desc <- pow[1,1]
+		r <- createPC(v, p, rho=1.225, desc=desc)
 		attr(r, "call") <- list(func="readPC", file=file)
 	} else if(type==".wtg") {
 		stopifnot(require(XML))
@@ -37,7 +38,8 @@ function(file) {
 			p <- append(p, as.numeric(xmlAttrs(wtg$doc$children$WindTurbineGenerator[[idx]][["DataTable"]][[i]])[["PowerOutput"]])/1000)
 			ct <- append(ct, as.numeric(xmlAttrs(wtg$doc$children$WindTurbineGenerator[[idx]][["DataTable"]][[i]])[["ThrustCoEfficient"]]))
 		}
-		r <- createPC(v=v, p=p, ct=ct, rho=rho)
+		desc <- xmlAttrs(xmlRoot(wtg))[["Description"]]
+		r <- createPC(v=v, p=p, ct=ct, rho=rho, desc=desc)
 		attr(r, "call") <- list(func="readPC", file=file)
 	}
 		

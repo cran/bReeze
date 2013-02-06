@@ -1,19 +1,19 @@
 weibull <-
-function(mast, v.set, dir.set, num.sectors=12) {
+function(mast, v.set, dir.set, num.sectors=12, digits=3, print=TRUE) {
 ### calculating weibull parameters for sectors
 	
 	if(is.null(attr(mast, "call"))) stop(paste(substitute(mast), "is no mast object"))
 	if(attr(mast, "call")$func!="createMast") stop(paste(substitute(mast), "is no mast object"))
 	num.sets <- length(mast$sets)
-	if(!missing(v.set) & missing(dir.set)) dir.set <- v.set
-	if(missing(v.set) & !missing(dir.set)) v.set <- dir.set
+	if(!missing(v.set) && missing(dir.set)) dir.set <- v.set
+	if(missing(v.set) && !missing(dir.set)) v.set <- dir.set
 	
 	if(!is.numeric(num.sectors)) stop("'num.sectors' must be numeric\n")
-	if(num.sectors%%4!=0 | num.sectors<4 | num.sectors>16) stop("Inapplicable number of sectors - choose 4, 8, 12 or 16\n")
+	if(num.sectors%%4!=0 || num.sectors<4 || num.sectors>16) stop("Inapplicable number of sectors - choose 4, 8, 12 or 16\n")
 	if(!is.numeric(v.set)) stop("'v.set' must be numeric\n")
-	if(v.set<=0 | v.set>num.sets) stop("'v.set' not found\n")
+	if(v.set<=0 || v.set>num.sets) stop("'v.set' not found\n")
 	if(!is.numeric(dir.set)) stop("'dir.set' must be numeric\n")
-	if(dir.set<=0 | dir.set>num.sets) stop("'dir.set' not found\n")
+	if(dir.set<=0 || dir.set>num.sets) stop("'dir.set' not found\n")
 	if(is.null(mast$sets[[v.set]]$data$v.avg)) stop("Specified set does not contain average wind speed data\n")
 	if(is.null(mast$sets[[dir.set]]$data$dir.avg)) stop("Specified set does not contain wind direction data\n")
 	
@@ -36,7 +36,7 @@ function(mast, v.set, dir.set, num.sectors=12) {
 	weibull.tbl[num.sectors+1,1] <- weibull.param$A
 	weibull.tbl[num.sectors+1,2] <- weibull.param$k
 	
-	freq <- frequency(mast, v.set, dir.set, num.sectors, bins=NULL)
+	freq <- frequency(mast, v.set, dir.set, num.sectors, bins=NULL, digits=digits)
 	weibull.tbl[,3] <- freq$wind.speed
 	weibull.tbl[,4] <- freq$total
 
@@ -46,8 +46,11 @@ function(mast, v.set, dir.set, num.sectors=12) {
 	if(num.sectors==16) r.names <- c("n","nne","ne","ene","e","ese","se","sse","s","ssw","sw","wsw","w","wnw","nw","nnw","all")
 	weibull.tbl <- data.frame(weibull.tbl, row.names=r.names)
 	names(weibull.tbl) <- c("A", "k", "wind.speed", "frequency")
-		
-	attr(weibull.tbl, "call") <- list(func="weibull", mast=deparse(substitute(mast)), v.set=v.set, dir.set=dir.set, num.sectors=num.sectors)
 	
-	return(round(weibull.tbl, 3))
+	attr(weibull.tbl, "units") <- c("m/s", "-", attr(mast$sets[[v.set]]$data$v.avg, "unit"), "%")
+	attr(weibull.tbl, "call") <- list(func="weibull", mast=deparse(substitute(mast)), v.set=v.set, dir.set=dir.set, num.sectors=num.sectors, digits=digits, print=print)
+	
+	weibull.tbl <- round(weibull.tbl, digits)
+	if(print) printObject(weibull.tbl)
+	invisible(weibull.tbl)
 }

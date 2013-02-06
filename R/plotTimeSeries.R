@@ -20,11 +20,11 @@ function(mast, set, signal=c("v.avg", "dir.avg", "turb.int"), start, end, ...) {
 	if(is.na(end)) stop("Specified 'end' not correctly formated\n")
 
 	# match start and end date
-	if(start<time.stamp[1] | start>time.stamp[num.samples]) stop("Specified 'start' not in period\n")
+	if(start<time.stamp[1] || start>time.stamp[num.samples]) stop("Specified 'start' not in period\n")
 	match.date <- difftime(time.stamp, ISOdatetime(1,1,1,0,0,0), tz="GMT", units="days") - difftime(start, ISOdatetime(1,1,1,0,0,0), tz="GMT", units="days")
 	start <- which(abs(as.numeric(match.date)) == min(abs(as.numeric(match.date))))
 	
-	if(end<time.stamp[1] | end>time.stamp[num.samples]) stop("Specified 'end' not in period\n")
+	if(end<time.stamp[1] || end>time.stamp[num.samples]) stop("Specified 'end' not in period\n")
 	match.date <- difftime(time.stamp, ISOdatetime(1,1,1,0,0,0), tz="GMT", units="days") - difftime(end, ISOdatetime(1,1,1,0,0,0), tz="GMT", units="days")
 	end <- which(abs(as.numeric(match.date)) == min(abs(as.numeric(match.date))))
 	
@@ -55,8 +55,39 @@ function(mast, set, signal=c("v.avg", "dir.avg", "turb.int"), start, end, ...) {
 			col[2] <- col1[1]
 		} else col <- c("blue", "green", "red", "cyan", "magenta", "orange", "brown", "violet", "yellow", "pink", colors())
 	}
+	if(any(names(plot.param)=="col.lab")) col.lab <- plot.param$col.lab
+	else col.lab <- "black"
+	if(any(names(plot.param)=="col.axis")) col.axis <- plot.param$col.axis
+	else col.axis <- "black"
+	if(any(names(plot.param)=="col.leg")) col.leg <- plot.param$col.leg
+	else col.leg <- "black"
+	if(any(names(plot.param)=="col.ticks")) col.ticks <- plot.param$col.ticks
+	else col.ticks <- "black"
 	if(any(names(plot.param)=="cex")) cex <- plot.param$cex
 	else cex <- 1
+	cex <- cex-0.2
+	if(any(names(plot.param)=="cex.lab")) cex.lab <- plot.param$cex.lab
+	else cex.lab <- cex
+	if(any(names(plot.param)=="cex.axis")) cex.axis <- plot.param$cex.axis
+	else cex.axis <- cex
+	if(any(names(plot.param)=="cex.leg")) cex.leg <- plot.param$cex.leg
+	else cex.leg <- cex-0.1
+	if(any(names(plot.param)=="x.intersp")) x.intersp <- plot.param$x.intersp
+	else x.intersp <- 0.4
+	if(any(names(plot.param)=="bty.leg")) bty.leg <- plot.param$bty.leg
+	else bty.leg <- "n"
+	if(any(names(plot.param)=="mar")) mar <- plot.param$mar
+	else mar <- c(1,4.5,0,1)
+	if(any(names(plot.param)=="mgp")) mgp <- plot.param$mgp
+	else mgp <- c(2.5,0.7,0)
+	if(any(names(plot.param)=="las")) las <- plot.param$las
+	else las <- 1
+	if(any(names(plot.param)=="bty")) bty <- plot.param$bty
+	else bty <- "o"
+	if(any(names(plot.param)=="col.box")) col.box <- plot.param$col.box
+	else col.box <- "black"
+	if(any(names(plot.param)=="legend")) legend <- plot.param$legend
+	else legend <- TRUE
 	if(any(names(plot.param)=="lty")) lty <- plot.param$lty
 	else lty <- rep(1, num.sets)
 	if(any(names(plot.param)=="ylab")) ylab <- plot.param$ylab
@@ -85,14 +116,17 @@ function(mast, set, signal=c("v.avg", "dir.avg", "turb.int"), start, end, ...) {
 		}
 	}
 		
-	# plot	
+	# plot
 	for(i in 1:n.sig) {
-		par(mar=c(1,5,0,1), las=1)
+		par(mar=mar, mgp=mgp, las=las, bty="n")
 		sets <- set.idx[!is.na(set.idx[,which(names(set.idx)==signal[i])]),which(names(set.idx)==signal[i])]
 		if(length(sets)>=1) {
-			plot(time.stamp[start:end], mast$sets[[sets[1]]]$data[[which(names(mast$sets[[sets[1]]]$data)==signal[i])]][start:end], type="l", col=col[sets[1]], ylab=ylab[i], xaxt="n", cex.axis=cex, cex.lab=cex, lty=lty[sets[1]])
-			if(i<n.sig) axis.POSIXct(1, at=seq(min(time.stamp[start:end]), max(time.stamp[start:end]), length.out=6), format="%Y-%m-%d %H:%M:%S", labels=FALSE)
-			else axis.POSIXct(1, at=seq(min(time.stamp[start:end]), max(time.stamp[start:end]), length.out=6), format="%Y-%m-%d %H:%M:%S", cex.axis=cex-0.2)
+			plot(time.stamp[start:end], mast$sets[[sets[1]]]$data[[which(names(mast$sets[[sets[1]]]$data)==signal[i])]][start:end], type="l", col=col[sets[1]], ylab=ylab[i], axes=FALSE, col.lab=col.lab, cex.lab=cex.lab, lty=lty[sets[1]])
+			box(bty=bty, col=col.box)
+			axis(2, line=mgp[3], col=col.ticks, col.axis=col.axis, cex.axis=cex.axis)
+			if(i<n.sig) axis.POSIXct(1, at=seq(min(time.stamp[start:end]), max(time.stamp[start:end]), length.out=6), format="%Y-%m-%d %H:%M:%S", labels=FALSE, col=col.ticks, col.axis=col.axis, cex.axis=cex.axis)
+			else axis.POSIXct(1, at=seq(min(time.stamp[start:end]), max(time.stamp[start:end]), length.out=6), format="%Y-%m-%d %H:%M:%S", col=col.ticks, col.axis=col.axis, cex.axis=cex.axis)
+		
 		
 			if(length(sets)>1) {
 				for(j in 2:length(sets)) {
@@ -106,15 +140,13 @@ function(mast, set, signal=c("v.avg", "dir.avg", "turb.int"), start, end, ...) {
 	}
 	
 	set.idx <- unique(unlist(set.idx)[!is.na(unlist(set.idx))])
-	if(length(set.idx)>1) {
-		heights <- names <- NULL
-		for(i in 1:length(set.idx)) {
-			heights <- append(heights, mast$sets[[set.idx[i]]]$height)
-			names <- append(names, names(mast$sets)[set.idx[i]])
-		}
-		plot(0, type="n", axes=FALSE, xlab="", ylab="")
-		par(mar=c(0,5,0,1))
-		plot(0, type="n", axes=FALSE, xlab="", ylab="")
-		legend("bottom", legend=paste(names, " (", heights, h.unit, ")", sep=""), col=col[set.idx], lty=lty[set.idx], ncol=length(set.idx), bty="n", cex=cex-0.2, x.intersp=0.4, y.intersp=0.8)
+	heights <- names <- NULL
+	for(i in 1:length(set.idx)) {
+		heights <- append(heights, mast$sets[[set.idx[i]]]$height)
+		names <- append(names, names(mast$sets)[set.idx[i]])
 	}
+	plot(0, type="n", axes=FALSE, xlab="", ylab="")
+	par(mar=c(0,5,0,1))
+	plot(0, type="n", axes=FALSE, xlab="", ylab="")
+	if(legend) legend("center", legend=paste(names, " (", heights, h.unit, ")", sep=""), col=col[set.idx], lty=lty[set.idx], ncol=length(set.idx), bty=bty.leg, cex=cex.leg, text.col=col.leg, x.intersp=x.intersp)
 }

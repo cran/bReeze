@@ -1,13 +1,13 @@
 availability <- 
-function(mast, v.set, dir.set) {
+function(mast, v.set, dir.set, digits=1, print=TRUE) {
 ### check availability for pairs of windspeed and direction - effective data period
 	
 	if(is.null(attr(mast, "call"))) stop(paste(substitute(mast), "is no mast object"))
 	if(attr(mast, "call")$func!="createMast") stop(paste(substitute(mast), "is no mast object"))
 	num.sets <- length(mast$sets)
-	if(missing(v.set) & missing(dir.set)) v.set <- "all"
-	if(!missing(v.set) & missing(dir.set)) dir.set <- v.set
-	if(missing(v.set) & !missing(dir.set)) v.set <- dir.set
+	if(missing(v.set) && missing(dir.set)) v.set <- "all"
+	if(!missing(v.set) && missing(dir.set)) dir.set <- v.set
+	if(missing(v.set) && !missing(dir.set)) v.set <- dir.set
 	
 	num.samples <- length(mast$time.stamp)
 	start.year <- mast$time.stamp$year[1]+1900
@@ -21,13 +21,13 @@ function(mast, v.set, dir.set) {
 	period.days <- as.numeric(mast$time.stamp[num.samples]-mast$time.stamp[1])
 	
 	if(v.set!="all") { # one set
-		if(!is.numeric(v.set) & !is.numeric(dir.set)) stop("'v.set' and 'dir.set' must be numeric\n") 
-		if(v.set<0 | v.set>num.sets) stop("'v.set' not found\n")
-		if(dir.set<0 | dir.set>num.sets) stop("'dir.set' not found\n")
+		if(!is.numeric(v.set) && !is.numeric(dir.set)) stop("'v.set' and 'dir.set' must be numeric\n") 
+		if(v.set<0 || v.set>num.sets) stop("'v.set' not found\n")
+		if(dir.set<0 || dir.set>num.sets) stop("'dir.set' not found\n")
 		if(is.null(mast$sets[[v.set]]$data$v.avg)) stop("'v.set' does not contain average wind speed data\n")
 		if(is.null(mast$sets[[dir.set]]$data$dir.avg)) stop("'dir.set' does not contain average wind direction data\n")
-		if(is.null(attr(mast$sets[[v.set]]$data, "cleaned")) | is.null(attr(mast$sets[[dir.set]]$data, "cleaned"))) cat("Set(s) not cleaned - the use of clean is recommended to avoid overestimated availability\n")
-		avail <- list(availabilityInt(mast$sets[[v.set]]$data$v.avg, mast$sets[[dir.set]]$data$dir.avg, mast$time.stamp, start.year, start.month, num.months, period.days))
+		if(any(attr(mast$sets[[v.set]]$data, "clean")=="v.avg") & any(attr(mast$sets[[dir.set]]$data, "clean")=="dir.avg")) cat("Set(s) not cleaned - cleaning of wind speed v.avg and wind direction dir.avg using 'clean' is recommended to avoid overestimated availability\n")
+		avail <- list(availabilityInt(mast$sets[[v.set]]$data$v.avg, mast$sets[[dir.set]]$data$dir.avg, mast$time.stamp, start.year, start.month, num.months, period.days, digits))
 		if(v.set==dir.set) names(avail) <- names(mast$sets)[v.set]
 		else names(avail) <- paste(names(mast$sets)[v.set], "_", names(mast$sets)[dir.set], sep="")
 	} else { # all sets
@@ -38,16 +38,17 @@ function(mast, v.set, dir.set) {
 		uncleaned <- 0
 		
 		for(s in 1:length(set.index)) {
-			avail.s <- availabilityInt(mast$sets[[set.index[s]]], mast$sets[[set.index[s]]], mast$time.stamp, start.year, start.month, num.months, period.days)
+			avail.s <- availabilityInt(mast$sets[[set.index[s]]]$data$v.avg, mast$sets[[set.index[s]]]$data$dir.avg, mast$time.stamp, start.year, start.month, num.months, period.days, digits)
 			if(!is.null(avail)) avail[[length(avail)+1]] <- avail.s
 			if(is.null(avail)) avail <- list(avail.s)
-			if(is.null(attr(mast$sets[[set.index[s]]]$data, "cleaned"))) uncleaned <- uncleaned+1
+			if(any(attr(mast$sets[[set.index[s]]]$data, "clean")=="v.avg") & any(attr(mast$sets[[set.index[s]]]$data, "clean")=="dir.avg")) uncleaned <- uncleaned+1
 		}
 		names(avail) <- names(mast$sets)[set.index]
-		if(uncleaned>0) cat(paste(uncleaned, "of", length(set.index), "sets were not cleaned - the use of clean is recommended to avoid overestimated availability\n"))
+		if(uncleaned>0) cat(paste(uncleaned, "of", length(set.index), "sets were not cleaned - cleaning of wind speed v.avg and wind direction dir.avg using 'clean' is recommended to avoid overestimated availability\n"))
 	}
 	
-	attr(avail, "call") <- list(func="availability", mast=deparse(substitute(mast)), v.set=v.set, dir.set=dir.set)
+	attr(avail, "call") <- list(func="availability", mast=deparse(substitute(mast)), v.set=v.set, dir.set=dir.set, digits=3, print=print)
 	
-	return(avail)
+	if(print) printObject(avail)
+	invisible(avail)
 }

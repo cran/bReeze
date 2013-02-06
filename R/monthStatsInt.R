@@ -1,5 +1,5 @@
 monthStatsInt <-
-function(data, ts, years) {
+function(data, ts, years, digits) {
 ### internal function for calculation of month.stats
 
 	m.mean <- matrix(nrow=14, ncol=length(years)+2)
@@ -22,5 +22,6 @@ function(data, ts, years) {
 		
 	for(i in 1:length(m.mean.df)) m.mean.df[,i][is.nan(m.mean.df[,i]) | m.mean.df[,i]==0] <- NA
 	
-	return(round(m.mean.df, 3))
+	m.mean.df <- round(m.mean.df, digits)
+	return(m.mean.df)
 }

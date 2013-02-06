@@ -6,7 +6,7 @@
 \usage{createPC(v, p, cp, ct, rho=1.225, rated.p, desc)}
 \arguments{
   \item{v}{Wind speed in m/s as numeric vector.}
-  \item{p}{Corresponding power in kW as numeric vector of same length as \code{v}.}
+  \item{p}{Corresponding power output in kW as numeric vector of same length as \code{v}.}
   \item{cp}{Power coefficient as numeric vector of same length as \code{v} (optional).}
   \item{ct}{Thrust coefficient as numeric vector of same length as \code{v} (optional).}
   \item{rho}{Air density as numeric value. Default is \code{1.225} kg/m3 according to the International Standard Atmosphere (ISA) at sea level and 15 degrees Celsius.}
@@ -45,33 +45,34 @@ Milan, P., Wächter, M., Barth, S., Peinke, J. (2010) Power Curves for Wind Turb
 Ragheb, M., Ragheb, A.M. (2011) Wind Turbines Theory -- The Betz Equation and Optimal Rotor Tip Speed Ratio. In: Rupp Carriveau (Ed.), Fundamental and Advanced Topics in Wind Power, Chapter 2, p. 19--38, InTech
 }
 \author{Christian Graul}
-\seealso{\code{\link{readPC}}}
+\seealso{\code{\link{readPC}}, \code{\link{printObject}}}
 \examples{
 \dontrun{
 # minimal theoretic power curve
-pc <- createPC(1:25, c(0, 0, seq(0, 1000, length.out=8), rep(1000, 15)))
+pc <- createPC(v=1:25, p=c(0, 0, seq(0, 1000, length.out=8), 
+  rep(1000, 15)))
 	
 # detailed power curve
 v <- seq(3, 25, 0.5)
 p <- c(5, 15.5, 32, 52, 71, 98, 136, 182, 230, 285, 345, 419, 497, 594, 
-	687, 760, 815, 860, 886, rep(900, 26))
+  687, 760, 815, 860, 886, rep(900, 26))
 	
 cp <- c(0.263, NA, 0.352, NA, 0.423, NA, 0.453, NA, 0.470, NA, 0.478, 
-	NA, 0.480, NA, 0.483, NA, 0.470, NA, 0.429, NA, 0.381, NA, 0.329, 
-	NA, 0.281, NA, 0.236, NA, 0.199, NA, 0.168, NA, 0.142, NA, 0.122, 
-	NA, 0.105, NA, 0.092, NA, 0.080, NA, 0.071, NA, 0.063)
+  NA, 0.480, NA, 0.483, NA, 0.470, NA, 0.429, NA, 0.381, NA, 0.329, 
+  NA, 0.281, NA, 0.236, NA, 0.199, NA, 0.168, NA, 0.142, NA, 0.122, 
+  NA, 0.105, NA, 0.092, NA, 0.080, NA, 0.071, NA, 0.063)
 	
 ct <- c(0.653, NA, 0.698, NA, 0.705, NA, 0.713, NA, 0.720, NA, 0.723, 
-	NA, 0.724, NA, 0.727, NA, 0.730, NA, 0.732, NA, 0.385, NA, 0.301, 
-	NA, 0.242, NA, 0.199, NA, 0.168, NA, 0.146, NA, 0.128, NA, 0.115, 
-	NA, 0.103, NA, 0.094, NA, 0.086, NA, 0.079, NA, 0.073)
+  NA, 0.724, NA, 0.727, NA, 0.730, NA, 0.732, NA, 0.385, NA, 0.301, 
+  NA, 0.242, NA, 0.199, NA, 0.168, NA, 0.146, NA, 0.128, NA, 0.115, 
+  NA, 0.103, NA, 0.094, NA, 0.086, NA, 0.079, NA, 0.073)
 	
 pc.2 <- createPC(v=v, p=p, cp=cp, ct=ct, rho=1.195, rated.p=900, 
-	desc="PowerWind 56")
+  desc="PowerWind 56")
 
 # compare power curves
-pc
-pc.2
+printObject(object=pc)
+printObject(object=pc.2)
 }
 }
 \keyword{methods}

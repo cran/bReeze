@@ -1,5 +1,5 @@
 aep <-
-function(profile, pc, hub.h, rho=1.225, avail=1, bins=c(5,10,15,20), sectoral=FALSE) {
+function(profile, pc, hub.h, rho=1.225, avail=1, bins=c(5,10,15,20), sectoral=FALSE, digits=c(3,0,0,3), print=TRUE) {
 ###	calculating annual energy production
 	
 	if(missing(profile)) stop("Profile 'profile' is mandatory\n")
@@ -16,9 +16,13 @@ function(profile, pc, hub.h, rho=1.225, avail=1, bins=c(5,10,15,20), sectoral=FA
 	if(!is.numeric(hub.h)) stop("'hub.h' must be numeric\n")
 	if(!is.numeric(rho)) stop("'rho' must be numeric\n")
 	if(!is.numeric(avail)) stop("'avail' must be numeric\n")
-	if(avail<0 | avail>1) stop("'avail' must be a numeric value between 0 and 1\n")
+	if(avail<0 || avail>1) stop("'avail' must be a numeric value between 0 and 1\n")
 	if(any(bins<0)) stop("'bins' must be NULL or a vector of positives\n")
-
+	if(length(digits)!=4) { 
+		digits <- rep(digits, 4)
+		cat("'digits' shall be a vector of four values (for wind speed, operation, aep and capacity)")
+	}
+	
 	if(is.null(attr(profile, "call")$mast)) stop(paste("Source mast object of", substitute(profile), "could not be found\n"))
 	mast <- get(attr(profile, "call")$mast)
 	v.set <- attr(profile, "call")$v.set[1]
@@ -60,7 +64,7 @@ function(profile, pc, hub.h, rho=1.225, avail=1, bins=c(5,10,15,20), sectoral=FA
 			}
 		}
 	}
-	if(!is.null(bins)) if(num.classes==2 & bins[num.classes]>=v.max) stop("Only one wind class found\n")
+	if(!is.null(bins)) if(num.classes==2 && bins[num.classes]>=v.max) stop("Only one wind class found\n")
 	
 	aep.tbl <- data.frame(matrix(NA, nrow=num.sectors+1, ncol=num.classes+3))
 	if(num.sectors==4) r.names <- c("n","e","s","w","total")
@@ -84,16 +88,16 @@ function(profile, pc, hub.h, rho=1.225, avail=1, bins=c(5,10,15,20), sectoral=FA
 		if(low<high) sector.idx <- dir>=low & dir<high
 		else sector.idx <- dir>=low | dir<high
 			
-		aep.tbl$wind.speed[i] <- mean(v.hh[sector.idx], na.rm=TRUE)
-		aep.tbl$operation[i] <- op <- round(length(v.hh[sector.idx])/length(v.hh)*8760)
+		aep.tbl$wind.speed[i] <- round(mean(v.hh[sector.idx], na.rm=TRUE), digits[1])
+		aep.tbl$operation[i] <- op <- round(length(v.hh[sector.idx])/length(v.hh)*8760, digits[2])
 		wb.par <- weibullInt(v.hh[sector.idx], FALSE)
 		if(!is.null(bins)) {
-			for(j in 2:num.classes) aep.tbl[i,j+2] <- round(aepInt(wb.par, c(bins[j-1],bins[j]), pc, rho.pc, op, rho, avail))
-			aep.tbl[i,num.classes+3] <- round(aepInt(wb.par, c(bins[num.classes],lim.max), pc, rho.pc, op, rho, avail))
+			for(j in 2:num.classes) aep.tbl[i,j+2] <- round(aepInt(wb.par, c(bins[j-1],bins[j]), pc, rho.pc, op, rho, avail), digits[3])
+			aep.tbl[i,num.classes+3] <- round(aepInt(wb.par, c(bins[num.classes],lim.max), pc, rho.pc, op, rho, avail), digits[3])
 		}
-		aep.tbl$total[i] <- round(aepInt(wb.par, c(0,lim.max), pc, rho.pc, op, rho, avail))
+		aep.tbl$total[i] <- round(aepInt(wb.par, c(0,lim.max), pc, rho.pc, op, rho, avail), digits[3])
 	}
-	aep.tbl$wind.speed[num.sectors+1] <- mean(v.hh, na.rm=TRUE)
+	aep.tbl$wind.speed[num.sectors+1] <- round(mean(v.hh, na.rm=TRUE), digits=digits[1])
 	aep.tbl$operation[num.sectors+1] <- 8760
 	
 	for(i in 3:(num.classes+3)) aep.tbl[num.sectors+1,i] <- sum(aep.tbl[1:num.sectors,i], na.rm=TRUE)
@@ -106,11 +110,11 @@ function(profile, pc, hub.h, rho=1.225, avail=1, bins=c(5,10,15,20), sectoral=FA
 	attr(aep.tbl$operation, "unit") <- "h/a"
 	attr(aep.tbl$total, "unit") <- "MWh/a"
 	
-	cap <- round(aep.tbl$total[num.sectors+1] / (rated.p*0.001*8760), digits=3)
-	
+	cap <- round(aep.tbl$total[num.sectors+1] / (rated.p*0.001*8760), digits=digits[4])
 	aep <- list(aep=aep.tbl, capacity=cap)
 	
-	attr(aep, "call") <- list(func="aep", profile=deparse(substitute(profile)), pc=deparse(substitute(pc)), hub.h=hub.h, rho=rho, avail=avail, bins=bins)
+	attr(aep, "call") <- list(func="aep", profile=deparse(substitute(profile)), pc=deparse(substitute(pc)), hub.h=hub.h, rho=rho, avail=avail, bins=bins, sectoral=sectoral, digits=digits, print=print)
 	
-	return(aep)	
+	if(print) printObject(aep)
+	invisible(aep)
 }

@@ -1,5 +1,5 @@
 monthStats <-
-function(mast, set) {
+function(mast, set, digits=3, print=TRUE) {
 ### calculating monthly means
 
 	if(is.null(attr(mast, "call"))) stop(paste(substitute(mast), "is no mast object"))
@@ -15,20 +15,20 @@ function(mast, set) {
 		if(!is.numeric(set)) stop("'set' must be numeric\n") 
 		if(set<0 | set>num.sets) stop("Set not found\n")
 		if(is.null(mast$sets[[set]]$data$v.avg)) stop("Specified set does not contain average wind speed data\n")
-		m.mean.l <- list(monthStatsInt(mast$sets[[set]]$data$v.avg, mast$time.stamp, years))
+		m.mean.l <- list(monthStatsInt(mast$sets[[set]]$data$v.avg, mast$time.stamp, years, digits))
 		names(m.mean.l) <- names(mast$sets)[set]
 		unit <- attr(mast$sets[[set]]$data$v.avg, "unit")	
 	} else { # all sets
 		set.index <- NULL
 		for(s in 1:num.sets) if(!is.null(mast$sets[[s]]$data$v.avg)) set.index <- append(set.index, s)
 		
-		l <- m.mean.df <- monthStatsInt(mast$sets[[set.index[1]]]$data$v.avg, mast$time.stamp, years)
+		l <- m.mean.df <- monthStatsInt(mast$sets[[set.index[1]]]$data$v.avg, mast$time.stamp, years, digits)
 		unit <- attr(mast$sets[[set.index[1]]]$data$v.avg, "unit")
 		
 		if(length(set.index) > 1) {
 			l <- list(m.mean.df)
 			for(s in 2:length(set.index)) {
-				m.mean.df <- monthStatsInt(mast$sets[[set.index[s]]]$data$v.avg, mast$time.stamp, years)
+				m.mean.df <- monthStatsInt(mast$sets[[set.index[s]]]$data$v.avg, mast$time.stamp, years, digits)
 				l[[length(l)+1]] <- m.mean.df
 			}
 			names(l) <- names(mast$sets)[set.index]
@@ -37,7 +37,8 @@ function(mast, set) {
 	}
 		
 	attr(m.mean.l, "unit") <- unit
-	attr(m.mean.l, "call") <- list(func="monthStats", mast=deparse(substitute(mast)), set=set)
+	attr(m.mean.l, "call") <- list(func="monthStats", mast=deparse(substitute(mast)), set=set, digits=digits)
 	
-	return(m.mean.l)
+	if(print) printObject(m.mean.l)
+	invisible(m.mean.l)
 }

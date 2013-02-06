@@ -5,15 +5,14 @@ function(mast, v.set=1, dir.set=1, ...) {
 	if(is.null(attr(mast, "call"))) stop(paste(substitute(mast), "is no mast object"))
 	if(attr(mast, "call")$func!="createMast") stop(paste(substitute(mast), "is no mast object"))
 	num.sets <- length(mast$sets)
-	if(!is.numeric(v.set) | v.set<=0 | v.set>num.sets) stop("Specified 'v.set' could not be found - please specify as number\n")
+	if(!is.numeric(v.set) || v.set<=0 || v.set>num.sets) stop("Specified 'v.set' could not be found - please specify as number\n")
 	if(is.null(mast$sets[[v.set]]$data$v.avg)) stop("Specified 'v.set' does not contain average wind speed data\n")
-	if(!is.numeric(dir.set) | dir.set<=0 | dir.set>num.sets) stop("Specified 'dir.set' could not be found - please specify as number\n")
+	if(!is.numeric(dir.set) || dir.set<=0 || dir.set>num.sets) stop("Specified 'dir.set' could not be found - please specify as number\n")
 	if(is.null(mast$sets[[dir.set]]$data$dir.avg)) stop("Specified 'dir.set' does not contain average wind direction data\n")
 	
 	ws <- mast$sets[[v.set]]$data$v.avg[!is.na(mast$sets[[v.set]]$data$v.avg) & !is.na(mast$sets[[dir.set]]$data$dir.avg)]
 	wd <- mast$sets[[dir.set]]$data$dir.avg[!is.na(mast$sets[[v.set]]$data$v.avg) & !is.na(mast$sets[[dir.set]]$data$dir.avg)]*-pi/180+pi/2
 	v.max <- max(mast$sets[[v.set]]$data$v.avg, na.rm=TRUE)
-	circles <- seq(5, 5*(trunc(ceiling(v.max)/5)+1), by=5)
 	unit <- attr(mast$sets[[v.set]]$data$v.avg, "unit")
 	
 	# prepare plot
@@ -28,8 +27,26 @@ function(mast, v.set=1, dir.set=1, ...) {
 	if(any(names(plot.param)=="cex")) cex <- plot.param$cex
 	else cex <- 1
 	if(any(names(plot.param)=="cex.pts")) cex.pts <- plot.param$cex.pts
-	else cex.pts <- 1
-	
+	else cex.pts <- cex
+	if(any(names(plot.param)=="cex.axis")) cex.axis <- plot.param$cex.axis
+	else cex.axis <- cex-0.2
+	if(any(names(plot.param)=="cex.lab")) cex.lab <- plot.param$cex.lab
+	else cex.lab <- cex
+	if(any(names(plot.param)=="circles")) circles <- seq(plot.param$circles[1], plot.param$circles[2], by=plot.param$circles[3])
+	else circles <- seq(5, 5*(trunc(ceiling(v.max)/5)+1), by=5)
+	if(any(names(plot.param)=="fg")) fg <- plot.param$fg
+	else fg <- FALSE
+	if(any(names(plot.param)=="col.circle")) col.circle <- plot.param$col.circle
+	else col.circle <- "gray45"
+	if(any(names(plot.param)=="col.axis")) col.axis <- plot.param$col.axis
+	else col.axis <- "gray45"
+	if(any(names(plot.param)=="col.lab")) col.lab <- plot.param$col.lab
+	else col.lab <- "black"
+	if(any(names(plot.param)=="lwd.circle")) lwd.circle <- plot.param$lwd.circle
+	else lwd.circle <- 0.7
+	if(any(names(plot.param)=="pos.axis")) pos.axis <- plot.param$pos.axis
+	else pos.axis <- 60
+		
 	# plot
 	par(mar=c(0,0,0,0), las=1)
 	plot.new()
@@ -39,24 +56,33 @@ function(mast, v.set=1, dir.set=1, ...) {
 	else ylim <- (pin[2]/pin[1]) * ylim
 	plot.window(xlim, ylim, "", asp=1)
 	
-	xlist <- 0.9 * ws/tail(circles, 1) * cos(wd)
-	ylist <- 0.9 * ws/tail(circles, 1) * sin(wd)
-	points(xlist, ylist, pch=pch, col=col, cex=cex.pts)
-	circle.pts <- seq(0, 2*pi, length.out=360)
+	if(!fg) {
+		xlist <- 0.9 * ws/tail(circles, 1) * cos(wd)
+		ylist <- 0.9 * ws/tail(circles, 1) * sin(wd)
+		points(xlist, ylist, pch=pch, col=col, cex=cex.pts)
+	}
 	
+	circle.pts <- seq(0, 2*pi, length.out=360)
+	pos.axis <- pi/2 - pos.axis*pi/180
 	for(i in 1:length(circles)) {
 		rad <- 0.9 * circles[i]/tail(circles, 1)
 		circle.x <- cos(circle.pts)*rad
 		circle.y <- sin(circle.pts)*rad
-		lines(circle.x, circle.y, lwd=0.7, lty=2, col="gray45")	
-		text(cos(pi/8)*rad, sin(pi/8)*rad, circles[i], cex=cex-0.2, col="gray45")
+		lines(circle.x, circle.y, lwd=lwd.circle, lty=2, col=col.circle)	
+		text(cos(pos.axis)*rad, sin(pos.axis)*rad, circles[i], cex=cex.axis, col=col.axis)
 	}
 	
-	lines(c(-0.92, 0.92), c(0, 0), lwd=0.7, col="gray45")
-	lines(c(0, 0), c(0.92, -0.92), lwd=0.7, col="gray45")
-	text(0, -0.9, "S", pos=1, cex=cex)
-	text(-0.9, 0, "W", pos=2, cex=cex)
-	text(0, 0.9, "N", pos=3, cex=cex)
-	text(0.9, 0, "E", pos=4, cex=cex)
-	text(1, -1, unit, pos=2, cex=cex-0.2, col="gray45")
+	lines(c(-0.92, 0.92), c(0, 0), lwd=lwd.circle, col=col.circle)
+	lines(c(0, 0), c(0.92, -0.92), lwd=lwd.circle, col=col.circle)
+	text(0, -0.9, "S", pos=1, cex=cex.lab, col=col.lab)
+	text(-0.9, 0, "W", pos=2, cex=cex.lab, col=col.lab)
+	text(0, 0.9, "N", pos=3, cex=cex.lab, col=col.lab)
+	text(0.9, 0, "E", pos=4, cex=cex.lab, col=col.lab)
+	text(1, -1, unit, pos=2, cex=cex.axis, col=col.axis)
+	
+	if(fg) {
+		xlist <- 0.9 * ws/tail(circles, 1) * cos(wd)
+		ylist <- 0.9 * ws/tail(circles, 1) * sin(wd)
+		points(xlist, ylist, pch=pch, col=col, cex=cex.pts)
+	}
 }

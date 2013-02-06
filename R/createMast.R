@@ -1,5 +1,5 @@
 createMast <-
-function(time.stamp, loc, desc, ...) {
+function(time.stamp, ..., loc=NULL, desc=NULL) {
 ### creating met mast from several datasets
 
 	if(missing(time.stamp)) stop("'time.stamp' is mandatory")
@@ -7,7 +7,7 @@ function(time.stamp, loc, desc, ...) {
 		if(!is.vector(loc)) stop("'location' must be a vector of latitude and longitude\n")
 		if(length(loc)!=2) stop("'location' must be a numeric vector of latitude and longitude\n")
 		if(!is.numeric(loc)) stop("'location' must be a numeric vector of decimal degrees\n")
-		if(loc[1]>90 | loc[1]<(-90) | loc[2]>180 | loc[2]<(-180)) stop("Coordinates in 'location' out of range - please use decimal degrees\n")
+		if(loc[1]>90 || loc[1]<(-90) || loc[2]>180 || loc[2]<(-180)) stop("Coordinates in 'location' out of range - please use decimal degrees\n")
 	}
 	
 	l <- list(...)

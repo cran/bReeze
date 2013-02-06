@@ -3,7 +3,7 @@
 \alias{availabilityInt}
 \title{Internal function for availability}
 \description{Internal function for \code{\link{availability}}}
-\usage{availabilityInt(v.avg, dir.avg, ts, start.year, start.month, num.months, period.days)}
+\usage{availabilityInt(v.avg, dir.avg, ts, start.year, start.month, num.months, period.days, digits)}
 \arguments{
   \item{v.set}{Dataset containing wind speed data to be used.}
   \item{dir.set}{Dataset containing wind direction data to be used.}
@@ -12,6 +12,7 @@
   \item{start.month}{First month of measurement period.}
   \item{num.months}{Number of months.}
   \item{period.days}{Days of measurement period.}
+  \item{digits}{Number of digits.}
 }
 \value{Returns a list of:
   \item{total}{Total availability}

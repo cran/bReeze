@@ -35,19 +35,19 @@ For details see \code{\link{strptime}}.
 data(winddata)
 
 # format time stamp
-time.stamp <- formatTS(winddata[,1])
+time.stamp <- formatTS(time.stamp=winddata[,1])
 
 # format time stamp with given pattern
-time.stamp.2 <- formatTS(winddata[,1], "\%d.\%m.\%Y \%H:\%M")
+time.stamp.2 <- formatTS(time.stamp=winddata[,1], "\%d.\%m.\%Y \%H:\%M")
 
 # wrong pattern (\%y)
-time.stamp.2 <- formatTS(winddata[,1], "\%d.\%m.\%y \%H:\%M")
+time.stamp.2 <- formatTS(time.stamp=winddata[,1], "\%d.\%m.\%y \%H:\%M")
 
-# very special time stamp pattern
+# strange time stamp pattern
 ts <- c("TS 08/2012-10 8h10m30s", "TS 08/2012-10 8h20m30s", 
-	"TS 08/2012-10 8h30m30s")
-time.stamp.3 <- formatTS(ts)	# pattern not found
-time.stamp.3 <- formatTS(ts, "TS \%m/\%Y-\%d \%Hh\%Mm\%Ss")
+  "TS 08/2012-10 8h30m30s")
+time.stamp.3 <- formatTS(time.stamp=ts)	# pattern not found
+time.stamp.3 <- formatTS(time.stamp=ts, "TS \%m/\%Y-\%d \%Hh\%Mm\%Ss")
 }
 }
 \keyword{methods}

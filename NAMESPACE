@@ -1,12 +1,38 @@
-# Default NAMESPACE created by R
-# Remove the previous line if you edit this file
+## Export methods
+export(
+  aep,
+  availability,
+  clean,
+  createMast,
+  createPC,
+  createSet,
+  energy,
+  formatTS,
+  frequency,
+  monthStats,
+  plotAep,
+  plotAvailability,
+  plotDay,
+  plotEnergy,
+  plotFrequency,
+  plotMonthStats,
+  plotPC,
+  plotPolar,
+  plotProfile,
+  plotTimeSeries,
+  plotTurbIEC,
+  plotTurbulence,
+  plotWbDir,
+  plotWeibull,
+  printObject,
+  profile,
+  readPC,
+  turbulence,
+  weibull
+)
 
-# Export all names
-exportPattern(".")
-
-# Import all packages listed as Imports or Depends
+# Import packages
 import(
-  OpenStreetMap,
   RColorBrewer,
   XML
 )

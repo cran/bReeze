@@ -1,24 +1,62 @@
+bReeze 0.2-0 [2013-02-06]
+-------------------------
+
+* clean: wind direction values are now excluded, where wind 
+  speed is lower than the v.avg.min specified; 
+  bug fixed - unwanted cleanings and wrong feedback possible; 
+  repetitions can now be cleaned
+
+* frequency: bug fixed - wrong frequency
+  values possible for uncleaned mast objects
+
+* plotDay: now all signals can be plottet
+
+* plotMap: function removed from package due to disproportional 
+  high installation requirements compared to the low performance 
+  of the used OpenStreetMap package
+
+* printMast: replaced by printObject
+
+* printObject: new print method for all bReeze objects; 
+  bug fixed in old printMast method, that returned wrong 
+  availability values
+
+* plotting functions (plotAep, plotAvailability, plotDay, 
+  plotEnergy, plotFrequency, plotMonthStats, plotPC, plotPolar, 
+  plotProfile, plotTimeSeries, plotTurbIEC, plotTurbulence, 
+  plotWbDir, plotWeibull): many optional graphical parameters 
+  added
+
+* processing functions (aep, energy, frequency, monthStats, 
+  profile, turbulence, weibull): new 'digits' argument for the 
+  number of decimal places to be used for results; new 'print' 
+  argument to show/hide results
+
+* further small improvements of code and documentation; 
+  name space added
+
+
 bReeze 0.1-1 [2012-10-21]
 -------------------------
 
 * aep: capacity factor added to the output
 
-* availability: two bugs fixed - slightly wrong availability values 
-  in some cases of missing samples; error in calculation for sets
-  with just one signal 
+* availability: two bugs fixed - slightly wrong availability 
+  values in some cases of missing samples; error in calculation 
+  for sets with just one signal 
 
 * clean: wind speed limit for calculation of turbulence intensity
   can now be adjusted by the user
-  
+
 * createPC: if rated.p is not given, rated power is now
-  automatically set to the maximum power value; desc parameter for
+  automatically set to the maximum power value; desc argument for
   name and/or description of a wind turbine added
-  
+
 * formatTS: available patterns cleaned up and internal handling
   enhanced; possible error in pattern selection fixed
 
 * plotTimeSeries: bug fixed - blocking of '00:00:00' time stamps 
-  for the start and end parameters
+  for the start and end arguments
 
 
 bReeze 0.1-0 [2012-07-10]

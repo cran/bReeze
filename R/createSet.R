@@ -4,7 +4,7 @@ function(height, desc, v.avg, v.max, v.min, v.std, dir.avg, dir.std, tmp, ...) {
 
 	if(missing(height)) stop("'height' is mandatory\n")
 	if(!is.numeric(height)) stop("'height' must be numeric\n")
-	if(missing(v.avg) & missing(v.max) & missing(v.min) & missing(v.std) & missing(dir.avg) & missing(dir.std) & missing(...)) stop("No data\n")
+	if(missing(v.avg) && missing(v.max) && missing(v.min) && missing(v.std) && missing(dir.avg) && missing(dir.std) && missing(...)) stop("No data\n")
 	if(missing(desc)) desc <- NULL
 	if(missing(v.avg)) v.avg <- NULL
 	if(missing(v.max)) v.max <- NULL
@@ -14,7 +14,7 @@ function(height, desc, v.avg, v.max, v.min, v.std, dir.avg, dir.std, tmp, ...) {
 	if(missing(dir.std)) dir.std <- NULL
 	if(missing(tmp)) tmp <- NULL
 		
-	if(!is.null(v.std) & !is.null(v.avg)) turb.int <- v.std / v.avg
+	if(!is.null(v.std) && !is.null(v.avg)) turb.int <- v.std / v.avg
 	else turb.int <- NULL
 	
 	data <- data.frame(cbind(v.avg, v.max, v.min, v.std, dir.avg, dir.std, turb.int, ...))
