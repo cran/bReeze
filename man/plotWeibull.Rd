@@ -55,7 +55,7 @@ neubuerg <- createMast(time.stamp=ts, set1)
 neubuerg <- clean(mast=neubuerg)
 
 # calculate Weibull parameters
-neubuerg.wb <- weibull(mast=neubuerg, v.set=1)
+neubuerg.wb <- weibull(mast=neubuerg, v.set=1, print=FALSE)
 
 # plot
 plotWeibull(wb=neubuerg.wb)

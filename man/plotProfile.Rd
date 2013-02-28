@@ -53,7 +53,8 @@ neubuerg <- createMast(time.stamp=ts, set40, set30, set20)
 neubuerg <- clean(mast=neubuerg)
 
 # create profile
-neubuerg.wp <- profile(mast=neubuerg, v.set=c(1,2), dir.set=1)
+neubuerg.wp <- profile(mast=neubuerg, v.set=c(1,2), dir.set=1, 
+  print=FALSE)
 
 # plot all profiles
 plotProfile(profile=neubuerg.wp)

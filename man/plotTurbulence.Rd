@@ -18,11 +18,15 @@ The following graphical parameters can optionally be added to customize the plot
     \item \code{col}: Colour to be used for the sectors.
     \item \code{col.axis}: Colour to be used for axis annotations -- default is \code{"gray45"}.
     \item \code{col.border}: Colour to be used for sector borders -- default is \code{NULL} (no border is drawn).
-    \item \code{col.circle}: Colour to be used for circles and axis lines -- default is \code{"gray45"}.
+    \item \code{col.circle}: Colour to be used for circles -- default is \code{"gray45"}.
+    \item \code{col.cross}: Colour to be used for axis lines -- default is \code{"gray45"}.
     \item \code{col.lab}: Colour to be used for axis labels -- default is \code{"black"}.
     \item \code{fg}: If \code{TRUE}, sectors are plotted in foreground (on top of axis lines and circles) -- default is \code{FALSE}.
+    \item \code{lty.circle}: Line type of circles -- default is \code{"dashed"}. See \code{\link{par}} for available line types.
+    \item \code{lty.cross}: Line type of axis lines -- default is \code{"solid"}. See \code{\link{par}} for available line types.
     \item \code{lwd.border}: Line width of the sector borders -- default is \code{0.5}. Only used if \code{col.border} is set.
-    \item \code{lwd.circle}: Line width of circles and axis lines, as numeric value -- default is \code{0.7}.
+    \item \code{lwd.circle}: Line width of circles, as numeric value -- default is \code{0.7}.
+    \item \code{lwd.cross}: Line width of axis lines, as numeric value -- default is \code{0.7}.
     \item \code{pos.axis}: Position of axis labels in degree, as numeric value -- default is \code{60}.
     \item \code{sec.space}: Space between plotted sectors, as numeric value between \code{0} and \code{1} -- default is \code{0.2}.
   }
@@ -40,16 +44,18 @@ neubuerg <- createMast(time.stamp=ts, set1)
 neubuerg <- clean(mast=neubuerg)
 
 # calculate turbulence intensity
-neubuerg.ti <- turbulence(mast=neubuerg, turb.set=1)
+neubuerg.ti <- turbulence(mast=neubuerg, turb.set=1, print=FALSE)
 
 # plot turbulence intensity
 plotTurbulence(turb=neubuerg.ti)
 
-# change colour and text size
+# change colour, text size etc.
 plotTurbulence(turb=neubuerg.ti, cex.axis=0.7, cex.lab=0.9, 
   circles=c(0.05,0.20,0.05), col="lightgray", col.axis="darkgray", 
-  col.border="gray", col.circle="darkgray", col.lab="darkgray", 
-  fg=TRUE, lwd.border=1.2, lwd.circle=1.2, pos.axis=135, sec.space=0.6)
+  col.border="gray", col.circle="darkgray", col.cross="darkgray", 
+  col.lab="darkgray", fg=TRUE, lty.circle="dotdash", 
+  lty.cross="longdash", lwd.border=1.2, lwd.circle=1.2, 
+  lwd.cross=1.2, pos.axis=135, sec.space=0.6)
 }
 }
 \keyword{methods}

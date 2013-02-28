@@ -21,12 +21,16 @@ The following graphical parameters can optionally be added to customize the plot
     \item \code{col}: Vector of colours -- one colour for each wind speed bin or a single colour if \code{frequency} only contains the total frequency per direction sector.
     \item \code{col.axis}: Colour to be used for axis annotations -- default is \code{"gray45"}.
     \item \code{col.border}: Colour to be used for sector borders -- default is \code{NULL} (no border is drawn).
-    \item \code{col.circle}: Colour to be used for circles and axis lines -- default is \code{"gray45"}.
+    \item \code{col.circle}: Colour to be used for circles -- default is \code{"gray45"}.
+    \item \code{col.cross}: Colour to be used for axis lines -- default is \code{"gray45"}.
     \item \code{col.lab}: Colour to be used for axis labels -- default is \code{"black"}.
     \item \code{col.leg}: Colour to be used for legend text -- default is \code{"black"}.
     \item \code{fg}: If \code{TRUE}, sectors are plotted in foreground (on top of axis lines and circles) -- default is \code{FALSE}.
+    \item \code{lty.circle}: Line type of circles -- default is \code{"dashed"}. See \code{\link{par}} for available line types.
+    \item \code{lty.cross}: Line type of axis lines -- default is \code{"solid"}. See \code{\link{par}} for available line types.
     \item \code{lwd.border}: Line width of the sector borders -- default is \code{0.5}. Only used if \code{col.border} is set.
-    \item \code{lwd.circle}: Line width of circles and axis lines, as numeric value -- default is \code{0.7}.
+    \item \code{lwd.circle}: Line width of circles, as numeric value -- default is \code{0.7}.
+    \item \code{lwd.cross}: Line width of axis lines, as numeric value -- default is \code{0.7}.
     \item \code{pos.axis}: Position of axis labels in degree, as numeric value -- default is \code{60}.
     \item \code{sec.space}: Space between plotted sectors, as numeric value between \code{0} and \code{1} -- default is \code{0.2}.
     \item \code{title.leg}: Alternative legend title, as string.
@@ -79,8 +83,9 @@ plotFrequency(freq=neubuerg.freq, width.leg=0)
 plotFrequency(freq=neubuerg.freq, border.leg=heat.colors(5), bty.leg="o", 
   cex.axis=0.5, cex.lab=2, cex.leg=0.5, circles=c(5, 30, 5), 
   col=rainbow(5), col.axis="green", col.border="orange", 
-  col.circle="purple", col.lab="pink", col.leg="lightblue", 
-  fg=TRUE, lwd.border=2, lwd.circle=3, sec.space=0.6, 
+  col.circle="purple", col.cross="yellow", col.lab="pink", 
+  col.leg="lightblue", fg=TRUE, lwd.border=2, lwd.circle=3, lwd.cross=3, 
+  lty.circle="12345678", lty.cross="87654321", sec.space=0.6, 
   title.leg="* WiNd SpEeD *", x.intersp=2, y.intersp=5)
 }
 }

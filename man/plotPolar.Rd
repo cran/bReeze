@@ -19,11 +19,15 @@ The following graphical parameters can optionally be added to customize the plot
     \item \code{cex.pts}: Amount by which the plot symbols should be scaled, as numeric value.
     \item \code{circles}: Manual definition of circles to be drawn, as numeric vector of the form c(inner circle, outer circle, interval between the circles).
     \item \code{col}: The colour of the symbols plotted.
-    \item \code{col.axis}: Colour to be used for axis annotations -- default is \code{gray45}.
-    \item \code{col.circle}: Colour to be used for circles and axis lines -- default is \code{gray45}.
-    \item \code{col.lab}: Colour to be used for axis labels -- default is \code{black}.
+    \item \code{col.axis}: Colour to be used for axis annotations -- default is \code{"gray45"}.
+    \item \code{col.circle}: Colour to be used for circles -- default is \code{"gray45"}.
+    \item \code{col.cross}: Colour to be used for axis lines -- default is \code{"gray45"}.
+    \item \code{col.lab}: Colour to be used for axis labels -- default is \code{"black"}.
     \item \code{fg}: If \code{TRUE}, sectors are plotted in foreground (on top of axis lines and circles) -- default is \code{FALSE}.
-    \item \code{lwd.circle}: Line width of circles and axis lines, as numeric value -- default is \code{0.7}.
+    \item \code{lty.circle}: Line type of circles -- default is \code{"dashed"}. See \code{\link{par}} for available line types.
+    \item \code{lty.cross}: Line type of axis lines -- default is \code{"solid"}. See \code{\link{par}} for available line types.
+    \item \code{lwd.circle}: Line width of circles, as numeric value -- default is \code{0.7}.
+    \item \code{lwd.cross}: Line width of axis lines, as numeric value -- default is \code{0.7}.
     \item \code{pch}: Either an integer specifying a symbol or a single character to be used as symbol -- default is \code{"."}, which is drawn much faster than other symbols. See \code{\link{points}} for possible values and their interpretation. 
     \item \code{pos.axis}: Position of axis labels in degree, as numeric value -- default is \code{60}.
   }
@@ -48,7 +52,8 @@ plotPolar(mast=neubuerg, v.set=3, dir.set=2)
 # customize plot
 plotPolar(mast=neubuerg, cex.axis=1.2, cex.lab=1.5, cex.pts=0.8, 
   circles=c(10,20,5), col="red3", col.axis=gray(0.2), col.circle=gray(0.3), 
-  col.lab=gray(0.2), fg=TRUE, lwd.circle=1.2, pch="+", pos.axis=135)
+  col.cross=gray(0.3), col.lab=gray(0.2), fg=TRUE, lty.circle="dotted", 
+  lty.cross="longdash", lwd.circle=1.2, lwd.cross=1.2, pch="+", pos.axis=135)
 }
 }
 \keyword{methods}

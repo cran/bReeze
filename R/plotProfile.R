@@ -33,6 +33,7 @@ function(profile, sector, measured=TRUE, ...) {
 		col <- plot.param$col
 		if(length(col)==1 && is.null(sector)) col <- rep(col, num.sectors+1)
 	} else {
+		col <- c(rep("gray45", num.sectors), "#E41A1C")
 		if(num.sectors==4) col <- c("#377EB8", "#4DAF4A", "#984EA3", "#FF7F00", "#E41A1C")
 		if(num.sectors==8) col <- c("#377EB8", "#41B6C4", "#4DAF4A", "#9970AB", "#984EA3", "#F781BF", "#FF7F00", "#A6761D", "#E41A1C")
 		if(num.sectors==12) col <- c("#08519C", "#3182BD", "#74C476", "#006D2C", "#31A354", "#9E9AC8", "#54278F", "#756BB1", "#FED976", "#FD8D3C", "#FEB24C", "#6BAED6", "#E41A1C")
@@ -61,6 +62,7 @@ function(profile, sector, measured=TRUE, ...) {
 		lty <- plot.param$lty
 		if(length(lty)==1 && is.null(sector)) lty <- rep(lty, num.sectors+1)
 	} else {
+		lty <- c(rep(5, num.sectors), 1)
 		if(num.sectors==4) lty <- c(5, 5, 5, 5, 1)
 		if(num.sectors==8) lty <- c(5, 3, 5, 3, 5, 3, 5, 3, 1)
 		if(num.sectors==12) lty <- c(5, 4, 3, 5, 4, 3, 5, 4, 3, 5, 4, 3, 1)
@@ -77,7 +79,7 @@ function(profile, sector, measured=TRUE, ...) {
 	if(any(names(plot.param)=="pch")) pch <- plot.param$pch
 	else pch <- 0
 	if(any(names(plot.param)=="xlim")) xlim <- plot.param$xlim
-	else xlim <- c(0, 1.75*ceiling(max(frequency(mast, v.set=v.set[1], dir.set=dir.set, bins=NULL)$wind.speed, na.rm=TRUE)))
+	else xlim <- c(0, 1.75*ceiling(max(frequency(mast, v.set=v.set[1], dir.set=dir.set, num.sectors=num.sectors, bins=NULL, print=FALSE)$wind.speed, na.rm=TRUE)))
 	if(any(names(plot.param)=="ylim")) ylim <- plot.param$ylim
 	else ylim <- c(0,200)
 	if(any(names(plot.param)=="x.intersp")) x.intersp <- plot.param$x.intersp
@@ -111,7 +113,7 @@ function(profile, sector, measured=TRUE, ...) {
 	if(measured) {		
 		for(i in 1:length(v.set)) {
 			if(!is.null(mast$sets[[v.set[i]]]$data$v.avg)) {
-				v.mean <- data.frame(v.mean, cbind(frequency(mast, v.set=v.set[i], dir.set=dir.set, num.sectors=num.sectors, bins=NULL)$wind.speed))
+				v.mean <- data.frame(v.mean, cbind(frequency(mast, v.set=v.set[i], dir.set=dir.set, num.sectors=num.sectors, bins=NULL, print=FALSE)$wind.speed))
 				h <- append(h, mast$sets[[v.set[i]]]$height)
 				names(v.mean)[i] <- names(mast$sets)[v.set[i]]
 			}

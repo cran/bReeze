@@ -5,7 +5,7 @@ function(libname, pkgname) {
     packageStartupMessage(" ")
     packageStartupMessage(paste("This is", pkgname, ver))
     packageStartupMessage(" ")
-    packageStartupMessage("Type bReezeNews() to see changes/bug fixes")
+    packageStartupMessage("Type bReezeNews() to see changes/bug fixes, help(bReeze) for documentation")
     packageStartupMessage("or citation(\"bReeze\") for how to cite bReeze.")
 }
 

@@ -1,3 +1,25 @@
+bReeze 0.2-1 [2013-02-28]
+-------------------------
+
+* energy, frequency and plotProfile: bug fixed - output of internally 
+  called function printed
+
+* frequency, profile, turbulence, weibull: number of sectors no
+  longer limited to 4/8/12/16
+
+* monthStats: bug fixed - calculation error for met masts 
+  with just one dataset
+
+* printObject: bug fixed - original/cleaned data displayed
+  wrong for met masts with just one data set
+
+* polar plotting functions (plotAep, plotEnergy, plotFrequency, 
+  plotPolar, plotTurbulence): optional graphical parameters
+  added
+
+* some small code and documentation cosmetics
+
+
 bReeze 0.2-0 [2013-02-06]
 -------------------------
 

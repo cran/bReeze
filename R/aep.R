@@ -67,6 +67,7 @@ function(profile, pc, hub.h, rho=1.225, avail=1, bins=c(5,10,15,20), sectoral=FA
 	if(!is.null(bins)) if(num.classes==2 && bins[num.classes]>=v.max) stop("Only one wind class found\n")
 	
 	aep.tbl <- data.frame(matrix(NA, nrow=num.sectors+1, ncol=num.classes+3))
+	r.names <- c(paste("s", 1:num.sectors, sep=""),"all")
 	if(num.sectors==4) r.names <- c("n","e","s","w","total")
 	if(num.sectors==8) r.names <- c("n","ne","e","se","s","sw","w","nw","total")
 	if(num.sectors==12) r.names <- c("n","nne","ene","e","ese","sse","s","ssw","wsw","w","wnw","nnw","total")

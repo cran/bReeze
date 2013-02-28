@@ -49,7 +49,7 @@ neubuerg <- createMast(time.stamp=ts, set1, set2, set3)
 neubuerg <- clean(mast=neubuerg)
 
 # calculate Weibull object
-neubuerg.wb <- weibull(mast=neubuerg, v.set=1)
+neubuerg.wb <- weibull(mast=neubuerg, v.set=1, print=FALSE)
 
 # calculate energy
 energy(wb=neubuerg.wb)

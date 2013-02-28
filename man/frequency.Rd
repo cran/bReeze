@@ -11,7 +11,7 @@ frequency(mast, v.set, dir.set, num.sectors=12,
   \item{mast}{Met mast object created by \code{\link{createMast}}.}
   \item{v.set}{Set used for wind speed as integer value (optional, if \code{dir.set} is given).}
   \item{dir.set}{Set used for wind direction as integer value (optional, if \code{v.set} is given).}
-  \item{num.sectors}{Number of wind direction sectors as integer value. One of \code{4}, \code{8}, \code{12} or \code{16}. Default is \code{12}.}
+  \item{num.sectors}{Number of wind direction sectors as integer value greater 1. Default is \code{12}.}
   \item{bins}{Wind speed bins as numeric vector or \code{NULL} if no classification is desired.}
   \item{digits}{Number of decimal places to be used for results as numeric value. Default is \code{3}.}
   \item{print}{If \code{TRUE}, results are printed directly.}

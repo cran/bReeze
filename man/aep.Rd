@@ -69,7 +69,8 @@ neubuerg <- createMast(time.stamp=ts, set1, set2)
 neubuerg <- clean(mast=neubuerg)
 
 # calculate wind profile
-neubuerg.wp <- profile(mast=neubuerg, v.set=c(1,2), dir.set=1)
+neubuerg.wp <- profile(mast=neubuerg, v.set=c(1,2), dir.set=1, 
+  print=FALSE)
 
 # load power curve
 pw.56 <- readPC(file=system.file(package="bReeze", "powercurves", 

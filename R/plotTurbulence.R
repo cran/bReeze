@@ -32,12 +32,20 @@ function(turb, ...) {
 	else fg <- FALSE
 	if(any(names(plot.param)=="col.circle")) col.circle <- plot.param$col.circle
 	else col.circle <- "gray45"
+	if(any(names(plot.param)=="col.cross")) col.cross <- plot.param$col.cross
+	else col.cross <- "gray45"
 	if(any(names(plot.param)=="col.axis")) col.axis <- plot.param$col.axis
 	else col.axis <- "gray45"
 	if(any(names(plot.param)=="col.lab")) col.lab <- plot.param$col.lab
 	else col.lab <- "black"
 	if(any(names(plot.param)=="lwd.circle")) lwd.circle <- plot.param$lwd.circle
 	else lwd.circle <- 0.7
+	if(any(names(plot.param)=="lwd.cross")) lwd.cross <- plot.param$lwd.cross
+	else lwd.cross <- 0.7
+	if(any(names(plot.param)=="lty.circle")) lty.circle <- plot.param$lty.circle
+	else lty.circle <- 2
+	if(any(names(plot.param)=="lty.cross")) lty.cross <- plot.param$lty.cross
+	else lty.cross <- 1
 	if(any(names(plot.param)=="pos.axis")) pos.axis <- plot.param$pos.axis
 	else pos.axis <- 60
 	if(any(names(plot.param)=="sec.space")) sec.space <- 1-plot.param$sec.space
@@ -74,12 +82,12 @@ function(turb, ...) {
 		rad <- 0.95 * circles[i]/tail(circles, 1)
 		circle.x <- cos(circle.pts)*rad
 		circle.y <- sin(circle.pts)*rad
-		lines(circle.x, circle.y, lwd=lwd.circle, lty=2, col=col.circle)
+		lines(circle.x, circle.y, lwd=lwd.circle, lty=lty.circle, col=col.circle)
 		text(cos(pos.axis)*rad, sin(pos.axis)*rad, circles[i], cex=cex.axis, col=col.axis)
 	}
 	    
-	lines(c(-0.97, 0.97), c(0, 0), lwd=lwd.circle, col=col.circle)
-	lines(c(0, 0), c(0.97, -0.97), lwd=lwd.circle, col=col.circle)
+	lines(c(-0.97, 0.97), c(0, 0), lwd=lwd.cross, lty=lty.cross, col=col.cross)
+	lines(c(0, 0), c(0.97, -0.97), lwd=lwd.cross, lty=lty.cross, col=col.cross)
 	text(0, -0.95, "S", pos=1, cex=cex.lab, col=col.lab)
 	text(-0.95, 0, "W", pos=2, cex=cex.lab, col=col.lab)
 	text(0, 0.95, "N", pos=3, cex=cex.lab, col=col.lab)

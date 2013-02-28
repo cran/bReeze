@@ -9,7 +9,7 @@ function(mast, turb.set, dir.set, num.sectors=12, bins=c(5,10,15,20), digits=3, 
 	if(missing(turb.set) && !missing(dir.set)) turb.set <- dir.set
 	
 	if(!is.numeric(num.sectors)) stop("'num.sectors' must be numeric\n")
-	if(num.sectors%%4!=0 || num.sectors<4 || num.sectors>16) stop("Inapplicable number of sectors - choose 4, 8, 12 or 16\n")
+	if(num.sectors<=1) stop("There must be at least 2 sectors\n")
 	if(!is.numeric(turb.set)) stop("'turb.set' must be numeric\n")
 	if(turb.set<=0 || turb.set>num.sets) stop("'turb.set' not found\n")
 	if(!is.numeric(dir.set)) stop("'dir.set' must be numeric\n")
@@ -73,6 +73,7 @@ function(mast, turb.set, dir.set, num.sectors=12, bins=c(5,10,15,20), digits=3, 
 		else turb.tbl[num.sectors+1,num.classes+1] <- mean(mast$sets[[turb.set]]$data$turb.int[idx.val & idx.v & mast$sets[[turb.set]]$data$v.avg>=bins[num.classes]])
 	}
 	
+	r.names <- c(paste("s", 1:num.sectors, sep=""),"all")
 	if(num.sectors==4) r.names <- c("n","e","s","w","all")
 	if(num.sectors==8) r.names <- c("n","ne","e","se","s","sw","w","nw","all")
 	if(num.sectors==12) r.names <- c("n","nne","ene","e","ese","sse","s","ssw","wsw","w","wnw","nnw","all")

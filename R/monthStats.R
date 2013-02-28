@@ -22,20 +22,18 @@ function(mast, set, digits=3, print=TRUE) {
 		set.index <- NULL
 		for(s in 1:num.sets) if(!is.null(mast$sets[[s]]$data$v.avg)) set.index <- append(set.index, s)
 		
-		l <- m.mean.df <- monthStatsInt(mast$sets[[set.index[1]]]$data$v.avg, mast$time.stamp, years, digits)
+		m.mean.l <- list(monthStatsInt(mast$sets[[set.index[1]]]$data$v.avg, mast$time.stamp, years, digits))
 		unit <- attr(mast$sets[[set.index[1]]]$data$v.avg, "unit")
 		
 		if(length(set.index) > 1) {
-			l <- list(m.mean.df)
 			for(s in 2:length(set.index)) {
 				m.mean.df <- monthStatsInt(mast$sets[[set.index[s]]]$data$v.avg, mast$time.stamp, years, digits)
-				l[[length(l)+1]] <- m.mean.df
+				m.mean.l[[length(m.mean.l)+1]] <- m.mean.df
 			}
-			names(l) <- names(mast$sets)[set.index]
-			m.mean.l <- l
 		}
+		names(m.mean.l) <- names(mast$sets)[set.index]
 	}
-		
+
 	attr(m.mean.l, "unit") <- unit
 	attr(m.mean.l, "call") <- list(func="monthStats", mast=deparse(substitute(mast)), set=set, digits=digits)
 	

@@ -9,7 +9,7 @@
   \item{mast}{Met mast object created by \code{\link{createMast}}.}
   \item{v.set}{Set(s) to be used for wind speed as integer vector. If one single dataset is given, the same Hellman exponent is assumed for each sector and can be specified using \code{alpha} (see Details for empirical values). If two or more datasets are given, the Hellman exponent is calculated for each sector. If more than two datasets are given, currently only the first two datasets are used.}
   \item{dir.set}{Set to be used for wind direction as integer value.}
-  \item{num.sectors}{Number of wind direction sectors as integer value. One of \code{4}, \code{8}, \code{12} or \code{16}. Default is \code{12}.}
+  \item{num.sectors}{Number of wind direction sectors as integer value greater 1. Default is \code{12}.}
   \item{alpha}{Hellman exponent. Optional and only used if a single dataset is given in \code{v.set}. If \code{alpha} is \code{NULL}, \code{0.2} is used as default.}
   \item{digits}{Number of decimal places to be used for results as numeric value. Default is \code{3}.}
   \item{print}{If \code{TRUE}, results are printed directly.}

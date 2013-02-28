@@ -80,6 +80,10 @@ printObject <- function(object) {
 		sig.tbl <- data.frame(matrix(NA, nrow=length(sig), ncol=num.sets))
 		row.names(sig.tbl) <- sig
 		names(sig.tbl) <- c(names(object$sets))
+		if(num.sets==1) {
+			signals <- list(signals)
+			clean <- list(clean)
+		}
 		for(i in 1:length(sig)) for(j in 1:num.sets) if(any(signals[[j]]==row.names(sig.tbl)[i])) sig.tbl[i,j] <- "o"
 		for(j in 1:num.sets) {
 			if(length(clean[[j]])!=1 && clean[[j]][1]!="not cleaned") {

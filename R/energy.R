@@ -27,6 +27,7 @@ function(wb, rho=1.225, bins=c(5,10,15,20), digits=0, print=TRUE) {
 	if(!is.null(bins)) if(num.classes==2 && bins[num.classes]>=v.max) stop("Only one wind class found\n")
 
 	energy.tbl <- data.frame(matrix(NA, nrow=num.sectors+1, ncol=num.classes+1))
+	r.names <- c(paste("s", 1:num.sectors, sep=""),"all")
 	if(num.sectors==4) r.names <- c("n","e","s","w","all")
 	if(num.sectors==8) r.names <- c("n","ne","e","se","s","sw","w","nw","all")
 	if(num.sectors==12) r.names <- c("n","nne","ene","e","ese","sse","s","ssw","wsw","w","wnw","nnw","all")
@@ -39,7 +40,7 @@ function(wb, rho=1.225, bins=c(5,10,15,20), digits=0, print=TRUE) {
 	}
 	names(energy.tbl) <- c.names
 	
-	freq <- frequency(mast, v.set, dir.set, num.sectors, bins)[,-1]
+	freq <- frequency(mast, v.set, dir.set, num.sectors, bins, print=FALSE)[,-1]
 	
 	for(i in 1:num.sectors) {
 		if(!is.null(bins)) {

@@ -33,7 +33,7 @@ function(time.stamp, pattern) {
 			if(substr(pattern, nchar(pattern), nchar(pattern))=="S") nts[which(is.na(nts)==TRUE)] <- strptime(paste(time.stamp[which(is.na(nts)==TRUE)], "00:00:00"), pattern)
 			if(substr(pattern, nchar(pattern), nchar(pattern))=="M") nts[which(is.na(nts)==TRUE)] <- strptime(paste(time.stamp[which(is.na(nts)==TRUE)], "00:00"), pattern)
 		}
-		if(any(is.na(nts)==TRUE) | substr(nts[1],1,2)=="00") stop("Pattern does not match\n")
+		if(any(is.na(nts)==TRUE) || substr(nts[1],1,2)=="00") stop("Pattern does not match\n")
 	}
 	
 	return(nts)

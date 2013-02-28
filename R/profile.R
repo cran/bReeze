@@ -13,11 +13,12 @@ function(mast, v.set, dir.set, num.sectors=12, alpha=NULL, digits=3, print=TRUE)
 	if(dir.set<=0 || dir.set>num.sets) stop("'dir.set' not found\n")
 	if(is.null(mast$sets[[dir.set]]$data$dir.avg)) stop(paste("'dir.set' does not contain average wind direction data\n"))
 	if(!is.numeric(num.sectors)) stop("'num.sectors' must be numeric\n")
-	if(num.sectors%%4!=0 || num.sectors<4 || num.sectors>16) stop("Inapplicable number of sectors - choose 4, 8, 12 or 16\n")
+	if(num.sectors<=1) stop("There must be at least 2 sectors\n")
 	
 	sector.width <- 360/num.sectors
 	sectors <- seq(0, 360-sector.width, by=sector.width)
 	sector.edges <- c(sectors-sector.width/2, tail(sectors, n=1)+sector.width/2)%%360
+	r.names <- c(paste("s", 1:num.sectors, sep=""),"all")
 	if(num.sectors==4) r.names <- c("n","e","s","w","all")
 	if(num.sectors==8) r.names <- c("n","ne","e","se","s","sw","w","nw","all")
 	if(num.sectors==12) r.names <- c("n","nne","ene","e","ese","sse","s","ssw","wsw","w","wnw","nnw","all")

@@ -17,6 +17,7 @@ function(wb, show.ak=FALSE, ...) {
 	plot.param <- list(...)
 	if(any(names(plot.param)=="col")) col <- plot.param$col
 	else {
+		col <- c(rep("gray45", num.sectors), "#E41A1C")
 		if(num.sectors==4) col <- c("#377EB8", "#4DAF4A", "#984EA3", "#FF7F00", "#E41A1C")
 		if(num.sectors==8) col <- c("#377EB8", "#41B6C4", "#4DAF4A", "#9970AB", "#984EA3", "#F781BF", "#FF7F00", "#A6761D", "#E41A1C")
 		if(num.sectors==12) col <- c("#08519C", "#3182BD", "#74C476", "#006D2C", "#31A354", "#9E9AC8", "#54278F", "#756BB1", "#FED976", "#FD8D3C", "#FEB24C", "#6BAED6", "#E41A1C")
@@ -34,6 +35,7 @@ function(wb, show.ak=FALSE, ...) {
 	else col.box <- "black"
 	if(any(names(plot.param)=="lty")) lty <- plot.param$lty
 	else {
+		lty <- c(rep(5, num.sectors), 1)
 		if(num.sectors==4) lty <- c(5, 5, 5, 5, 1)
 		if(num.sectors==8) lty <- c(5, 3, 5, 3, 5, 3, 5, 3, 1)
 		if(num.sectors==12) lty <- c(5, 4, 3, 5, 4, 3, 5, 4, 3, 5, 4, 3, 1)
