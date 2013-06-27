@@ -1,9 +1,13 @@
 \encoding{UTF-8}
 \name{formatTS}
 \alias{formatTS}
+\alias{forts}
 \title{Format time stamps}
 \description{Converts time stamps from string to \code{POSIXlt}. The conversion specification (pattern) is looked up if not given as argument.}
-\usage{formatTS(time.stamp, pattern)}
+\usage{
+formatTS(time.stamp, pattern)
+forts(time.stamp, pattern)
+}
 \arguments{
   \item{time.stamp}{Time stamp as string vector.}
   \item{pattern}{Conversion specification of time stamp as string (optional). See Details for usage.}

@@ -1,16 +1,19 @@
 \encoding{UTF-8}
 \name{turbulence}
 \alias{turbulence}
+\alias{turb}
 \title{Calculation of turbulence intensity}
 \description{Calculates turbulence intensity and mean wind speed for each given direction sector.}
 \usage{
 turbulence(mast, turb.set, dir.set, num.sectors=12, 
   bins=c(5, 10, 15, 20), digits=3, print=TRUE)
-	}
+turb(mast, turb.set, dir.set, num.sectors=12, 
+  bins=c(5, 10, 15, 20), digits=3, print=TRUE)
+}
 \arguments{
   \item{mast}{Met mast object created by \code{\link{createMast}}.}
-  \item{turb.set}{Set used for turbulence intensity as integer value (optional, if \code{dir.set} is given).}
-  \item{dir.set}{Set used for wind direction as integer value (optional, if \code{turb.set} is given).}
+  \item{turb.set}{Set used for turbulence intensity, specified as set number or set name (optional, if \code{dir.set} is given).}
+  \item{dir.set}{Set used for wind direction, specified as set number or set name (optional, if \code{turb.set} is given).}
   \item{num.sectors}{Number of wind direction sectors as integer value greater 1. Default is \code{12}.}
   \item{bins}{Wind speed bins as numeric vector or \code{NULL} if no classification is desired.}
   \item{digits}{Number of decimal places to be used for results as numeric value. Default is \code{3}.}
@@ -53,6 +56,7 @@ turbulence(mast=neubuerg, turb.set=1)
 
 # use different datasets for turb.set and dir.set
 turbulence(mast=neubuerg, turb.set=1, dir.set=2)
+turbulence(mast=neubuerg, turb.set="set1", dir.set="set2")	# same as above
 
 # change number of direction sectors
 turbulence(mast=neubuerg, turb.set=1, num.sectors=4)

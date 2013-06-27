@@ -1,9 +1,13 @@
 \encoding{UTF-8}
 \name{createPC}
 \alias{createPC}
+\alias{pc}
 \title{Creation of power curve objects}
 \description{Creates power curve objects, characterizing wind turbines.}
-\usage{createPC(v, p, cp, ct, rho=1.225, rated.p, desc)}
+\usage{
+createPC(v, p, cp, ct, rho=1.225, rated.p, desc)
+pc(v, p, cp, ct, rho=1.225, rated.p, desc)
+}
 \arguments{
   \item{v}{Wind speed in m/s as numeric vector.}
   \item{p}{Corresponding power output in kW as numeric vector of same length as \code{v}.}
@@ -45,7 +49,7 @@ Milan, P., Wächter, M., Barth, S., Peinke, J. (2010) Power Curves for Wind Turb
 Ragheb, M., Ragheb, A.M. (2011) Wind Turbines Theory -- The Betz Equation and Optimal Rotor Tip Speed Ratio. In: Rupp Carriveau (Ed.), Fundamental and Advanced Topics in Wind Power, Chapter 2, p. 19--38, InTech
 }
 \author{Christian Graul}
-\seealso{\code{\link{readPC}}, \code{\link{printObject}}}
+\seealso{\code{\link{readPC}}, \code{\link{plotPC}}, \code{\link{printObject}}}
 \examples{
 \dontrun{
 # minimal theoretic power curve

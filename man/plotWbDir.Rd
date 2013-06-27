@@ -1,9 +1,13 @@
 \encoding{UTF-8}
 \name{plotWbDir}
 \alias{plotWbDir}
+\alias{plwbd}
 \title{Plot Weibull fit per direction sector}
 \description{Plots the fitted Weibull distribution per direction sector from a \code{\link{weibull}} object.}
-\usage{plotWbDir(wb, show.ak=FALSE, ...)}
+\usage{
+plotWbDir(wb, show.ak=FALSE, ...)
+plwbd(wb, show.ak=FALSE, ...)
+}
 \arguments{
   \item{wb}{Weibull object created by \code{\link{weibull}}.}
   \item{show.ak}{If \code{TRUE}, the Weibull parameters A and k are added to the legend.}

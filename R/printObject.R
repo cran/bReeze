@@ -168,6 +168,9 @@ printObject <- function(object) {
 				cat("\n")
 			}
 		}
+		if(attr(object, "call")$v.set=="all") attr(object, "call")$v.set <- "\"all\""
+		if(attr(object, "call")$dir.set=="all") attr(object, "call")$dir.set <- "\"all\""
+		cat("call: availability(mast=", attr(object, "call")$mast, ", v.set=", attr(object, "call")$v.set, ", dir.set=", attr(object, "call")$dir.set, ", digits=", attr(object, "call")$digits, ")\n\n", sep="")
 	} else if(attr(object, "call")$func=="monthStats") { # month stats object
 		cat("\n\tMonthly means\n\n")
 		cat(names(object)[1], "\n")
@@ -186,6 +189,8 @@ printObject <- function(object) {
 				cat("\n")
 			}
 		}
+		if(attr(object, "call")$set=="all") attr(object, "call")$set <- "\"all\""
+		cat("call: monthStats(mast=", attr(object, "call")$mast, ", set=", attr(object, "call")$set, ", digits=", attr(object, "call")$digits, ")\n\n", sep="")
 	} else if(attr(object, "call")$func=="frequency") { # frequency object
 		cat("\n\tFrequency\n\n")
 		tbl.units <- data.frame(t(names(object)))
@@ -239,7 +244,7 @@ printObject <- function(object) {
 		print(rbind(tbl.units, obj), quote=FALSE)
 		cat("\nreference height:", object$h.ref, attr(object$h.ref, "unit"), "\n")
 		if(is.null(attr(object, "call")$alpha)) attr(object, "call")$alpha <- "NULL"
-		cat("\ncall: profile(mast=", attr(object, "call")$mast, ", v.set=", attr(object, "call")$v.set, ", dir.set=", attr(object, "call")$dir.set, ", num.sectors=", attr(object, "call")$num.sectors, ", alpha=", attr(object, "call")$alpha, ", digits=", attr(object, "call")$digits, ")\n\n", sep="")
+		cat("\ncall: profile(mast=", attr(object, "call")$mast, ", v.set=c(", paste(attr(object, "call")$v.set, collapse=", "), "), dir.set=", attr(object, "call")$dir.set, ", num.sectors=", attr(object, "call")$num.sectors, ", alpha=", attr(object, "call")$alpha, ", digits=", attr(object, "call")$digits, ")\n\n", sep="")
 	} else if(attr(object, "call")$func=="aep") { # aep object
 		cat("\n\tAnnual energy production\n\n")
 		tbl.units <- data.frame(t(names(object$aep)))

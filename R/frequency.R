@@ -8,11 +8,14 @@ function(mast, v.set, dir.set, num.sectors=12, bins=c(5,10,15,20), digits=3, pri
 	if(!missing(v.set) && missing(dir.set)) dir.set <- v.set
 	if(missing(v.set) && !missing(dir.set)) v.set <- dir.set
 	
+	if(!is.numeric(v.set)) v.set <- match(v.set, names(mast$sets))
+	if(is.na(v.set)) stop("'v.set' not found\n")
+	if(!is.numeric(dir.set)) dir.set <- match(dir.set, names(mast$sets))
+	if(is.na(dir.set)) stop("'dir.set' not found\n")
+	
 	if(!is.numeric(num.sectors)) stop("'num.sectors' must be numeric\n")
 	if(num.sectors<=1) stop("There must be at least 2 sectors\n")
-	if(!is.numeric(v.set)) stop("'v.set' must be numeric\n")
 	if(v.set<=0 || v.set>num.sets) stop("'v.set' not found\n")
-	if(!is.numeric(dir.set)) stop("'dir.set' must be numeric\n")
 	if(dir.set<=0 || dir.set>num.sets) stop("'dir.set' not found\n")
 	if(is.null(mast$sets[[v.set]]$data$v.avg)) stop("Specified set does not contain average wind speed data\n")
 	if(is.null(mast$sets[[dir.set]]$data$dir.avg)) stop("Specified set does not contain wind direction data\n")

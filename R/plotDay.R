@@ -84,7 +84,8 @@ function(mast, set, signal, ...) {
 	
 	# calculate and plot
 	if(set!="all") { # one set
-		if(!is.numeric(set)) stop("'set' must be numeric\n")
+		if(!is.numeric(set)) if(set!="all") set <- match(set, names(mast$sets))
+		if(is.na(set)) stop("'set' not found\n")
 		if(set<0 || set>num.sets) stop("'set' not found\n")
 		if(!any(names(mast$sets[[set]]$data)==signal)) stop("Specified set does not contain the choosen signal\n")
 		dat <- mast$sets[[set]]$data[,which(names(mast$sets[[set]]$data)==signal)]

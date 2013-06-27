@@ -1,10 +1,13 @@
 \encoding{UTF-8}
 \name{createSet}
 \alias{createSet}
+\alias{set}
 \title{Creation of datasets}
 \description{Creates a dataset object, by combining all signals of one height of measurement.}
 \usage{
 createSet(height, desc, v.avg, v.max, v.min, v.std, 
+  dir.avg, dir.std, tmp, ...)
+set(height, desc, v.avg, v.max, v.min, v.std, 
   dir.avg, dir.std, tmp, ...)
 }
 \arguments{

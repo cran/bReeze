@@ -1,9 +1,13 @@
 \encoding{UTF-8}
 \name{plotEnergy}
 \alias{plotEnergy}
+\alias{plen}
 \title{Plot wind energy rose}
 \description{Plots a wind energy rose from an \code{\link{energy}} object.}
-\usage{plotEnergy(energy, show.total=TRUE, ...)}
+\usage{
+plotEnergy(energy, show.total=TRUE, ...)
+plen(energy, show.total=TRUE, ...)
+}
 \arguments{
   \item{energy}{Energy object created by \code{\link{energy}}.}
   \item{show.total}{If \code{TRUE}, the total amount of wind energy per square meter is shown.}

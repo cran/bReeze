@@ -10,7 +10,8 @@ function(stats, set, ...) {
 	if(attr(stats, "call")$func!="monthStats") stop(paste(substitute(stats), "is no monthStats object\n"))
 	if(missing(set)) set <- 1:num.sets
 	n.set <- length(set)
-	if(any(!is.numeric(set))) stop("'set' must be numeric\n")
+	if(!is.numeric(set)) set <- match(set, names(stats))
+	if(any(is.na(set))) stop("'set' not found\n")
 	if(any(set<1) || any(set>num.sets)) stop("'set' not found\n")
 	unit <- attr(stats, "unit")
 	years <- length(stats[[1]])-2

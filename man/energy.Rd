@@ -1,10 +1,15 @@
 \name{energy}
 \encoding{UTF-8}
 \alias{energy}
+\alias{en}
 \title{Calculation of total wind energy content}
 \description{Calculates the total wind energy content per direction sector from Weibull data.}
-\usage{energy(wb, rho=1.225, bins=c(5, 10, 15, 20),
-  digits=0, print=TRUE)}
+\usage{
+energy(wb, rho=1.225, bins=c(5, 10, 15, 20),
+  digits=0, print=TRUE)
+en(wb, rho=1.225, bins=c(5, 10, 15, 20),
+  digits=0, print=TRUE)
+}
 \arguments{
   \item{wb}{Weibull object created by \code{\link{weibull}}.}
   \item{rho}{Air density as numeric value. Default is \code{1.225} kg/m3 according to the International Standard Atmosphere (ISA) at sea level and 15°C.}

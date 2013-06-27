@@ -1,9 +1,13 @@
 \encoding{UTF-8}
 \name{plotTurbulence}
 \alias{plotTurbulence}
+\alias{plturb}
 \title{Plot turbulence intensity}
 \description{Plots sectoral turbulence intensity from a \code{\link{turbulence}} object in a rose plot.}
-\usage{plotTurbulence(turb, ...)}
+\usage{
+plotTurbulence(turb, ...)
+plturb(turb, ...)
+}
 \arguments{
   \item{turb}{Turbulence intensity object created by \code{\link{turbulence}}.}
   \item{\dots}{Optional graphical parameters, see below for details.}

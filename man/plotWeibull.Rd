@@ -1,9 +1,13 @@
 \encoding{UTF-8}
 \name{plotWeibull}
 \alias{plotWeibull}
+\alias{plwb}
 \title{Plot wind speed distribution and Weibull fit}
 \description{Plots the distribution of wind speeds and the fitted weibull distribution from a \code{\link{weibull}} object.}
-\usage{plotWeibull(wb, show.ak=FALSE, ...)}
+\usage{
+plotWeibull(wb, show.ak=FALSE, ...)
+plwb(wb, show.ak=FALSE, ...)
+}
 \arguments{
   \item{wb}{Weibull object created by \code{\link{weibull}}.}
   \item{show.ak}{If \code{TRUE}, the Weibull parameters A and k are added to the legend.}

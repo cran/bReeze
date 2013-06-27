@@ -1,12 +1,16 @@
 \encoding{UTF-8}
 \name{plotMonthStats}
 \alias{plotMonthStats}
+\alias{plms}
 \title{Plot monthly means}
 \description{Plots monthly means of wind speed from a \code{\link{monthStats}} object.}
-\usage{plotMonthStats(stats, set, ...)}
+\usage{
+plotMonthStats(stats, set, ...)
+plms(stats, set, ...)
+}
 \arguments{
   \item{stats}{Monthly means created by \code{\link{monthStats}}.}
-  \item{set}{Set used for plotting as integer value. Argument is optional -- if missing, all sets in \code{stats} are plotted.}
+  \item{set}{Set used for plotting specified as set number or set name. Argument is optional -- if missing, all sets in \code{stats} are plotted.}
   \item{\dots}{Optional graphical parameters, see below for details.}
 }
 \section{Optional graphical parameters}{
@@ -58,6 +62,7 @@ plotMonthStats(stats=neubuerg.stats)
 
 # plot one dataset
 plotMonthStats(stats=neubuerg.stats, set=1)
+plotMonthStats(stats=neubuerg.stats, set="set1")	# same as above
 
 # customize plot
 plotMonthStats(stats=neubuerg.stats, border="darkgray", bty="l", cex.axis=0.7, 

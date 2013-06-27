@@ -1,22 +1,3 @@
-.onAttach <- 
-function(libname, pkgname) {
-    ver <- read.dcf(file=system.file("DESCRIPTION", package=pkgname), fields="Version")
-    packageStartupMessage(" ")
-    packageStartupMessage(" ")
-    packageStartupMessage(paste("This is", pkgname, ver))
-    packageStartupMessage(" ")
-    packageStartupMessage("Type changes(\"bReeze\") to see changes/bug fixes, help(bReeze) for documentation")
-    packageStartupMessage("or citation(\"bReeze\") for how to cite bReeze.")
-}
-
-
-changes <- 
-function(pkg="bReeze") {
-    if(pkg=="bReeze")
-    file.show(file.path(system.file(package="bReeze"), "CHANGES"))
-}
-
-
 ### short name wrapper functions
 
 avail <- function(mast, v.set, dir.set, digits=1, print=TRUE) {

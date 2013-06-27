@@ -1,8 +1,31 @@
+bReeze 0.2-2 [2013-06-27]
+-------------------------
+
+* availability: v.set and dir.set can now handle vectors of 
+  datasets 
+
+* availability, clean, frequency, monthStats, plotAvailability, 
+  plotDay, plotMonthStats, plotTimeSeries, plotTurbIEC,profile, 
+  turbulence, weibull: data sets can now be specified by name
+
+* formatTS: bug fixed - handling of duplicates
+
+* plotPC: bug fixed - ugly axis if both coefficients are plotted;
+  a list of power curves can now be plotted at once
+
+* printObject: bugs fixed - function calls incorrect in some 
+  cases
+
+* readPC: power curve data base update
+
+* new short name aliases for functions
+
+
 bReeze 0.2-1 [2013-02-28]
 -------------------------
 
-* energy, frequency and plotProfile: bug fixed - output of internally 
-  called function printed
+* energy, frequency and plotProfile: bug fixed - output of 
+  internally called function printed
 
 * frequency, profile, turbulence, weibull: number of sectors no
   longer limited to 4/8/12/16
@@ -11,7 +34,7 @@ bReeze 0.2-1 [2013-02-28]
   with just one dataset
 
 * printObject: bug fixed - original/cleaned data displayed
-  wrong for met masts with just one data set
+  wrong for met masts with just one dataset
 
 * polar plotting functions (plotAep, plotEnergy, plotFrequency, 
   plotPolar, plotTurbulence): optional graphical parameters

@@ -1,9 +1,13 @@
 \encoding{UTF-8}
 \name{plotFrequency}
 \alias{plotFrequency}
+\alias{plfreq}
 \title{Plot frequency data}
 \description{Plots joint probability of wind speeds and directions from a \code{\link{frequency}} object in a rose plot.}
-\usage{plotFrequency(freq, ...)}
+\usage{
+plotFrequency(freq, ...)
+plfreq(freq, ...)
+}
 \arguments{
   \item{freq}{Frequency object created by \code{\link{frequency}}.}
   \item{\dots}{Optional graphical parameters, see below for details.}

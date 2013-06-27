@@ -1,16 +1,19 @@
 \encoding{UTF-8}
 \name{frequency}
 \alias{frequency}
+\alias{freq}
 \title{Calculation of frequency and mean wind speed}
 \description{Calculates the frequency of occurrence and mean wind speed per wind direction sector.}
 \usage{
 frequency(mast, v.set, dir.set, num.sectors=12, 
   bins=c(5, 10, 15, 20), digits=3, print=TRUE)
+freq(mast, v.set, dir.set, num.sectors=12, 
+  bins=c(5, 10, 15, 20), digits=3, print=TRUE)
 }
 \arguments{
   \item{mast}{Met mast object created by \code{\link{createMast}}.}
-  \item{v.set}{Set used for wind speed as integer value (optional, if \code{dir.set} is given).}
-  \item{dir.set}{Set used for wind direction as integer value (optional, if \code{v.set} is given).}
+  \item{v.set}{Set used for wind speed, specified as set number or set name (optional, if \code{dir.set} is given).}
+  \item{dir.set}{Set used for wind direction, specified as set number or set name (optional, if \code{v.set} is given).}
   \item{num.sectors}{Number of wind direction sectors as integer value greater 1. Default is \code{12}.}
   \item{bins}{Wind speed bins as numeric vector or \code{NULL} if no classification is desired.}
   \item{digits}{Number of decimal places to be used for results as numeric value. Default is \code{3}.}
@@ -51,6 +54,7 @@ frequency(mast=neubuerg, dir.set=1)
 # use different datasets for wind speed and direction
 frequency(mast=neubuerg, v.set=3)	# no direction in dataset
 frequency(mast=neubuerg, v.set=3, dir.set=2)
+frequency(mast=neubuerg, v.set="set3", dir.set="set2")	# same as above
 
 # change number of direction sectors 
 frequency(mast=neubuerg, v.set=1, num.sectors=4)

@@ -1,12 +1,16 @@
 \encoding{UTF-8}
 \name{plotAvailability}
 \alias{plotAvailability}
+\alias{plavail}
 \title{Plot availability}
 \description{Plots daily availability from an \code{\link{availability}} object in a calendar plot.}
-\usage{plotAvailability(avail, set, ...)}
+\usage{
+plotAvailability(avail, set, ...)
+plavail(avail, set, ...)
+}
 \arguments{
   \item{avail}{Availability object created by \code{\link{availability}}.}
-  \item{set}{Number of dataset to plot as integer value (optional).}
+  \item{set}{Number of dataset to plot specified as set number or set name (optional).}
   \item{\dots}{Optional graphical parameters, see below for details.}
 }
 \section{Optional graphical parameters}{
@@ -46,6 +50,8 @@ neubuerg.avail <- availability(mast=neubuerg, print=FALSE)
 # plot availability
 plotAvailability(avail=neubuerg.avail)
 plotAvailability(avail=neubuerg.avail, set=2)	# one dataset
+plotAvailability(avail=neubuerg.avail, set="set2")	# same as above
+plotAvailability(avail=neubuerg.avail, set=c(1,2))	# several datasets
 
 # customize plot
 plotAvailability(avail=neubuerg.avail, border="darkgray", cex.axis=0.7, 

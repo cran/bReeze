@@ -11,7 +11,9 @@ function(mast, set, signal=c("v.avg", "dir.avg", "turb.int"), start, end, ...) {
 	num.samples <- length(time.stamp)
 	
 	if(missing(set)) set <- 1:num.sets
-	if(any(!is.numeric(set)==TRUE)) stop("'set' must be numeric")
+	if(!is.numeric(set)) set <- match(set, names(mast$sets))
+	if(any(is.na(set))) stop("'set' not found\n")
+	if(any(set<1) || any(set>num.sets)) stop("'set' not found\n")
 	if(missing(start)) start <- as.character(time.stamp[1])
 	if(missing(end)) end <- as.character(time.stamp[num.samples])
 	start <- strptime(start, "%Y-%m-%d %H:%M:%S")

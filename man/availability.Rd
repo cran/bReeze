@@ -1,13 +1,17 @@
 \encoding{UTF-8}
 \name{availability}
 \alias{availability}
+\alias{avail}
 \title{Calculate availability for pairs of wind speed and direction}
 \description{Calculates the availability for pairs of wind speed and wind direction of a met mast.}
-\usage{availability(mast, v.set, dir.set, digits=1, print=TRUE)}
+\usage{
+availability(mast, v.set, dir.set, digits=1, print=TRUE)
+avail(mast, v.set, dir.set, digits=1, print=TRUE)
+}
 \arguments{
   \item{mast}{Met mast object created by \code{\link{createMast}}.}
-  \item{v.set}{Set to be used for wind speed as integer value. Argument is optional -- if missing, all sets containing wind speed and wind direction data are used.}
-  \item{dir.set}{Set to be used for wind direction as integer value. Argument is optional -- if missing, the set used for wind speed data will also be used for wind direction.}
+  \item{v.set}{Set(s) to be used for wind speed, specified as set number(s) or set name(s). Argument is optional -- if missing, all sets containing wind speed and wind direction data are used.}
+  \item{dir.set}{Set(s) to be used for wind direction, specified as set number(s) or set name(s). Argument is optional -- if missing, the set(s) used for wind speed data will also be used for wind direction.}
   \item{digits}{Number of decimal places to be used for results as numeric value. Default is \code{1}.}
   \item{print}{If \code{TRUE}, results are printed directly.}
 }
@@ -55,8 +59,13 @@ neubuerg.avail$set40$daily
 # note: availability for 'set20' is missing - its availability is NULL,
 # since it does not contain wind direction data
 
-# calculate availability for 'set20' using wind direction data from 'set30'
-set20.avail <- availability(mast=neubuerg, v.set=3, dir.set=2)
+# calculate availability for 'set20' using wind direction data from 'set40'
+set20.avail <- availability(mast=neubuerg, v.set=3, dir.set=1)
+# same as above
+set20.avail <- availability(mast=neubuerg, v.set="set20", dir.set="set40")
+
+# calculate availability for all sets using wind direction data from 'set40'
+neubuerg.avail <- availability(mast=neubuerg, v.set=c(1,2,3), dir.set=1)
 }
 }
 \keyword{methods}

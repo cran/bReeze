@@ -8,7 +8,8 @@ function(avail, set, ...) {
 	if(is.null(attr(avail[[1]]$daily, "num.daily.samples"))) stop("Cannot use 'avail' - please use output object of availability\n")
 	if(missing(set)) set <- 1:num.sets
 	n.set <- length(set)
-	if(any(!is.numeric(set))) stop("'set' must be numeric\n")
+	if(!is.numeric(set)) set <- match(set, names(avail))
+	if(any(is.na(set))) stop("'set' not found\n")
 	if(any(set<1) || any(set>num.sets)) stop("'set' not found\n")
 	
 	# prepare plot

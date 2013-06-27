@@ -5,9 +5,15 @@ function(mast, v.set=1, dir.set=1, ...) {
 	if(is.null(attr(mast, "call"))) stop(paste(substitute(mast), "is no mast object"))
 	if(attr(mast, "call")$func!="createMast") stop(paste(substitute(mast), "is no mast object"))
 	num.sets <- length(mast$sets)
-	if(!is.numeric(v.set) || v.set<=0 || v.set>num.sets) stop("Specified 'v.set' could not be found - please specify as number\n")
+	
+	if(!is.numeric(v.set)) v.set <- match(v.set, names(mast$sets))
+	if(is.na(v.set)) stop("'v.set' not found\n")
+	if(!is.numeric(dir.set)) dir.set <- match(dir.set, names(mast$sets))
+	if(is.na(dir.set)) stop("'dir.set' not found\n")
+	
+	if(v.set<=0 || v.set>num.sets) stop("Specified 'v.set' could not be found\n")
 	if(is.null(mast$sets[[v.set]]$data$v.avg)) stop("Specified 'v.set' does not contain average wind speed data\n")
-	if(!is.numeric(dir.set) || dir.set<=0 || dir.set>num.sets) stop("Specified 'dir.set' could not be found - please specify as number\n")
+	if(dir.set<=0 || dir.set>num.sets) stop("Specified 'dir.set' could not be found\n")
 	if(is.null(mast$sets[[dir.set]]$data$dir.avg)) stop("Specified 'dir.set' does not contain average wind direction data\n")
 	
 	ws <- mast$sets[[v.set]]$data$v.avg[!is.na(mast$sets[[v.set]]$data$v.avg) & !is.na(mast$sets[[dir.set]]$data$dir.avg)]

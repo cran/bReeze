@@ -1,12 +1,16 @@
 \encoding{UTF-8}
 \name{plotTurbIEC}
 \alias{plotTurbIEC}
+\alias{pliec}
 \title{Plot turbulence intensity site classification}
 \description{Plots the turbulence intensity and site classification after IEC.}
-\usage{plotTurbIEC(mast, set, ...)}
+\usage{
+plotTurbIEC(mast, set, ...)
+pliec(mast, set, ...)
+}
 \arguments{
   \item{mast}{Met mast object created by \code{createMast}.}
-  \item{set}{Set used for plotting as integer value.}
+  \item{set}{Set used for plotting specified as set number or set name.}
   \item{\dots}{Optional graphical parameters, see below for details.}
 }
 \section{Optional graphical parameters}{
@@ -73,6 +77,7 @@ neubuerg <- clean(mast=neubuerg)
 
 # plot
 plotTurbIEC(mast=neubuerg, set=1)
+plotTurbIEC(mast=neubuerg, set="set1")	# same as above
 
 # customize plot
 plotTurbIEC(mast=neubuerg, set=1, bty="l", cex.axis=0.8, cex.lab=0.9, 

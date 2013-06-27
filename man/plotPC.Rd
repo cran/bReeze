@@ -1,11 +1,15 @@
 \encoding{UTF-8}
 \name{plotPC}
 \alias{plotPC}
+\alias{plpc}
 \title{Plot power curve}
 \description{Plots a power curve object.}
-\usage{plotPC(pc, cp=TRUE, ct=TRUE, ...)}
+\usage{
+plotPC(pc, cp=TRUE, ct=TRUE, ...)
+plpc(pc, cp=TRUE, ct=TRUE, ...)
+}
 \arguments{
-  \item{pc}{Power curve object ceated by \code{\link{createPC}} or imported from file by \code{\link{readPC}}.}
+  \item{pc}{Power curve object ceated by \code{\link{createPC}} or imported from file by \code{\link{readPC}}, or a list of power curve objects.}
   \item{cp}{If \code{TRUE}, the power coefficient (cp) is added to the plot (if available).}
   \item{ct}{If \code{TRUE}, the thrust coefficient (ct) is added to the plot (if available).}
   \item{\dots}{Optional graphical parameters, see below for details.}
@@ -58,6 +62,19 @@ p <- c(5, 15.5, 32, 52, 71, 98, 136, 182, 230, 285, 345, 419, 497, 594,
 # plot power curve with and without coefficients
 plotPC(pc=my.pc)
 plotPC(pc=my.pc, cp=FALSE, ct=FALSE)
+
+# plot list of power curves
+enercon.e82 <- readPC(file=system.file(package="bReeze", "powercurves", 
+  "Enercon_E82_2.0MW.pow"))
+gamesa.g83 <- readPC(file=system.file(package="bReeze", "powercurves", 
+  "Gamesa_G83_2.0MW.pow"))
+vestas.v80 <- readPC(file=system.file(package="bReeze", "powercurves", 
+  "Vestas_V80_2.0MW.wtg"))
+vestas.v90 <- readPC(file=system.file(package="bReeze", "powercurves", 
+  "Vestas_V90_2.0MW.wtg"))
+pc.2mw <- list(V80=vestas.v80, E82=enercon.e82, G83=gamesa.g83)
+plotPC(pc.2mw, ct=FALSE)
+plotPC(list(v80, v90))
 
 # customize plot
 plotPC(pc=my.pc, bty="u", bty.leg="o", cex.axis=0.8, cex.lab=0.9, 

@@ -1,12 +1,16 @@
 \encoding{UTF-8}
 \name{monthStats}
 \alias{monthStats}
+\alias{ms}
 \title{Calculation of monthly means}
 \description{Calculates monthly means of wind speed.}
-\usage{monthStats(mast, set, digits=3, print=TRUE)}
+\usage{
+monthStats(mast, set, digits=3, print=TRUE)
+ms(mast, set, digits=3, print=TRUE)
+}
 \arguments{
   \item{mast}{Met mast object created by \code{\link{createMast}}.}
-  \item{set}{Set used for calculation as integer value. If missing, the calculation is carried out for all datasets that contain average wind speed \code{v.avg}.}
+  \item{set}{Set used for calculation specified as set number or set name. If missing, the calculation is carried out for all datasets that contain average wind speed \code{v.avg}.}
   \item{digits}{Number of decimal places to be used for results as numeric value. Default is \code{3}.}
   \item{print}{If \code{TRUE}, results are printed directly.}
 }
@@ -35,6 +39,7 @@ neubuerg.stats <- monthStats(mast=neubuerg)
 
 # calculate monthly means for one dataset
 neubuerg.stats.2 <- monthStats(mast=neubuerg, set=1)
+neubuerg.stats.2 <- monthStats(mast=neubuerg, set="set1")	# same as above
 
 # change number of digits and hide results
 monthStats(mast=neubuerg, digits=2)

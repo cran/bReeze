@@ -1,9 +1,13 @@
 \encoding{UTF-8}
 \name{plotAep}
 \alias{plotAep}
+\alias{plaep}
 \title{Plot annual energy production}
 \description{Plots sectoral annual energy production (AEP) from an \code{\link{aep}} object in a rose plot.}
-\usage{plotAep(aep, show.total=TRUE, ...)}
+\usage{
+plotAep(aep, show.total=TRUE, ...)
+plaep(aep, show.total=TRUE, ...)
+}
 \arguments{
   \item{aep}{AEP object created by \code{\link{aep}}.}
   \item{show.total}{If \code{TRUE} the total AEP is added to the plot.}

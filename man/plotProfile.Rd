@@ -1,9 +1,13 @@
 \encoding{UTF-8}
 \name{plotProfile}
 \alias{plotProfile}
+\alias{plpro}
 \title{Plot wind profile}
 \description{Plots wind profiles from a \code{\link{profile}} object.}
-\usage{plotProfile(profile, sector, measured=TRUE, ...)}
+\usage{
+plotProfile(profile, sector, measured=TRUE, ...)
+plpro(profile, sector, measured=TRUE, ...)
+}
 \arguments{
   \item{profile}{Wind profile object created by \code{\link{profile}}.}
   \item{sector}{Direction sector as integer (sector number) or string (sector code). If missing or \code{NULL}, all sectors are plotted. For plotting the general profile only use \code{"all"}.}

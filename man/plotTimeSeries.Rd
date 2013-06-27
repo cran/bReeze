@@ -1,15 +1,18 @@
 \encoding{UTF-8}
 \name{plotTimeSeries}
 \alias{plotTimeSeries}
+\alias{plts}
 \title{Plot time series of met mast data}
 \description{Plots time series of one or more signals of a given met mast object.}
 \usage{
 plotTimeSeries(mast, set, signal=c("v.avg", "dir.avg", "turb.int"), 
   start, end, ...)
+plts(mast, set, signal=c("v.avg", "dir.avg", "turb.int"), 
+  start, end, ...)
 }
 \arguments{
   \item{mast}{Met mast object created by \code{\link{createMast}}.}
-  \item{set}{Set used for plotting as integer value. Argument is optional -- if missing, all sets containing the given \code{signal}(s) are used.}
+  \item{set}{Set used for plotting specified as set number or set name. Argument is optional -- if missing, all sets containing the given \code{signal}(s) are used.}
   \item{signal}{Signal(s) to be plotted as vector of strings giving the signal names.}
   \item{start}{Date and time the plot starts at, as string.}
   \item{end}{Date and time the plot ends at, as string.}
@@ -57,6 +60,7 @@ neubuerg <- clean(mast=neubuerg)
 # plot time series
 plotTimeSeries(mast=neubuerg)
 plotTimeSeries(mast=neubuerg, set=1, legend=FALSE)
+plotTimeSeries(mast=neubuerg, set="set1", legend=FALSE)	# same as above
 
 # change signals 
 plotTimeSeries(mast=neubuerg, signal=c("v.avg", "v.min", "v.max", 

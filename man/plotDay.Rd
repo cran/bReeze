@@ -1,12 +1,16 @@
 \encoding{UTF-8}
 \name{plotDay}
 \alias{plotDay}
+\alias{plday}
 \title{Plot diurnal wind speed}
 \description{Plots the diurnal variation of wind speed or wind direction.}
-\usage{plotDay(mast, set, signal, ...)}
+\usage{
+plotDay(mast, set, signal, ...)
+plday(mast, set, signal, ...)
+}
 \arguments{
   \item{mast}{Met mast object created by \code{\link{createMast}}.}
-  \item{set}{Set used for plotting as integer value. Argument is optional -- if missing, all sets containing the choosen \code{signal} are used.}
+  \item{set}{Set used for plotting specified as set number or set name. Argument is optional -- if missing, all sets containing the choosen \code{signal} are used.}
   \item{signal}{Signal to be plotted.}
   \item{\dots}{Optional graphical parameters, see below for details.}
 }
@@ -60,6 +64,7 @@ plotDay(mast=neubuerg, signal="dir.avg")
 
 # plot one dataset
 plotDay(mast=neubuerg, set=1, signal="v.avg")
+plotDay(mast=neubuerg, set="set1", signal="v.avg")	# same as above
 plotDay(mast=neubuerg, set=2, signal="dir.avg")
 
 # customize plot

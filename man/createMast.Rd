@@ -1,9 +1,13 @@
 \encoding{UTF-8}
 \name{createMast}
 \alias{createMast}
+\alias{mast}
 \title{Creation of met mast objects}
 \description{Creates met mast objects from one or more datasets (measurement heights). All datasets are sorted by height in descending order.}
-\usage{createMast(time.stamp, ..., loc=NULL, desc=NULL)}
+\usage{
+createMast(time.stamp, ..., loc=NULL, desc=NULL)
+mast(time.stamp, ..., loc=NULL, desc=NULL)
+}
 \arguments{
   \item{time.stamp}{Time stamp as \code{POSIXlt} vector, e.g. created by \code{\link{formatTS}}.}
   \item{\dots}{At least one dataset created by \code{\link{createSet}}.}

@@ -1,15 +1,18 @@
 \encoding{UTF-8}
 \name{clean}
 \alias{clean}
+\alias{cln}
 \title{Clean faulty values}
 \description{Cleans faulty values of a met mast object, set or specified set of a met mast. Faulty values are replaced by \code{NA}.}
 \usage{
 clean(mast, set, v.avg.min=0.4, v.avg.max=50, dir.clean=TRUE, 
 	turb.clean=4, icing=FALSE, rep=NULL, n.rep=5)
+cln(mast, set, v.avg.min=0.4, v.avg.max=50, dir.clean=TRUE, 
+	turb.clean=4, icing=FALSE, rep=NULL, n.rep=5)
 }
 \arguments{
   \item{mast}{Met mast object created by \code{\link{createMast}}. To be ignored, if a single dataset shall be cleaned.}
-  \item{set}{Set object created by \code{\link{createSet}} (if no \code{mast} is given) or set number of met mast as integer value. To be ignored, if all datasets of \code{mast} shall be cleaned.}
+  \item{set}{Set object created by \code{\link{createSet}} (if no \code{mast} is given) or set of met mast specified as set number or set name. To be ignored, if all datasets of \code{mast} shall be cleaned.}
   \item{v.avg.min}{Lower limit for wind speeds as numeric value. Default is \code{0.4} m/s.}
   \item{v.avg.max}{Upper limit for wind speeds as numeric value. Default is \code{50} m/s.}
   \item{dir.clean}{If \code{TRUE}, faulty wind direction values are excluded. Faulty values are \code{dir.avg}<0, \code{dir.avg}>360 and \code{dir.avg}, where the wind speed is lower than the \code{v.avg.min} specified. Default is \code{TRUE}.}
@@ -52,7 +55,7 @@ set40.clean <- clean(set=set40)
   
 # clean just one dataset of a met mast
 neubuerg.clean.2 <- clean(mast=neubuerg, set=1)
-
+neubuerg.clean.2 <- clean(mast=neubuerg, set="set40")	# same as above
 
 # change lower wind speed limit 
 neubuerg.clean.3 <- clean(mast=neubuerg, v.avg.min=0.3)

@@ -10,9 +10,11 @@ function(mast, turb.set, dir.set, num.sectors=12, bins=c(5,10,15,20), digits=3, 
 	
 	if(!is.numeric(num.sectors)) stop("'num.sectors' must be numeric\n")
 	if(num.sectors<=1) stop("There must be at least 2 sectors\n")
-	if(!is.numeric(turb.set)) stop("'turb.set' must be numeric\n")
+	if(!is.numeric(turb.set)) turb.set <- match(turb.set, names(mast$sets))
+	if(is.na(turb.set)) stop("'turb.set' not found\n")
 	if(turb.set<=0 || turb.set>num.sets) stop("'turb.set' not found\n")
-	if(!is.numeric(dir.set)) stop("'dir.set' must be numeric\n")
+	if(!is.numeric(dir.set)) dir.set <- match(dir.set, names(mast$sets))
+	if(is.na(dir.set)) stop("'dir.set' not found\n")
 	if(dir.set<=0 || dir.set>num.sets) stop("'dir.set' not found\n")
 	if(is.null(mast$sets[[turb.set]]$data$turb.int)) stop("Specified set does not contain turbulence intensity data\n")
 	if(is.null(mast$sets[[dir.set]]$data$dir.avg)) stop("Specified set does not contain wind direction data\n")

@@ -1,14 +1,19 @@
 \encoding{UTF-8}
 \name{weibull}
 \alias{weibull}
+\alias{wb}
 \title{Calculation of Weibull parameters}
 \description{Calculates the shape parameters (k) and scale parameters (A) of the Weibull distribution per direction sector.}
-\usage{weibull(mast, v.set, dir.set, num.sectors=12,
-  digits=3, print=TRUE)}
+\usage{
+weibull(mast, v.set, dir.set, num.sectors=12,
+  digits=3, print=TRUE)
+wb(mast, v.set, dir.set, num.sectors=12,
+  digits=3, print=TRUE)
+}
 \arguments{
   \item{mast}{Met mast object created by \code{\link{createMast}}.}
-  \item{v.set}{Set used for wind speed as numeric value (optional, if dir.set is given).}
-  \item{dir.set}{Set used for wind direction as integer value (optional, if \code{v.set} is given).}
+  \item{v.set}{Set used for wind speed, specified as set number or set name (optional, if dir.set is given).}
+  \item{dir.set}{Set used for wind direction, specified as set number or set name (optional, if \code{v.set} is given).}
   \item{num.sectors}{Number of wind direction sectors as integer value greater 1. Default is \code{12}.}
   \item{digits}{Number of decimal places to be used for results as numeric value. Default is \code{3}.}
   \item{print}{If \code{TRUE}, results are printed directly.}
@@ -54,6 +59,7 @@ weibull(mast=neubuerg, v.set=1)
 # the dataset is assigned to both
 weibull(mast=neubuerg, v.set=1)
 weibull(mast=neubuerg, dir.set=1)
+weibull(mast=neubuerg, dir.set="set1")
 
 # change number of direction sectors
 weibull(mast=neubuerg, v.set=1, num.sectors=16)

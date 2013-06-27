@@ -2,7 +2,7 @@ formatTS <-
 function(time.stamp, pattern) {
 ### formatting time stamp (lookup or with given pattern)
 	
-	if(anyDuplicated(time.stamp)) stop("'time.stamp' contains duplicates\n")
+	if(anyDuplicated(time.stamp)) if(any(duplicated(time.stamp)==TRUE)) stop("'time.stamp' contains duplicates\n") # sometimes anyDuplicated() founds duplicates although there are no duplicates
 	ts <- nts <- NULL
 	
 	if(missing(pattern)) { # search for pattern

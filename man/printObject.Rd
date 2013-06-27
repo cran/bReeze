@@ -1,9 +1,13 @@
 \encoding{UTF-8}
 \name{printObject}
 \alias{printObject}
+\alias{probj}
 \title{Print method for bReeze objects}
 \description{Summarizes information about a bReeze object.}
-\usage{printObject(object)}
+\usage{
+printObject(object)
+probj(object)
+}
 \arguments{
   \item{object}{bReeze object (from \code{\link{aep}}, \code{\link{availability}}, \code{\link{createMast}}, \code{\link{createSet}}, 
   \code{\link{createPC}}, \code{\link{energy}}, \code{\link{frequency}}, \code{\link{monthStats}}, \code{\link{profile}}, \code{\link{readPC}}, 

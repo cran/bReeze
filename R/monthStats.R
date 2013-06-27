@@ -12,7 +12,8 @@ function(mast, set, digits=3, print=TRUE) {
 	unit <- NULL
 	
 	if(set!="all") { # one set
-		if(!is.numeric(set)) stop("'set' must be numeric\n") 
+		if(!is.numeric(set)) set <- match(set, names(mast$sets))
+		if(is.na(set)) stop("Set not found\n") 
 		if(set<0 | set>num.sets) stop("Set not found\n")
 		if(is.null(mast$sets[[set]]$data$v.avg)) stop("Specified set does not contain average wind speed data\n")
 		m.mean.l <- list(monthStatsInt(mast$sets[[set]]$data$v.avg, mast$time.stamp, years, digits))
