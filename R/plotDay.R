@@ -1,8 +1,6 @@
 plotDay <-
 function(mast, set, signal, ...) {
 ### plotting diurnal wind speed data
-
-	stopifnot(require(RColorBrewer))
 	
 	if(is.null(attr(mast, "call"))) stop(paste(substitute(mast), "is no mast object"))
 	if(attr(mast, "call")$func!="createMast") stop(paste(substitute(mast), "is no mast object"))

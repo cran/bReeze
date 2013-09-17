@@ -1,8 +1,6 @@
 plotEnergy <-
 function(energy, show.total=TRUE, ...) {
 ###	plotting wind energy rose
-
-	stopifnot(require(RColorBrewer))
 	
 	if(is.null(attr(energy, "call")$func)) stop(paste(substitute(energy), "is no energy object\n"))
 	if(attr(energy, "call")$func!="energy") stop(paste(substitute(energy), "is no energy object\n"))

@@ -2,12 +2,19 @@ formatTS <-
 function(time.stamp, pattern) {
 ### formatting time stamp (lookup or with given pattern)
 	
+	cat("1 ", Sys.time(), "\n")
+	
 	if(anyDuplicated(time.stamp)) if(any(duplicated(time.stamp)==TRUE)) stop("'time.stamp' contains duplicates\n") # sometimes anyDuplicated() founds duplicates although there are no duplicates
 	ts <- nts <- NULL
+	
+	cat("2 ", Sys.time(), "\n")
 	
 	if(missing(pattern)) { # search for pattern
 		pattern.list <- read.table(system.file(package="bReeze", "ts_patterns", "patterns.txt"), sep=",")
 		pattern <- as.vector(unlist(pattern.list))
+		
+		cat("3 ", Sys.time(), "\n")
+		
 		for(i in 1:length(pattern)) {
 			nts <- strptime(time.stamp[1], pattern[i])
 			if(is.na(nts)) {
@@ -26,6 +33,9 @@ function(time.stamp, pattern) {
 				}
 			}
 		}
+		
+		cat("4 ", Sys.time(), "\n")
+		
 		if(length(nts)==1) stop("No pattern found\n")
 	} else { # pattern specified
 		nts <- strptime(time.stamp, pattern)

@@ -1,12 +1,15 @@
 monthStats <-
-function(mast, set, digits=3, print=TRUE) {
-### calculating monthly means
+function(mast, set, signal="v.avg", fun=c("mean", "median", "min", "max", "sd"), digits=3, print=TRUE) {
+### calculating monthly statistics
 
 	if(is.null(attr(mast, "call"))) stop(paste(substitute(mast), "is no mast object"))
-	if(attr(mast, "call")$func!="createMast") stop(paste(substitute(mast), "is no mast object"))
+	if(attr(mast, "call")$fun!="createMast") stop(paste(substitute(mast), "is no mast object"))
 	if(missing(set)) set <- "all"
+	if(is.null(signal)) stop("Please choose signal\n")
+	if(length(signal)>1) stop("Please choose only one signal\n")
+	if(missing(fun)) fun <- "mean"
 	
-	m.mean.l <- NULL
+	m.stats.l <- NULL
 	years <- unique(mast$time.stamp$year+1900)
 	num.sets <- length(mast$sets)
 	unit <- NULL
@@ -15,29 +18,31 @@ function(mast, set, digits=3, print=TRUE) {
 		if(!is.numeric(set)) set <- match(set, names(mast$sets))
 		if(is.na(set)) stop("Set not found\n") 
 		if(set<0 | set>num.sets) stop("Set not found\n")
-		if(is.null(mast$sets[[set]]$data$v.avg)) stop("Specified set does not contain average wind speed data\n")
-		m.mean.l <- list(monthStatsInt(mast$sets[[set]]$data$v.avg, mast$time.stamp, years, digits))
-		names(m.mean.l) <- names(mast$sets)[set]
-		unit <- attr(mast$sets[[set]]$data$v.avg, "unit")	
+		if(!any(names(mast$sets[[set]]$data)==signal)) stop("Specified set does not contain the choosen signal\n")
+		dat <- mast$sets[[set]]$data[,which(names(mast$sets[[set]]$data)==signal)]
+		m.stats.l <- list(monthStatsInt(dat, fun, mast$time.stamp, years, digits))
+		names(m.stats.l) <- names(mast$sets)[set]
+		unit <- attr(dat, "unit")	
 	} else { # all sets
 		set.index <- NULL
-		for(s in 1:num.sets) if(!is.null(mast$sets[[s]]$data$v.avg)) set.index <- append(set.index, s)
+		for(s in 1:num.sets) if(any(names(mast$sets[[s]]$data)==signal)) set.index <- append(set.index, s)
+		if(is.null(set.index)) stop("Signal not found in any set\n")
 		
-		m.mean.l <- list(monthStatsInt(mast$sets[[set.index[1]]]$data$v.avg, mast$time.stamp, years, digits))
+		m.stats.l <- list(monthStatsInt(mast$sets[[set.index[1]]]$data[,which(names(mast$sets[[set.index[1]]]$data)==signal)], fun, mast$time.stamp, years, digits))
 		unit <- attr(mast$sets[[set.index[1]]]$data$v.avg, "unit")
 		
 		if(length(set.index) > 1) {
 			for(s in 2:length(set.index)) {
-				m.mean.df <- monthStatsInt(mast$sets[[set.index[s]]]$data$v.avg, mast$time.stamp, years, digits)
-				m.mean.l[[length(m.mean.l)+1]] <- m.mean.df
+				m.stats.df <- monthStatsInt(mast$sets[[set.index[s]]]$data[,which(names(mast$sets[[set.index[s]]]$data)==signal)], fun, mast$time.stamp, years, digits)
+				m.stats.l[[length(m.stats.l)+1]] <- m.stats.df
 			}
 		}
-		names(m.mean.l) <- names(mast$sets)[set.index]
+		names(m.stats.l) <- names(mast$sets)[set.index]
 	}
 
-	attr(m.mean.l, "unit") <- unit
-	attr(m.mean.l, "call") <- list(func="monthStats", mast=deparse(substitute(mast)), set=set, digits=digits)
+	attr(m.stats.l, "unit") <- unit
+	attr(m.stats.l, "call") <- list(func="monthStats", mast=deparse(substitute(mast)), set=set, signal=signal, fun=fun, digits=digits)
 	
-	if(print) printObject(m.mean.l)
-	invisible(m.mean.l)
+	if(print) printObject(m.stats.l)
+	invisible(m.stats.l)
 }

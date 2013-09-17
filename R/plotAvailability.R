@@ -57,23 +57,17 @@ function(avail, set, ...) {
 	
 		for (i in 1:m) {
 			d <- length(avail[[set[s]]]$daily[i, !is.na(avail[[set[s]]]$daily[i,])])-1
-			for (j in 1:d) {
-				value <- avail[[set[s]]]$daily[i,j+1]
-				if(value==d.s) {
-					col <- color[1]
-					fill <- col.fill[1]
-				}
-				if(value<d.s && value>0) {
-					col <- color[2]
-					fill <- col.fill[2]
-				}
-				if(value==0) {
-					col <- color[3]
-					fill <- col.fill[3]
-				}
-				rect(j/31,1-i/m, (j-1)/31, 1-(i-1)/m, col=fill, border=border, lwd=lwd)
-				text((j-0.5)/31, 1-(i-0.5)/m, value, cex=0.4*c.cex, col=col)
-			}
+			col <- fill <- character(d)
+			value <- avail[[set[s]]]$daily[i,2:(d+1)]
+			col[value==d.s] <- color[1]
+			fill[value==d.s] <- col.fill[1]
+			col[value<d.s & value>0] <- color[2]
+			fill[value<d.s & value>0] <- col.fill[2]
+			col[value==0] <- color[3]
+			fill[value==0] <- col.fill[3]
+			
+			rect((1:d)/31,1-i/m, ((1:d)-1)/31, 1-(i-1)/m, col=fill, border=border, lwd=lwd)
+			text(((1:d)-0.5)/31, 1-(i-0.5)/m, value, cex=0.4*c.cex, col=col)
 		}
 		if(s==1) {
 			mtext(xlab, side=3, line=0.7, at=0.5, cex=0.8*cex.lab, col=col.lab)

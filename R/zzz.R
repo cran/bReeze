@@ -51,8 +51,8 @@ freq <- function(mast, v.set, dir.set, num.sectors=12, bins=c(5,10,15,20), digit
 	frequency(mast, v.set, dir.set, num.sectors=12, bins=c(5,10,15,20), digits=3, print=TRUE)
 }
 
-ms <- function(mast, set, digits=3, print=TRUE) {
-	monthStats(mast, set, digits=3, print=TRUE)
+ms <- function(mast, set, signal="v.avg", fun=c("mean", "median", "min", "max", "sd"), digits=3, print=TRUE) {
+	monthStats(mast, set, signal="v.avg", fun=c("mean", "median", "min", "max", "sd"), digits=3, print=TRUE)
 }
 
 plaep <- function(aep, show.total=TRUE, ...) {
@@ -115,8 +115,8 @@ probj <- function(object) {
 	printObject(object)
 }
 
-pro <- function(mast, v.set, dir.set, num.sectors=12, alpha=NULL, digits=3, print=TRUE) {
-	profile(mast, v.set, dir.set, num.sectors=12, alpha=NULL, digits=3, print=TRUE)
+pro <- function(mast, v.set, dir.set, num.sectors=12, method=c("hellman", "loglm", "fixed"), alpha=NULL, digits=3, print=TRUE) {
+	profile(mast, v.set, dir.set, num.sectors=12, method=c("hellman", "loglm", "fixed"), alpha=NULL, digits=3, print=TRUE)
 }
 
 rpc <- function(file) {

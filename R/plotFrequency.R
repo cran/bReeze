@@ -1,8 +1,6 @@
 plotFrequency <-
 function(freq, ...) {
 ### plotting frequency from frequency object
-
-	stopifnot(require(RColorBrewer))
 	
 	if(is.null(attr(freq, "call")$func)) stop(paste(substitute(freq), "is no frequency object\n"))
 	if(attr(freq, "call")$func!="frequency") stop(paste(substitute(freq), "is no frequency object\n"))

@@ -1,9 +1,7 @@
 plotMonthStats <- 
 function(stats, set, ...) {
 ### plotting monthly data
-	
-	stopifnot(require(RColorBrewer))
-	
+		
 	if(is.data.frame(stats)) num.sets <- 1
 	else num.sets <- length(stats)
 	if(is.null(attr(stats, "call")$func)) stop(paste(substitute(stats), "is no monthStats object\n"))

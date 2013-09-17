@@ -11,8 +11,8 @@ A collection of functions to analyse, visualize and interpret wind data and to c
 \tabular{lll}{
   \tab Package: \tab bReeze\cr
   \tab Type: \tab Package\cr
-  \tab Version: \tab 0.2-2\cr
-  \tab Date: \tab 2013-06-27\cr
+  \tab Version: \tab 0.2-3\cr
+  \tab Date: \tab 2013-09-17\cr
   \tab License: \tab GPL (>=2)\cr
 }
 Wind power is a global source of energy which attracts a large share of investments in renewables. Project sites with high wind potential do not only minimise the financial risk but increase the efficiency in carbon footprint reduction. Hence a thorough productivity analysis of a wind project is essential, regarding both economic and environmental aspects. The evaluation of the potential of a site requires a wind resource assessment, which is best based on data gained by a local measurement campaign. A methodology of processing the measured data has been established, resulting in a better understanding of the wind conditions of a site and therefore a more reliable estimation of energy production.

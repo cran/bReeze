@@ -1,9 +1,7 @@
 plotTimeSeries <-
 function(mast, set, signal=c("v.avg", "dir.avg", "turb.int"), start, end, ...) {
 ### plotting time series of mast data
-	
-	stopifnot(require(RColorBrewer))
-	
+		
 	if(is.null(attr(mast, "call"))) stop(paste(substitute(mast), "is no mast object"))
 	if(attr(mast, "call")$func!="createMast") stop(paste(substitute(mast), "is no mast object"))
 	num.sets <- length(mast$sets)

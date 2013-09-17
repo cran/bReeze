@@ -172,10 +172,10 @@ printObject <- function(object) {
 		if(attr(object, "call")$dir.set=="all") attr(object, "call")$dir.set <- "\"all\""
 		cat("call: availability(mast=", attr(object, "call")$mast, ", v.set=", attr(object, "call")$v.set, ", dir.set=", attr(object, "call")$dir.set, ", digits=", attr(object, "call")$digits, ")\n\n", sep="")
 	} else if(attr(object, "call")$func=="monthStats") { # month stats object
-		cat("\n\tMonthly means\n\n")
+		cat("\n\tMonthly statistics\n\n")
 		cat(names(object)[1], "\n")
 		object[[1]][is.na(object[[1]])] <- ""
-		names(object[[1]])[length(names(object[[1]]))] <- row.names(object[[1]])[14] <- "mean of months"
+		if(length(row.names(object[[1]]))==14) names(object[[1]])[length(names(object[[1]]))] <- row.names(object[[1]])[14] <- gsub("\\.", " ", row.names(object[[1]])[14])
 		row.names(object[[1]])[1:12] <- c(toupper(row.names(object[[1]])[1:12]))
 		print(object[[1]], quote=FALSE)
 		cat("\n")
@@ -183,14 +183,14 @@ printObject <- function(object) {
 			for(i in 2:length(object)) {
 				cat(names(object)[i], "\n")
 				object[[i]][is.na(object[[i]])] <- ""
-				names(object[[i]])[length(names(object[[i]]))] <- row.names(object[[i]])[14] <- "mean of months"
+				if(length(row.names(object[[1]]))==14) names(object[[i]])[length(names(object[[i]]))] <- row.names(object[[i]])[14] <- gsub("\\.", " ", row.names(object[[i]])[14])
 				row.names(object[[i]])[1:12] <- c(toupper(row.names(object[[i]])[1:12]))
 				print(object[[i]], quote=FALSE)
 				cat("\n")
 			}
 		}
 		if(attr(object, "call")$set=="all") attr(object, "call")$set <- "\"all\""
-		cat("call: monthStats(mast=", attr(object, "call")$mast, ", set=", attr(object, "call")$set, ", digits=", attr(object, "call")$digits, ")\n\n", sep="")
+		cat("call: monthStats(mast=", attr(object, "call")$mast, ", set=", attr(object, "call")$set, ", signal=\"", attr(object, "call")$signal, "\", fun=\"", attr(object, "call")$fun, "\", digits=", attr(object, "call")$digits, ")\n\n", sep="")
 	} else if(attr(object, "call")$func=="frequency") { # frequency object
 		cat("\n\tFrequency\n\n")
 		tbl.units <- data.frame(t(names(object)))
@@ -244,7 +244,7 @@ printObject <- function(object) {
 		print(rbind(tbl.units, obj), quote=FALSE)
 		cat("\nreference height:", object$h.ref, attr(object$h.ref, "unit"), "\n")
 		if(is.null(attr(object, "call")$alpha)) attr(object, "call")$alpha <- "NULL"
-		cat("\ncall: profile(mast=", attr(object, "call")$mast, ", v.set=c(", paste(attr(object, "call")$v.set, collapse=", "), "), dir.set=", attr(object, "call")$dir.set, ", num.sectors=", attr(object, "call")$num.sectors, ", alpha=", attr(object, "call")$alpha, ", digits=", attr(object, "call")$digits, ")\n\n", sep="")
+		cat("\ncall: profile(mast=", attr(object, "call")$mast, ", v.set=c(", paste(attr(object, "call")$v.set, collapse=", "), "), dir.set=", attr(object, "call")$dir.set, ", num.sectors=", attr(object, "call")$num.sectors, ", method=\"", attr(object, "call")$method, "\", alpha=", attr(object, "call")$alpha, ", digits=", attr(object, "call")$digits, ")\n\n", sep="")
 	} else if(attr(object, "call")$func=="aep") { # aep object
 		cat("\n\tAnnual energy production\n\n")
 		tbl.units <- data.frame(t(names(object$aep)))

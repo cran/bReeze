@@ -1,3 +1,17 @@
+bReeze 0.2-3 [2013-09-17]
+-------------------------
+
+* monthStats: all available signals of the met mast can now be 
+  used for calculations;
+  in addition to "mean", also "median", "min", "max" and "sd" 
+  can be applied
+
+* plotAvailability: faster plotting
+
+* profile: new method loglm (log-linear model) added - now more
+  than two heights can be used for profile calculation
+
+
 bReeze 0.2-2 [2013-06-27]
 -------------------------
 

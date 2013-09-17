@@ -20,7 +20,6 @@ function(file) {
 		r <- createPC(v, p, rho=1.225, desc=desc)
 		attr(r, "call") <- list(func="readPC", file=file)
 	} else if(type==".wtg") {
-		stopifnot(require(XML))
 		wtg <- xmlTreeParse(file, asTree=TRUE)
 		if(is.null(wtg$doc$children$WindTurbineGenerator)) stop("Cannot handle file\n")
 		n <- length(wtg$doc$children$WindTurbineGenerator)

@@ -1,8 +1,6 @@
 plotAep <-
 function(aep, show.total=TRUE, ...) {
 ###	plotting annual energy production rose
-
-	stopifnot(require(RColorBrewer))
 	
 	if(is.null(attr(aep, "call")$func)) stop(paste(substitute(aep), "is no aep object\n"))
 	if(attr(aep, "call")$func!="aep") stop(paste(substitute(aep), "is no aep object\n"))
