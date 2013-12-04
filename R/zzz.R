@@ -13,7 +13,7 @@ function(libname, pkgname) {
 changes <- 
 function(pkg="bReeze") {
     if(pkg=="bReeze")
-    file.show(file.path(system.file(package="bReeze"), "CHANGES"))
+    file.show(file.path(system.file(package="bReeze"), "NEWS"))
 }
 
 
@@ -119,8 +119,8 @@ pro <- function(mast, v.set, dir.set, num.sectors=12, method=c("hellman", "loglm
 	profile(mast, v.set, dir.set, num.sectors=12, method=c("hellman", "loglm", "fixed"), alpha=NULL, digits=3, print=TRUE)
 }
 
-rpc <- function(file) {
-	readPC(file)
+rpc <- function(file, ex=FALSE) {
+	readPC(file, ex=FALSE)
 }
 
 turb <- function(mast, turb.set, dir.set, num.sectors=12, bins=c(5,10,15,20), digits=3, print=TRUE) {

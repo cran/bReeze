@@ -24,7 +24,7 @@ The following graphical parameters can optionally be added to customize the plot
 	\item \code{col.axis}: Colour to be used for axis -- default is \code{"gray45"}.
     \item \code{col.lab}: Colour to be used for axis labels -- default is \code{"black"}.
     \item \code{fill}: Vector of three fill colours (or just one colour), where the first indicates 'full availability', the second 'partial availability' and the third 'not available'.
-    \item \code{lwd}: Line widths of the cell borders. See \code{par} for usage.
+    \item \code{lwd}: Line widths of the cell borders. See \code{\link{par}} for usage.
     \item \code{mar}: A numerical vector of the form c(bottom, left, top, right) which gives the number of lines of margin to be specified on the four sides of the plot -- default is \code{c(0, 0, 0, 0)}.
     \item \code{plot.names}: If \code{TRUE} (the default), the names of the datasets is plotted as second label of the y axis.
    	\item \code{xlab}: Alternative label for the x axis.

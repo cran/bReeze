@@ -73,8 +73,7 @@ neubuerg.wp <- profile(mast=neubuerg, v.set=c(1,2), dir.set=1,
   print=FALSE)
 
 # load power curve
-pw.56 <- readPC(file=system.file(package="bReeze", "powercurves", 
-  "PowerWind_56_900kW.wtg"))
+pw.56 <- readPC(file="PowerWind_56_900kW.wtg")
 
 # calculate AEP
 aep(profile=neubuerg.wp, pc=pw.56, hub.h=71)

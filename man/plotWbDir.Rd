@@ -29,8 +29,8 @@ The following graphical parameters can optionally be added to customize the plot
     \item \code{col.leg}: Colour to be used for legend text -- default is \code{"black"}.
     \item \code{col.ticks}: Colours for the axis line and the tick marks respectively -- default is \code{"black"}.
     \item \code{las}: Style of axis labels. One of \code{0} (always parallel to the axis, default), \code{1} (always horizontal), \code{2} (always perpendicular to the axis), \code{3} (always vertical).
-    \item \code{lty}: Vector of line types, assigned like \code{col}. See \code{par} for usage.
-    \item \code{lwd}: Vector of line widths, assigned like \code{col}. See \code{par} for usage.
+    \item \code{lty}: Vector of line types, assigned like \code{col}. See \code{\link{par}} for usage.
+    \item \code{lwd}: Vector of line widths, assigned like \code{col}. See \code{\link{par}} for usage.
     \item \code{mar}: A numerical vector of the form c(bottom, left, top, right) which gives the number of lines of margin to be specified on the four sides of the plot -- default is \code{c(4.5, 4.5, 1, 1)}.
     \item \code{mgp}: A numerical vector of the form c(label, annotation, line), which gives the margin line for the axis label, axis annotation and axis line. The default is \code{c(2.5, 0.7, 0)}.
     \item \code{pos.leg}: Position of legend -- one of \code{"bottomright"}, \code{"bottom"}, \code{"bottomleft"}, \code{"left"}, \code{"topleft"}, \code{"top"}, \code{"topright"}, \code{"right"} or \code{"center"}. Use \code{NULL} to hide the legend.

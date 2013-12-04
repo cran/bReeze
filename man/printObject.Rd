@@ -24,11 +24,11 @@ probj(object)
   \item{wind.speed}{List of average wind speed of the datasets (if available).}
   \item{availability}{List of the availability of the datasets (if available).}
   \item{cleaned}{List of the cleaning status of the datasets.}
+  
   Other objects are just printed without return value.
 }
 \author{Christian Graul}
-\seealso{\code{\link{aep}}, \code{\link{availability}}, \code{\link{createMast}}, \code{\link{createSet}}, \code{\link{createPC}}, \code{\link{energy}}, \code{\link{frequency}}, 
-\code{\link{monthStats}}, \code{\link{profile}}, \code{\link{readPC}}, \code{\link{turbulence}}, \code{\link{weibull}}}
+\seealso{\code{\link{aep}}, \code{\link{availability}}, \code{\link{createMast}}, \code{\link{createSet}}, \code{\link{createPC}}, \code{\link{energy}}, \code{\link{frequency}}, \code{\link{monthStats}}, \code{\link{profile}}, \code{\link{readPC}}, \code{\link{turbulence}}, \code{\link{weibull}}}
 \examples{
 \dontrun{
 # load and prepare data

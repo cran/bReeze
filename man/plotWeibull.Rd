@@ -34,8 +34,8 @@ The following graphical parameters can optionally be added to customize the plot
     \item \code{legend}: If \code{TRUE} (the default) a legend is drawn.
     \item \code{leg.text}: A character or \code{\link{expression}} vector to appear in the legend.
     \item \code{line}: Colour, used for the Weibull fit line.
-    \item \code{lty}: Line type of the Weibull fit line -- see \code{par} for available line types.
-    \item \code{lwd}: Line width for the Weibull fit line -- see \code{par} for usage.
+    \item \code{lty}: Line type of the Weibull fit line -- see \code{\link{par}} for available line types.
+    \item \code{lwd}: Line width for the Weibull fit line -- see \code{\link{par}} for usage.
     \item \code{mar}: A numerical vector of the form c(bottom, left, top, right) which gives the number of lines of margin to be specified on the four sides of the plot (only for plots with one dataset) -- default is \code{c(4.5, 4.5, 1, 1)}.
     \item \code{mgp}: A numerical vector of the form c(label, annotation, line), which gives the margin line for the axis label, axis annotation and axis line. The default is \code{c(2.2, 0.7, 0)}.
     \item \code{pos.leg}: Position of legend -- one of \code{"bottomright"}, \code{"bottom"}, \code{"bottomleft"}, \code{"left"}, \code{"topleft"}, \code{"top"}, \code{"topright"}, \code{"right"} or \code{"center"}. Use \code{NULL} to hide the legend.

@@ -170,7 +170,7 @@ printObject <- function(object) {
 		}
 		if(attr(object, "call")$v.set=="all") attr(object, "call")$v.set <- "\"all\""
 		if(attr(object, "call")$dir.set=="all") attr(object, "call")$dir.set <- "\"all\""
-		cat("call: availability(mast=", attr(object, "call")$mast, ", v.set=", attr(object, "call")$v.set, ", dir.set=", attr(object, "call")$dir.set, ", digits=", attr(object, "call")$digits, ")\n\n", sep="")
+		cat("call: availability(mast=", attr(object, "call")$mast, ", v.set=", attr(object, "call")$v.set, ", dir.set=", attr(object, "call")$dir.set, ", digits=", attr(object, "call")$digits, ", print=", attr(object, "call")$print, ")\n\n", sep="")
 	} else if(attr(object, "call")$func=="monthStats") { # month stats object
 		cat("\n\tMonthly statistics\n\n")
 		cat(names(object)[1], "\n")
@@ -190,7 +190,7 @@ printObject <- function(object) {
 			}
 		}
 		if(attr(object, "call")$set=="all") attr(object, "call")$set <- "\"all\""
-		cat("call: monthStats(mast=", attr(object, "call")$mast, ", set=", attr(object, "call")$set, ", signal=\"", attr(object, "call")$signal, "\", fun=\"", attr(object, "call")$fun, "\", digits=", attr(object, "call")$digits, ")\n\n", sep="")
+		cat("call: monthStats(mast=", attr(object, "call")$mast, ", set=", attr(object, "call")$set, ", signal=\"", attr(object, "call")$signal, "\", fun=\"", attr(object, "call")$fun, "\", digits=", attr(object, "call")$digits, ", print=", attr(object, "call")$print, ")\n\n", sep="")
 	} else if(attr(object, "call")$func=="frequency") { # frequency object
 		cat("\n\tFrequency\n\n")
 		tbl.units <- data.frame(t(names(object)))
@@ -203,13 +203,13 @@ printObject <- function(object) {
 		row.names(tbl.units) <- " "
 		row.names(obj) <- c(toupper(head(row.names(object), -1)), tail(row.names(object), 1))
 		print(rbind(tbl.units, obj), quote=FALSE)
-		cat("\ncall: frequency(mast=", attr(object, "call")$mast, ", v.set=", attr(object, "call")$v.set, ", dir.set=", attr(object, "call")$dir.set, ", num.sectors=", attr(object, "call")$num.sectors, ", bins=c(", paste(attr(object, "call")$bins, collapse=", "), "), digits=", attr(object, "call")$digits, ")\n\n", sep="")
+		cat("\ncall: frequency(mast=", attr(object, "call")$mast, ", v.set=", attr(object, "call")$v.set, ", dir.set=", attr(object, "call")$dir.set, ", num.sectors=", attr(object, "call")$num.sectors, ", bins=c(", paste(attr(object, "call")$bins, collapse=", "), "), digits=", attr(object, "call")$digits, ", print=", attr(object, "call")$print, ")\n\n", sep="")
 	} else if(attr(object, "call")$func=="turbulence") { # turbulence object
 		cat("\n\tTurbulence intensity\n\n")
 		row.names(object) <- c(toupper(head(row.names(object), -1)), tail(row.names(object), 1))
 		object[is.na(object)] <- ""
 		print(object, quote=FALSE)
-		cat("\ncall: turbulence(mast=", attr(object, "call")$mast, ", turb.set=", attr(object, "call")$turb.set, ", dir.set=", attr(object, "call")$dir.set, ", num.sectors=", attr(object, "call")$num.sectors, ", bins=c(", paste(attr(object, "call")$bins, collapse=", "), "), digits=", attr(object, "call")$digits, ")\n\n", sep="")
+		cat("\ncall: turbulence(mast=", attr(object, "call")$mast, ", turb.set=", attr(object, "call")$turb.set, ", dir.set=", attr(object, "call")$dir.set, ", num.sectors=", attr(object, "call")$num.sectors, ", bins=c(", paste(attr(object, "call")$bins, collapse=", "), "), digits=", attr(object, "call")$digits, ", print=", attr(object, "call")$print, ")\n\n", sep="")
 	} else if(attr(object, "call")$func=="weibull") { # weibull object
 		cat("\n\tWeibull parameters\n\n")
 		tbl.units <- data.frame(t(names(object)))
@@ -223,14 +223,14 @@ printObject <- function(object) {
 		row.names(tbl.units) <- " "
 		row.names(obj) <- c(toupper(head(row.names(object), -1)), tail(row.names(object), 1))
 		print(rbind(tbl.units, obj), quote=FALSE)
-		cat("\ncall: weibull(mast=", attr(object, "call")$mast, ", v.set=", attr(object, "call")$v.set, ", dir.set=", attr(object, "call")$dir.set, ", num.sectors=", attr(object, "call")$num.sectors, ", digits=", attr(object, "call")$digits, ")\n\n", sep="")
+		cat("\ncall: weibull(mast=", attr(object, "call")$mast, ", v.set=", attr(object, "call")$v.set, ", dir.set=", attr(object, "call")$dir.set, ", num.sectors=", attr(object, "call")$num.sectors, ", digits=", attr(object, "call")$digits, ", print=", attr(object, "call")$print, ")\n\n", sep="")
 	} else if(attr(object, "call")$func=="energy") { # energy object
 		cat("\n\tWind energy content\n\n")
 		row.names(object) <- c(toupper(head(row.names(object), -1)), tail(row.names(object), 1))
 		object[is.na(object)] <- ""
 		print(object, quote=FALSE)
 		cat("\t(all values in ", attr(object, "unit"), ")\n", sep="")
-		cat("\ncall: energy(wb=", attr(object, "call")$wb, ", rho=", attr(object, "call")$rho, ", bins=c(", paste(attr(object, "call")$bins, collapse=", "), "), digits=", attr(object, "call")$digits, ")\n\n", sep="")
+		cat("\ncall: energy(wb=", attr(object, "call")$wb, ", rho=", attr(object, "call")$rho, ", bins=c(", paste(attr(object, "call")$bins, collapse=", "), "), digits=", attr(object, "call")$digits, ", print=", attr(object, "call")$print, ")\n\n", sep="")
 	} else if(attr(object, "call")$func=="profile") { # profile object
 		cat("\n\tWind profile\n\n")
 		tbl.units <- data.frame(t(names(object$profile)))
@@ -244,7 +244,7 @@ printObject <- function(object) {
 		print(rbind(tbl.units, obj), quote=FALSE)
 		cat("\nreference height:", object$h.ref, attr(object$h.ref, "unit"), "\n")
 		if(is.null(attr(object, "call")$alpha)) attr(object, "call")$alpha <- "NULL"
-		cat("\ncall: profile(mast=", attr(object, "call")$mast, ", v.set=c(", paste(attr(object, "call")$v.set, collapse=", "), "), dir.set=", attr(object, "call")$dir.set, ", num.sectors=", attr(object, "call")$num.sectors, ", method=\"", attr(object, "call")$method, "\", alpha=", attr(object, "call")$alpha, ", digits=", attr(object, "call")$digits, ")\n\n", sep="")
+		cat("\ncall: profile(mast=", attr(object, "call")$mast, ", v.set=c(", paste(attr(object, "call")$v.set, collapse=", "), "), dir.set=", attr(object, "call")$dir.set, ", num.sectors=", attr(object, "call")$num.sectors, ", method=\"", attr(object, "call")$method, "\", alpha=", attr(object, "call")$alpha, ", digits=", attr(object, "call")$digits, ", print=", attr(object, "call")$print, ")\n\n", sep="")
 	} else if(attr(object, "call")$func=="aep") { # aep object
 		cat("\n\tAnnual energy production\n\n")
 		tbl.units <- data.frame(t(names(object$aep)))
@@ -259,6 +259,6 @@ printObject <- function(object) {
 		row.names(obj) <- c(toupper(head(row.names(object$aep), -1)), tail(row.names(object$aep), 1))
 		print(rbind(tbl.units, obj), quote=FALSE)
 		cat("\ncapacity factor:", object$capacity, "\n")
-		cat("\ncall: aep(profile=", attr(object, "call")$profile, ", pc=", attr(object, "call")$pc, ", hub.h=", attr(object, "call")$hub.h, ", rho=", attr(object, "call")$rho, ", avail=", attr(object, "call")$avail, ", bins=c(", paste(attr(object, "call")$bins, collapse=", "), "), sectoral=", attr(object, "call")$sectoral, ", digits=c(", paste(attr(object, "call")$digits, collapse=", "), ")\n\n", sep="")
+		cat("\ncall: aep(profile=", attr(object, "call")$profile, ", pc=", attr(object, "call")$pc, ", hub.h=", attr(object, "call")$hub.h, ", rho=", attr(object, "call")$rho, ", avail=", attr(object, "call")$avail, ", bins=c(", paste(attr(object, "call")$bins, collapse=", "), "), sectoral=", attr(object, "call")$sectoral, ", digits=c(", paste(attr(object, "call")$digits, collapse=", "), "), print=", attr(object, "call")$print, ")\n\n", sep="")
 	} else stop(paste(substitute(object), "seems not to be a bReeze object"))
 }

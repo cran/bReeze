@@ -32,8 +32,8 @@ The following graphical parameters can optionally be added to customize the plot
     \item \code{las}: Style of axis labels. One of \code{0} (always parallel to the axis, default), \code{1} (always horizontal), \code{2} (always perpendicular to the axis), \code{3} (always vertical).
     \item \code{legend}: If \code{TRUE} (the default) a legend is drawn.
     \item \code{leg.text}: A character or \code{\link{expression}} vector to appear in the legend.
-    \item \code{lty}: Vector of line types, assigned like \code{col}. See \code{par} for available line types.
-    \item \code{lwd}: Vector of line widths, assigned like \code{col}. See \code{par} for usage.
+    \item \code{lty}: Vector of line types, assigned like \code{col}. See \code{\link{par}} for available line types.
+    \item \code{lwd}: Vector of line widths, assigned like \code{col}. See \code{\link{par}} for usage.
     \item \code{mar}: A numerical vector of the form c(bottom, left, top, right) which gives the number of lines of margin to be specified on the four sides of the plot -- default is \code{c(5, 5, 1, 5)} for one y axis and \code{c(5, 5, 1, 1)} for two y axes.
     \item \code{mgp}: A numerical vector of the form c(label, annotation, line), which gives the margin line for the axis label, axis annotation and axis line. The default is \code{c(3, 1, 0)}.
     \item \code{pos.leg}: Position of legend -- one of \code{"bottomright"}, \code{"bottom"}, \code{"bottomleft"}, \code{"left"}, \code{"topleft"}, \code{"top"}, \code{"topright"}, \code{"right"} or \code{"center"}. Use \code{NULL} to hide the legend.
@@ -64,14 +64,10 @@ plotPC(pc=my.pc)
 plotPC(pc=my.pc, cp=FALSE, ct=FALSE)
 
 # plot list of power curves
-enercon.e82 <- readPC(file=system.file(package="bReeze", "powercurves", 
-  "Enercon_E82_2.0MW.pow"))
-gamesa.g83 <- readPC(file=system.file(package="bReeze", "powercurves", 
-  "Gamesa_G83_2.0MW.pow"))
-vestas.v80 <- readPC(file=system.file(package="bReeze", "powercurves", 
-  "Vestas_V80_2.0MW.wtg"))
-vestas.v90 <- readPC(file=system.file(package="bReeze", "powercurves", 
-  "Vestas_V90_2.0MW.wtg"))
+enercon.e82 <- readPC(file="Enercon_E82_2.0MW.pow")
+gamesa.g83 <- readPC(file="Gamesa_G83_2.0MW.pow")
+vestas.v80 <- readPC(file="Vestas_V80_2.0MW.wtg")
+vestas.v90 <- readPC(file="Vestas_V90_2.0MW.wtg")
 pc.2mw <- list(V80=vestas.v80, E82=enercon.e82, G83=gamesa.g83)
 plotPC(pc.2mw, ct=FALSE)
 plotPC(list(v80, v90))

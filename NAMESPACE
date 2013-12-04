@@ -62,6 +62,5 @@ export(
 
 ## Import packages
 import(
-  RColorBrewer,
-  XML
+  RColorBrewer
 )

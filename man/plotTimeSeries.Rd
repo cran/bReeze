@@ -35,7 +35,7 @@ The following graphical parameters can optionally be added to customize the plot
     \item \code{col.ticks}: Colours for the axis line and the tick marks respectively -- default is \code{"black"}.
     \item \code{las}: Style of axis labels. One of \code{0} (always parallel to the axis, default), \code{1} (always horizontal), \code{2} (always perpendicular to the axis), \code{3} (always vertical).
     \item \code{legend}: If \code{TRUE} (the default) a legend is drawn.
-    \item \code{lty}: Vector of line types -- one for each set plotted. See \code{par} for available line types.
+    \item \code{lty}: Vector of line types -- one for each set plotted. See \code{\link{par}} for available line types.
     \item \code{mar}: A numerical vector of the form c(bottom, left, top, right) which gives the number of lines of margin to be specified on the four sides of the plot (only for plots with one dataset) -- default is \code{c(1, 4.5, 0, 1)}.
     \item \code{mgp}: A numerical vector of the form c(label, annotation, line), which gives the margin line for the axis label, axis annotation and axis line. The default is \code{c(2.5, 0.7, 0)}.
 	\item \code{ylab}: String vector of labels for the y axis.

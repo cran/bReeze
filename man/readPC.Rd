@@ -5,11 +5,12 @@
 \title{Import power curve from file}
 \description{Imports a power curve from a WAsP 'wgt' file or a WindPower program 'pow' file.}
 \usage{
-readPC(file)
-rpc(file)
+readPC(file, ex=FALSE)
+rpc(file, ex=FALSE)
 }
 \arguments{
-  \item{file}{The name of, or the path to a 'wgt' or 'pow' file containing power curve data. It can also be a URL.}
+  \item{file}{The name of, or the path to a 'wgt' or 'pow' file containing power curve data.}
+  \item{ex}{Set to \code{TRUE}, if \code{file} is an external file (not included in the package directory of \code{bReeze}) -- default is \code{FALSE}.}
 }
 \details{
 \code{bReeze} provides several power curves of common manufacturers, that can be read from the package directory. See examples for usage.
@@ -72,15 +73,13 @@ All power curves are provided without any warranty of accuracy and timeliness. R
 \examples{
 \dontrun{
 # import power curve from bReeze wtg file
-vestas.v90 <- readPC(file=system.file(package="bReeze", "powercurves", 
-  "Vestas_V90_2.0MW.wtg"))
+vestas.v90 <- readPC(file="Vestas_V90_2.0MW.wtg")
 
 # import power curve from bReeze pow file
-repower.mm92 <- readPC(file=system.file(package="bReeze", "powercurves", 
-  "Repower_MM92_2.0MW.pow"))
+repower.mm92 <- readPC(file="Repower_MM92_2.0MW.pow")
 
 # import power curve from user file
-# e.g.: my.pc <- readPC(file="~/Projects/bReeze/Sandbox/myPowerCurve.wtg")
+# e.g.: my.pc <- readPC(file="~/Projects/bReeze/Sandbox/myPC.wtg", ex=TRUE)
 }
 }
 \keyword{methods}

@@ -1,6 +1,13 @@
 readPC <-
-function(file) {
+function(file, ex=FALSE) {
 ### importing power curve from WAsP .wgt file or WindPower program .pow file
+	
+	stopifnot(require(XML))
+	
+	if(!ex) {
+		if(system.file(package="bReeze", "powercurves", file)=="") stop("Power curve not found in package collection. To read external power curve files set 'ex' to TRUE")
+		file <- system.file(package="bReeze", "powercurves", file)
+	}
 	
 	type <- substr(file, nchar(file)-3, nchar(file))
 	if(!any(c(".pow", ".wtg")==type)) stop("Cannot handle file - only WAsP .wtg files and WindPower program .pow files are supported\n")

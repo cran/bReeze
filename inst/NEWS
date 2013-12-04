@@ -1,3 +1,13 @@
+bReeze 0.2-4 [2013-12-04]
+-------------------------
+
+* formatTS: removed some test code left in last version
+
+* readPC: simpler specifying of package directory files
+
+* some background improvements/fixes
+
+
 bReeze 0.2-3 [2013-09-17]
 -------------------------
 

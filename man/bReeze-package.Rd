@@ -11,8 +11,8 @@ A collection of functions to analyse, visualize and interpret wind data and to c
 \tabular{lll}{
   \tab Package: \tab bReeze\cr
   \tab Type: \tab Package\cr
-  \tab Version: \tab 0.2-3\cr
-  \tab Date: \tab 2013-09-17\cr
+  \tab Version: \tab 0.2-4\cr
+  \tab Date: \tab 2013-12-04\cr
   \tab License: \tab GPL (>=2)\cr
 }
 Wind power is a global source of energy which attracts a large share of investments in renewables. Project sites with high wind potential do not only minimise the financial risk but increase the efficiency in carbon footprint reduction. Hence a thorough productivity analysis of a wind project is essential, regarding both economic and environmental aspects. The evaluation of the potential of a site requires a wind resource assessment, which is best based on data gained by a local measurement campaign. A methodology of processing the measured data has been established, resulting in a better understanding of the wind conditions of a site and therefore a more reliable estimation of energy production.
@@ -21,7 +21,7 @@ Wind power is a global source of energy which attracts a large share of investme
 
 Usually the data to be analysed are collected by meteorological masts (met masts) and averaged over ten minutes, but other time intervals are also processable. 
 
-\code{bReeze} depends on two packages, written by other developers: \code{RColorBrewer} (by Erich Neuwirth) provides nice colours for the graphics. \code{XML} (by Duncan Temple Lang) provides xml parsing for power curve import.
+\code{bReeze} depends on or suggests two packages, written by other developers: \code{RColorBrewer} (by Erich Neuwirth) provides nice colours for the graphics and \code{XML} (by Duncan Temple Lang) provides xml parsing for power curve import.
 	
 Try the examples below to check if \code{bReeze} has been correctly installed. Any question and feedback is welcome via email to <christian.graul@gmail.com>.
 }
@@ -39,6 +39,7 @@ Further references are given under the specific functions of the package.
 }
 \keyword{package}
 \examples{
+\dontrun{
 # load example data
 data(winddata)
 
@@ -82,12 +83,12 @@ energy(wb=wb)
 pf <- profile(mast=metmast, v.set=c(1,2), dir.set=1)
 
 # import power curve
-pc <- readPC(file=system.file(package="bReeze", "powercurves", 
-  "Enercon_E126_7.5MW.pow"))
+pc <- readPC(file="Enercon_E126_7.5MW.pow")
 
 # calculate annual energy production
 aep <- aep(profile=pf, pc=pc, hub.h=135)
 
 # plot AEP
 plotAep(aep)
+}
 }
