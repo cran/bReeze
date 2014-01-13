@@ -1,0 +1,38 @@
+plotMap <-
+function(mast, type=c("satellite", "terrain", "hybrid", "roadmap"), zoom, label, ...) {
+### plotting map or satellite image of mast location
+
+	stopifnot(require(RgoogleMaps))
+
+	if(is.null(attr(mast, "call"))) stop(paste(substitute(mast), "is no mast object"))
+	if(attr(mast, "call")$func!="createMast") stop(paste(substitute(mast), "is no mast object"))
+	if(missing(type)) type <- "satellite"
+	type <- match.arg(type)
+	if(is.null(mast$location)) stop("No location found\n")
+	lat <- mast$location[1]
+	lon <- mast$location[2]
+	if(missing(zoom)) zoom <- 15
+	if(missing(label)) label <- paste(lat, lon, sep=",")
+
+	plot.param <- list(...)
+	if(any(names(plot.param)=="pch")) pch <- plot.param$pch
+	else pch <- 8
+	if(any(names(plot.param)=="col")) col <- plot.param$col
+	else col <- "#E41A1C"
+	if(any(names(plot.param)=="cex")) cex <- plot.param$cex
+	else cex <- 1.5
+	if(any(names(plot.param)=="col.lab")) col.lab <- plot.param$col.lab
+	else col.lab <- col
+	if(any(names(plot.param)=="cex.lab")) cex.lab <- plot.param$cex.lab
+	else cex.lab <- 1
+	if(any(names(plot.param)=="pos.lab")) pos.lab <- plot.param$pos.lab
+	else pos.lab <- 4
+	
+	tmp.file <- gsub("[^0-9]", "", substr(Sys.time(), 1, 19))
+	tmpmap <- GetMap(center=c(lat, lon), zoom=zoom, destfile=paste("map", tmp.file, ".png", sep=""), maptype=type, format="png32", verbose=0)
+	PlotOnStaticMap(tmpmap, lat=lat, lon=lon, destfile=paste("map", tmp.file, ".png", sep=""), cex=cex, pch=pch ,col=col, NEWMAP=FALSE)
+	if(!is.na(label)) TextOnStaticMap(tmpmap, lat=lat, lon=lon, labels=label, cex=cex.lab, col=col.lab, pos=pos.lab, add=TRUE)
+	
+	unlink(paste("map", tmp.file, ".png.rda", sep=""), recursive=FALSE, force=FALSE)
+	unlink(paste("map", tmp.file, ".png", sep=""), recursive=FALSE, force=FALSE)
+}

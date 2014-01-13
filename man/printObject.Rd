@@ -11,7 +11,7 @@ probj(object)
 \arguments{
   \item{object}{bReeze object (from \code{\link{aep}}, \code{\link{availability}}, \code{\link{createMast}}, \code{\link{createSet}}, 
   \code{\link{createPC}}, \code{\link{energy}}, \code{\link{frequency}}, \code{\link{monthStats}}, \code{\link{profile}}, \code{\link{readPC}}, 
-  \code{\link{turbulence}} or \code{\link{weibull}}).}
+  \code{\link{turbulence}}, \code{\link{uncertainty}} or \code{\link{weibull}}).}
 }
 \value{For met mast objects a list is returned:
   \item{location}{Lat/lon coordinates of the site (if available).}
@@ -28,7 +28,7 @@ probj(object)
   Other objects are just printed without return value.
 }
 \author{Christian Graul}
-\seealso{\code{\link{aep}}, \code{\link{availability}}, \code{\link{createMast}}, \code{\link{createSet}}, \code{\link{createPC}}, \code{\link{energy}}, \code{\link{frequency}}, \code{\link{monthStats}}, \code{\link{profile}}, \code{\link{readPC}}, \code{\link{turbulence}}, \code{\link{weibull}}}
+\seealso{\code{\link{aep}}, \code{\link{availability}}, \code{\link{createMast}}, \code{\link{createSet}}, \code{\link{createPC}}, \code{\link{energy}}, \code{\link{frequency}}, \code{\link{monthStats}}, \code{\link{profile}}, \code{\link{readPC}}, \code{\link{turbulence}}, \code{\link{uncertainty}}, \code{\link{weibull}}}
 \examples{
 \dontrun{
 # load and prepare data

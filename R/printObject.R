@@ -260,5 +260,28 @@ printObject <- function(object) {
 		print(rbind(tbl.units, obj), quote=FALSE)
 		cat("\ncapacity factor:", object$capacity, "\n")
 		cat("\ncall: aep(profile=", attr(object, "call")$profile, ", pc=", attr(object, "call")$pc, ", hub.h=", attr(object, "call")$hub.h, ", rho=", attr(object, "call")$rho, ", avail=", attr(object, "call")$avail, ", bins=c(", paste(attr(object, "call")$bins, collapse=", "), "), sectoral=", attr(object, "call")$sectoral, ", digits=c(", paste(attr(object, "call")$digits, collapse=", "), "), print=", attr(object, "call")$print, ")\n\n", sep="")
+	} else if(attr(object, "call")$func=="uncertainty") { # uncertainty object
+		cat("\n\tUncertainty\n\n")
+		ucm <- object$uncertainty.meth
+		cat("Uncertainties of applied methods:\n")
+		ucm.units <- data.frame(t(names(ucm)))
+		ucm.units[,] <- "[%]"
+		obj <- as.data.frame(lapply(ucm, as.character))
+		names(ucm) <- "uncertainty"
+		names(ucm.units) <- names(obj) <- names(ucm)
+		row.names(ucm.units) <- " "
+		print(rbind(ucm.units, ucm), quote=FALSE)
+		pe <- object$prob.exceedance
+		cat("\nProbability of exceedance:\n")
+		pe.units <- data.frame(t(names(pe)))
+		pe.units[,1] <- paste("[", attr(pe$probability, "unit"), "]", sep="")
+		pe.units[,2] <- paste("[", attr(pe$aep, "unit"), "]", sep="")
+		obj <- as.data.frame(lapply(pe, as.character))
+		names(pe)[2] <- "AEP"
+		names(pe.units) <- names(obj) <- names(pe)
+		row.names(pe.units) <- " "
+		row.names(pe) <- row.names(pe)
+		print(rbind(pe.units, pe), quote=FALSE)
+		cat("\ncall: uncertainty(aep=", attr(object, "call")$aep, ", uc.values=c(", paste(attr(object, "call")$uc.values, collapse=", "), "), uc.names=c(\"", paste(attr(object, "call")$uc.names, collapse="\", \""), "\"), prob=c(", paste(attr(object, "call")$prob, collapse=", "), "), digits=c(", paste(attr(uc, "call")$digits, collapse=", "), "), print=", attr(object, "call")$print, ")\n\n", sep="")
 	} else stop(paste(substitute(object), "seems not to be a bReeze object"))
 }

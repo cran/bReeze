@@ -1,3 +1,17 @@
+bReeze 0.3-0 [2014-01-13]
+-------------------------
+
+* plotMap: function for simple map plotting is back, 
+  now based on RgoogleMaps package
+
+* uncertainty: new function for uncertainty assessment 
+
+* plotUncertainty: new function for uncertainty plots
+
+* short name wrapper functions: bug fixed - default value 
+  confusion
+
+
 bReeze 0.2-4 [2013-12-04]
 -------------------------
 
@@ -102,7 +116,7 @@ bReeze 0.2-0 [2013-02-06]
   argument to show/hide results
 
 * further small improvements of code and documentation; 
-  name space added
+  namespace added
 
 
 bReeze 0.1-1 [2012-10-21]

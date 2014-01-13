@@ -30,6 +30,8 @@ export(
   plen,
   plotFrequency,
   plfreq,
+  plotMap,
+  map,
   plotMonthStats,
   plms,
   plotPC,
@@ -44,6 +46,8 @@ export(
   pliec,
   plotTurbulence,
   plturb,
+  plotUncertainty,
+  pluc,
   plotWbDir,
   plwbd,
   plotWeibull,
@@ -56,6 +60,8 @@ export(
   rpc,
   turbulence,
   turb,
+  uncertainty,
+  uc,
   weibull,
   wb
 )
