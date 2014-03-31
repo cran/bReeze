@@ -1,9 +1,9 @@
 frequency <-
-function(mast, v.set, dir.set, num.sectors=12, bins=c(5,10,15,20), digits=3, print=TRUE) {
+function(mast, v.set, dir.set, num.sectors=12, bins=c(5,10,15,20), subset, digits=3, print=TRUE) {
 ### calculating mean wind speed and frequency of sectors
 
-	if(is.null(attr(mast, "call"))) stop(paste(substitute(mast), "is no mast object"))
-	if(attr(mast, "call")$func!="createMast") stop(paste(substitute(mast), "is no mast object"))
+	if(is.null(attr(mast, "call"))) stop(paste(substitute(mast), "is no mast object\n"))
+	if(attr(mast, "call")$func!="createMast") stop(paste(substitute(mast), "is no mast object\n"))
 	num.sets <- length(mast$sets)
 	if(!missing(v.set) && missing(dir.set)) dir.set <- v.set
 	if(missing(v.set) && !missing(dir.set)) v.set <- dir.set
@@ -21,12 +21,35 @@ function(mast, v.set, dir.set, num.sectors=12, bins=c(5,10,15,20), digits=3, pri
 	if(is.null(mast$sets[[dir.set]]$data$dir.avg)) stop("Specified set does not contain wind direction data\n")
 	if(any(bins<0)) stop("'bins' must be NULL or a vector of positives\n")
 	
+	# subset
+	num.samples <- length(mast$time.stamp)
+	if(missing(subset)) subset <- c(NA, NA)
+	if((!any(is.character(subset)) && !any(is.na(subset))) || length(subset)!=2) stop("Please specify 'subset' as vector of start and end time stamp\n")
+	if(is.na(subset[1])) subset[1] <- as.character(mast$time.stamp[1])
+	if(is.na(subset[2])) subset[2] <- as.character(mast$time.stamp[num.samples])
+	start <- strptime(subset[1], "%Y-%m-%d %H:%M:%S")
+	end <- strptime(subset[2], "%Y-%m-%d %H:%M:%S")
+	if(is.na(start)) start <- strptime(subset[1], "%Y-%m-%d %H:%M")
+	if(is.na(end)) end <- strptime(subset[2], "%Y-%m-%d %H:%M")
+	if(is.na(start)) start <- strptime(subset[1], "%Y-%m-%d %H")
+	if(is.na(end)) end <- strptime(subset[2], "%Y-%m-%d %H")
+	if(is.na(start)) stop("Specified start time stamp in 'subset' not correctly formated\n")
+	if(is.na(end)) stop("Specified end time stamp in 'subset' not correctly formated\n")
+	if(start<mast$time.stamp[1] || start>mast$time.stamp[num.samples]) stop("Specified 'start' not in period\n")
+	match.date <- difftime(mast$time.stamp, ISOdatetime(1,1,1,0,0,0), tz="GMT", units="days") - difftime(start, ISOdatetime(1,1,1,0,0,0), tz="GMT", units="days")
+	start <- which(abs(as.numeric(match.date)) == min(abs(as.numeric(match.date))))
+	if(end<mast$time.stamp[1] || end>mast$time.stamp[num.samples]) stop("Specified 'end' not in period\n")
+	match.date <- difftime(mast$time.stamp, ISOdatetime(1,1,1,0,0,0), tz="GMT", units="days") - difftime(end, ISOdatetime(1,1,1,0,0,0), tz="GMT", units="days")
+	end <- which(abs(as.numeric(match.date)) == min(abs(as.numeric(match.date))))
+	v <- mast$sets[[v.set]]$data$v.avg[start:end]
+	d <- mast$sets[[dir.set]]$data$dir.avg[start:end]
+	
 	sector.width <- 360/num.sectors
 	sectors <- seq(0, 360-sector.width, by=sector.width)
 	sector.edges <- c(sectors-sector.width/2, tail(sectors, n=1)+sector.width/2)%%360
 	if(!is.null(bins)) if(head(bins, 1)!=0) bins <- c(0, bins)
 	num.classes <- length(bins)
-	v.max <- max(mast$sets[[v.set]]$data$v.avg, na.rm=TRUE)
+	v.max <- max(v, na.rm=TRUE)
 	if(num.classes>2) {
 		for(i in (num.classes-1):2) {
 			if(bins[i+1]>=v.max & bins[i]>=v.max) {
@@ -36,32 +59,33 @@ function(mast, v.set, dir.set, num.sectors=12, bins=c(5,10,15,20), digits=3, pri
 		}
 	}
 	if(!is.null(bins)) if(num.classes==2 && bins[num.classes]>=v.max) stop("Only one wind class found\n")
-	
+		
 	freq.tbl <- matrix(NA, nrow=num.sectors+1, ncol=num.classes+2)
+	
 	# index for valid data
-	idx.val <- !is.na(mast$sets[[v.set]]$data$v.avg) & !is.na(mast$sets[[dir.set]]$data$dir.avg) & mast$sets[[v.set]]$data$v.avg >= 0
+	idx.val <- !is.na(v) & !is.na(d) & v>=0
 	
 	for(s in 1:num.sectors) {
 		# index for direction
 		low <- sector.edges[s]
 		high <- sector.edges[s+1]
-		if(low<high) idx.dir <- mast$sets[[dir.set]]$data$dir.avg>=low & mast$sets[[dir.set]]$data$dir.avg<high
-		else idx.dir <- mast$sets[[dir.set]]$data$dir.avg>=low | mast$sets[[dir.set]]$data$dir.avg<high
+		if(low<high) idx.dir <- d>=low & d<high
+		else idx.dir <- d>=low | d<high
 		
-		freq.tbl[s,1] <- mean(mast$sets[[v.set]]$data$v.avg[idx.val & idx.dir])
-		freq.tbl[s,2] <- length(mast$sets[[v.set]]$data$v.avg[idx.val & idx.dir]) * 100 / length(mast$sets[[dir.set]]$data$dir.avg[idx.val])
+		freq.tbl[s,1] <- mean(v[idx.val & idx.dir], na.rm=TRUE)
+		freq.tbl[s,2] <- length(v[idx.val & idx.dir]) * 100 / length(d[idx.val])
 		if(!is.null(bins)) {
 			for(c in 1:(num.classes-1)) {
 				# index for wind class
-				idx.class <- mast$sets[[v.set]]$data$v.avg>=bins[c] & mast$sets[[v.set]]$data$v.avg<bins[c+1]
-				freq.tbl[s,c+2] <- length(mast$sets[[v.set]]$data$v.avg[idx.val & idx.dir & idx.class]) * 100 / length(mast$sets[[dir.set]]$data$dir.avg[idx.val])
+				idx.class <- v>=bins[c] & v<bins[c+1]
+				freq.tbl[s,c+2] <- length(v[idx.val & idx.dir & idx.class]) * 100 / length(d[idx.val])
 			}
 		}
 		if(!is.null(bins)) {
-			freq.tbl[s,num.classes+2] <- length(mast$sets[[v.set]]$data$v.avg[idx.val & idx.dir & mast$sets[[v.set]]$data$v.avg>=bins[num.classes]]) * 100 / length(mast$sets[[dir.set]]$data$dir.avg[idx.val])
+			freq.tbl[s,num.classes+2] <- length(v[idx.val & idx.dir & v>=bins[num.classes]]) * 100 / length(d[idx.val])
 		}
 	}
-	freq.tbl[num.sectors+1,1] <- mean(mast$sets[[v.set]]$data$v.avg, na.rm=TRUE)
+	freq.tbl[num.sectors+1,1] <- mean(v[idx.val], na.rm=TRUE) # idx.val???
 	freq.tbl[num.sectors+1,2] <- sum(freq.tbl[1:num.sectors,2], na.rm=TRUE)
 	
 	if(!is.null(bins)) for(i in 3:(num.classes+2)) freq.tbl[num.sectors+1,i] <- sum(freq.tbl[1:num.sectors,i], na.rm=TRUE)
@@ -82,10 +106,9 @@ function(mast, v.set, dir.set, num.sectors=12, bins=c(5,10,15,20), digits=3, pri
 	for(i in 1:length(freq.tbl)) freq.tbl[,i][is.nan(freq.tbl[,i]) | freq.tbl[,i]==0] <- NA
 	if(sum(freq.tbl[,length(freq.tbl)], na.rm=TRUE)==0) freq.tbl[,length(freq.tbl)] <- NULL
 	
-	unit <-
-	attr(freq.tbl, "units") <- c(attr(mast$sets[[v.set]]$data$v.avg, "unit"), "%")
-	attr(freq.tbl, "call") <- list(func="frequency", mast=deparse(substitute(mast)), v.set=v.set, dir.set=dir.set, num.sectors=num.sectors, bins=bins, digits=digits, print=print)
-	
+	unit <- attr(freq.tbl, "units") <- c(attr(mast$sets[[v.set]]$data$v.avg, "unit"), "%")
+	attr(freq.tbl, "call") <- list(func="frequency", mast=deparse(substitute(mast)), v.set=v.set, dir.set=dir.set, num.sectors=num.sectors, bins=bins, subset=subset, digits=digits, print=print)
+		
 	freq.tbl <- round(freq.tbl, digits)
 	if(print) printObject(freq.tbl)
 	invisible(freq.tbl)

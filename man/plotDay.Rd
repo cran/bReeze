@@ -5,13 +5,16 @@
 \title{Plot diurnal wind speed}
 \description{Plots the diurnal variation of wind speed or wind direction.}
 \usage{
-plotDay(mast, set, signal, ...)
-plday(mast, set, signal, ...)
+plotDay(mast, set, dir.set=set, signal, num.sectors=NULL, subset, ...)
+plday(mast, set, dir.set=set, signal, num.sectors=NULL, subset, ...)
 }
 \arguments{
   \item{mast}{Met mast object created by \code{\link{createMast}}.}
-  \item{set}{Set used for plotting specified as set number or set name. Argument is optional -- if missing, all sets containing the choosen \code{signal} are used.}
-  \item{signal}{Signal to be plotted.}
+  \item{set}{Set used for plotting, specified as set number or set name. Argument is optional -- if missing, all sets containing the choosen \code{signal} are used.}
+  \item{dir.set}{Direction set used for sectoral splitting of the data, specified as set number or set name. Argument is used for sectoral plotting only (see \code{num.sectors}).}
+  \item{signal}{Signal to be plotted as string.}
+  \item{num.sectors}{Number of wind direction sectors as integer value greater 1. Argument is optional -- if not \code{NULL}, data is splitted into directional sectors for plotting. Sectoral plots are available only for single sets.}
+  \item{subset}{Optional start and end time stamp for a data subset, as string vector \code{c(start, end)}. The time stamps format shall follow the rules of ISO 8601 international standard, e.g. "2012-08-08 22:55:00".}
   \item{\dots}{Optional graphical parameters, see below for details.}
 }
 \section{Optional graphical parameters}{
@@ -66,6 +69,17 @@ plotDay(mast=neubuerg, signal="dir.avg")
 plotDay(mast=neubuerg, set=1, signal="v.avg")
 plotDay(mast=neubuerg, set="set1", signal="v.avg")	# same as above
 plotDay(mast=neubuerg, set=2, signal="dir.avg")
+
+# sectoral plot
+plotDay(mast=neubuerg, set=1, signal="v.avg", num.sectors=8)
+
+# data subsets
+plotDay(mast=neubuerg, signal="v.avg", 
+  subset=c("2009-12-01 00:00:00", "2009-12-31 23:50:00"))
+plotDay(mast=neubuerg, signal="v.avg",  
+  subset=c("2010-01-01 00:00:00", NA)) # just 'start' time stamp
+plotDay(mast=neubuerg, set=1, signal="v.avg", num.sectors=4, 
+  subset=c(NA, "2009-12-31 23:50:00")) # just 'end' time stamp
 
 # customize plot
 plotDay(mast=neubuerg, signal="v.avg", 

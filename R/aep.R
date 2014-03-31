@@ -12,7 +12,7 @@ function(profile, pc, hub.h, rho=1.225, avail=1, bins=c(5,10,15,20), sectoral=FA
 	if(is.null(attr(profile, "call"))) stop(paste(substitute(profile), "is no profile object\n"))
 	if(attr(profile, "call")$func!="profile") stop(paste(substitute(profile), "is no profile object\n"))
 	if(is.null(attr(pc, "call"))) stop(paste(substitute(pc), "is no profile object\n"))
-	if(attr(pc, "call")$func!="readPC" & attr(pc, "call")$func!="createPC") stop(paste(substitute(pc), "is no power curve object - use create.pc to create a power curve or read.pc to import a power curve from file\n"))
+	if(attr(pc, "call")$func!="createPC" && attr(pc, "call")$func!="readPC") stop(paste(substitute(pc), "is no power curve object - use createPC to create a power curve or readPC to import a power curve from file\n"))
 	if(!is.numeric(hub.h)) stop("'hub.h' must be numeric\n")
 	if(!is.numeric(rho)) stop("'rho' must be numeric\n")
 	if(!is.numeric(avail)) stop("'avail' must be numeric\n")
@@ -28,16 +28,30 @@ function(profile, pc, hub.h, rho=1.225, avail=1, bins=c(5,10,15,20), sectoral=FA
 	v.set <- attr(profile, "call")$v.set[1]
 	dir.set <- attr(profile, "call")$dir.set
 	num.sectors <- attr(profile, "call")$num.sectors
+	subset <- attr(profile, "call")$subset
 	rho.pc <- attr(pc, "rho")
 	rated.p <- attr(pc, "rated.power")
+	
+	# subset
+	num.samples <- length(mast$time.stamp)
+	start <- strptime(subset[1], "%Y-%m-%d %H:%M:%S")
+	end <- strptime(subset[2], "%Y-%m-%d %H:%M:%S")
+	if(is.na(start)) start <- strptime(subset[1], "%Y-%m-%d %H:%M")
+	if(is.na(end)) end <- strptime(subset[2], "%Y-%m-%d %H:%M")
+	if(is.na(start)) start <- strptime(subset[1], "%Y-%m-%d %H")
+	if(is.na(end)) end <- strptime(subset[2], "%Y-%m-%d %H")
+	match.date <- difftime(mast$time.stamp, ISOdatetime(1,1,1,0,0,0), tz="GMT", units="days") - difftime(start, ISOdatetime(1,1,1,0,0,0), tz="GMT", units="days")
+	start <- which(abs(as.numeric(match.date)) == min(abs(as.numeric(match.date))))
+	match.date <- difftime(mast$time.stamp, ISOdatetime(1,1,1,0,0,0), tz="GMT", units="days") - difftime(end, ISOdatetime(1,1,1,0,0,0), tz="GMT", units="days")
+	end <- which(abs(as.numeric(match.date)) == min(abs(as.numeric(match.date))))
 	
 	sector.width <- 360/num.sectors
 	sectors <- seq(0, 360-sector.width, by=sector.width)
 	sector.edges <- c(sectors-sector.width/2, tail(sectors, n=1)+sector.width/2)%%360
 	
-	v.ref <- mast$sets[[v.set]]$data$v.avg
+	v.ref <- mast$sets[[v.set]]$data$v.avg[start:end]
 	h.ref <- profile$h.ref 
-	dir <- mast$sets[[dir.set]]$data$dir.avg
+	dir <- mast$sets[[dir.set]]$data$dir.avg[start:end]
 	idx <- !is.na(v.ref) & !is.na(dir)
 	v.hh <- v.ref[idx]
 	dir <- dir[idx]

@@ -13,13 +13,13 @@ cln(mast, set, v.avg.min=0.4, v.avg.max=50, dir.clean=TRUE,
 \arguments{
   \item{mast}{Met mast object created by \code{\link{createMast}}. To be ignored, if a single dataset shall be cleaned.}
   \item{set}{Set object created by \code{\link{createSet}} (if no \code{mast} is given) or set of met mast specified as set number or set name. To be ignored, if all datasets of \code{mast} shall be cleaned.}
-  \item{v.avg.min}{Lower limit for wind speeds as numeric value. Default is \code{0.4} m/s.}
-  \item{v.avg.max}{Upper limit for wind speeds as numeric value. Default is \code{50} m/s.}
-  \item{dir.clean}{If \code{TRUE}, faulty wind direction values are excluded. Faulty values are \code{dir.avg}<0, \code{dir.avg}>360 and \code{dir.avg}, where the wind speed is lower than the \code{v.avg.min} specified. Default is \code{TRUE}.}
-  \item{turb.clean}{Wind speed limit for turbulence intensity. Turbulence intesity values are excluded for wind speeds lower then this limit. Default is 4 m/s.}
+  \item{v.avg.min}{Lower limit for wind speeds as numeric value. Default is \code{0.4} m/s. Set to \code{NULL} to omit minimum wind speed.}
+  \item{v.avg.max}{Upper limit for wind speeds as numeric value. Default is \code{50} m/s. Set to \code{NULL} to omit maximum wind speed.}
+  \item{dir.clean}{If \code{TRUE} (default), faulty wind direction values are excluded. Faulty values are \code{dir.avg}<0, \code{dir.avg}>360 and \code{dir.avg}, where the wind speed is lower than the \code{v.avg.min} specified.}
+  \item{turb.clean}{Wind speed limit for turbulence intensity as numeric value. Turbulence intesity values are excluded for wind speeds lower then this limit. Default is 4 m/s.}
   \item{icing}{If \code{TRUE}, wind direction values are excluded, where standard deviation of wind direction is 0, assuming icing. Default is \code{FALSE}.}
   \item{rep}{Signal (or a vector of signals), for which repetitions shall be cleaned -- default is \code{NULL}.}
-  \item{n.rep}{Number of repetitions that shall be cleaned, as integer value -- default is \code{5}. Only used if \code{rep} is not \code{NULL}.}
+  \item{n.rep}{Minimum number of repetitions that shall be cleaned, as integer value -- default is \code{5}. Only used if \code{rep} is not \code{NULL}.}
 }
 \value{Returns the input met mast or dataset object with cleaned data.}
 \details{Turbulence can be ignored for low wind speeds. Use \code{turb.clean} to clean the respective turbulence intensity values. See \code{\link{turbulence}} for more details.

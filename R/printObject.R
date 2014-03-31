@@ -1,7 +1,7 @@
 printObject <- function(object) {
 ### summarising object information
-
-	if(is.null(attr(object, "call"))) stop(paste(substitute(object), "seems not to be a bReeze object"))
+	
+	if(is.null(attr(object, "call"))) stop(paste(substitute(object), "seems not to be a bReeze object\n"))
 	
 	if(attr(object, "call")$func=="createMast") { # mast object
 		if(!is.null(object$location)) loc <- object$location
@@ -61,13 +61,13 @@ printObject <- function(object) {
 			cat("location: ", abs(object$location[1]), ns, abs(object$location[2]), we, "\n", sep="")
 		}
 		if(!is.null(object$description)) cat("description:", object$description, "\n\n")
-		cat(paste("measuring period: from ", period.start, " to ", period.end, " (", round(period.days, 1), " days)\n", sep=""))
+		cat(paste0("measuring period: from ", period.start, " to ", period.end, " (", round(period.days, 1), " days)\n"))
 		cat("samples:", num.samples, "\n\n")
 		cat("datasets (", num.sets, "):\n", sep="")
 		det <- data.frame(cbind(heights, round(wind.speed, 2), round(avail, 1)))
 		tbl.units <- data.frame(t(names(det)))
-		tbl.units[,1] <- paste("[", h.unit, "]", sep="")
-		tbl.units[,2] <- paste("[", v.unit, "]", sep="")
+		tbl.units[,1] <- paste0("[", h.unit, "]")
+		tbl.units[,2] <- paste0("[", v.unit, "]")
 		tbl.units[,3] <- "[%]"
 		det[is.na(det)] <- ""
 		det <- as.data.frame(lapply(det, as.character))
@@ -104,7 +104,7 @@ printObject <- function(object) {
 		cat("samples:", nrow(object$data), "\n")
 		cat("height:", object$height, attr(object$height, "unit"), "\n")
 		signals <- names(object$data)
-		if(!is.null(object$data$v.avg) && !is.null(object$data$dir.avg)) cat(paste("availability: ", round(sum(!is.na(object$data$v.avg) & !is.na(object$data$dir.avg)) * 100 / nrow(object$data)), "%\n", sep="")) else cat("availability: 0%\n")
+		if(!is.null(object$data$v.avg) && !is.null(object$data$dir.avg)) cat(paste0("availability: ", round(sum(!is.na(object$data$v.avg) & !is.na(object$data$dir.avg)) * 100 / nrow(object$data)), "%\n")) else cat("availability: 0%\n")
 		cat("\nsignals:")
 		if(is.null(attr(object$data, "clean"))) clean <- "not cleaned"
 		else clean <- unlist(attr(object$data, "clean"))
@@ -128,8 +128,8 @@ printObject <- function(object) {
 		cat("air pressure:", attr(object, "rho"), "\n\n")
 		tbl.units <- data.frame(t(names(object)))
 		tbl.units[,] <- "[-]"
-		tbl.units[,1] <- paste("[", attr(object, "units")[1], "]", sep="")
-		tbl.units[,2] <- paste("[", attr(object, "units")[2], "]", sep="")
+		tbl.units[,1] <- paste0("[", attr(object, "units")[1], "]")
+		tbl.units[,2] <- paste0("[", attr(object, "units")[2], "]")
 		object[is.na(object)] <- ""
 		obj <- as.data.frame(lapply(object, as.character))
 		names(object)[1] <- "wind speed"
@@ -168,9 +168,13 @@ printObject <- function(object) {
 				cat("\n")
 			}
 		}
-		if(attr(object, "call")$v.set=="all") attr(object, "call")$v.set <- "\"all\""
-		if(attr(object, "call")$dir.set=="all") attr(object, "call")$dir.set <- "\"all\""
-		cat("call: availability(mast=", attr(object, "call")$mast, ", v.set=", attr(object, "call")$v.set, ", dir.set=", attr(object, "call")$dir.set, ", digits=", attr(object, "call")$digits, ", print=", attr(object, "call")$print, ")\n\n", sep="")
+		if(attr(object, "call")$v.set[1]=="all") attr(object, "call")$v.set[1] <- "\"all\""
+		if(attr(object, "call")$dir.set[1]=="all") attr(object, "call")$dir.set[1] <- "\"all\""
+		if(length(attr(object, "call")$v.set)==1) vset <- paste0(", v.set=", attr(object, "call")$v.set)
+		else vset <- paste0(", v.set=c(", paste0(attr(object, "call")$v.set, collapse=", "), ")")
+		if(length(attr(object, "call")$dir.set)==1) dirset <- paste0(", dir.set=", attr(object, "call")$dir.set)
+		else dirset <- paste0(", dir.set=c(", paste0(attr(object, "call")$dir.set, collapse=", "), ")")
+		cat("call: availability(mast=", attr(object, "call")$mast, vset, dirset, ", subset=c(\"", paste(attr(object, "call")$subset, collapse="\", \""), "\"), digits=", attr(object, "call")$digits, ", print=", attr(object, "call")$print, ")\n\n", sep="")
 	} else if(attr(object, "call")$func=="monthStats") { # month stats object
 		cat("\n\tMonthly statistics\n\n")
 		cat(names(object)[1], "\n")
@@ -190,12 +194,13 @@ printObject <- function(object) {
 			}
 		}
 		if(attr(object, "call")$set=="all") attr(object, "call")$set <- "\"all\""
-		cat("call: monthStats(mast=", attr(object, "call")$mast, ", set=", attr(object, "call")$set, ", signal=\"", attr(object, "call")$signal, "\", fun=\"", attr(object, "call")$fun, "\", digits=", attr(object, "call")$digits, ", print=", attr(object, "call")$print, ")\n\n", sep="")
+		cat("call: monthStats(mast=", attr(object, "call")$mast, ", set=", attr(object, "call")$set, ", signal=\"", attr(object, "call")$signal, "\", fun=\"", attr(object, "call")$fun, "\", subset=c(\"", paste(attr(object, "call")$subset, collapse="\", \""), "\"), digits=", attr(object, "call")$digits, ", print=", attr(object, "call")$print, ")\n\n", sep="")
 	} else if(attr(object, "call")$func=="frequency") { # frequency object
 		cat("\n\tFrequency\n\n")
+		object <- as.data.frame(object)
 		tbl.units <- data.frame(t(names(object)))
-		tbl.units[,] <- paste("[", attr(object, "unit")[2], "]", sep="")
-		tbl.units[,1] <- paste("[", attr(object, "unit")[1], "]", sep="")
+		tbl.units[,] <- paste0("[", attr(object, "unit")[2], "]")
+		tbl.units[,1] <- paste0("[", attr(object, "unit")[1], "]")
 		object[is.na(object)] <- ""
 		obj <- as.data.frame(lapply(object, as.character))
 		names(object)[1] <- "wind speed"
@@ -203,27 +208,27 @@ printObject <- function(object) {
 		row.names(tbl.units) <- " "
 		row.names(obj) <- c(toupper(head(row.names(object), -1)), tail(row.names(object), 1))
 		print(rbind(tbl.units, obj), quote=FALSE)
-		cat("\ncall: frequency(mast=", attr(object, "call")$mast, ", v.set=", attr(object, "call")$v.set, ", dir.set=", attr(object, "call")$dir.set, ", num.sectors=", attr(object, "call")$num.sectors, ", bins=c(", paste(attr(object, "call")$bins, collapse=", "), "), digits=", attr(object, "call")$digits, ", print=", attr(object, "call")$print, ")\n\n", sep="")
+		cat("\ncall: frequency(mast=", attr(object, "call")$mast, ", v.set=", attr(object, "call")$v.set, ", dir.set=", attr(object, "call")$dir.set, ", num.sectors=", attr(object, "call")$num.sectors, ", bins=c(", paste(attr(object, "call")$bins, collapse=", "), "), subset=c(\"", paste(attr(object, "call")$subset, collapse="\", \""), "\"), digits=", attr(object, "call")$digits, ", print=", attr(object, "call")$print, ")\n\n", sep="")
 	} else if(attr(object, "call")$func=="turbulence") { # turbulence object
 		cat("\n\tTurbulence intensity\n\n")
 		row.names(object) <- c(toupper(head(row.names(object), -1)), tail(row.names(object), 1))
 		object[is.na(object)] <- ""
 		print(object, quote=FALSE)
-		cat("\ncall: turbulence(mast=", attr(object, "call")$mast, ", turb.set=", attr(object, "call")$turb.set, ", dir.set=", attr(object, "call")$dir.set, ", num.sectors=", attr(object, "call")$num.sectors, ", bins=c(", paste(attr(object, "call")$bins, collapse=", "), "), digits=", attr(object, "call")$digits, ", print=", attr(object, "call")$print, ")\n\n", sep="")
+		cat("\ncall: turbulence(mast=", attr(object, "call")$mast, ", turb.set=", attr(object, "call")$turb.set, ", dir.set=", attr(object, "call")$dir.set, ", num.sectors=", attr(object, "call")$num.sectors, ", bins=c(", paste(attr(object, "call")$bins, collapse=", "), "), subset=c(\"", paste(attr(object, "call")$subset, collapse="\", \""), "\"), digits=", attr(object, "call")$digits, ", print=", attr(object, "call")$print, ")\n\n", sep="")
 	} else if(attr(object, "call")$func=="weibull") { # weibull object
 		cat("\n\tWeibull parameters\n\n")
 		tbl.units <- data.frame(t(names(object)))
-		tbl.units[,1] <- paste("[", attr(object, "unit")[1], "]", sep="")
-		tbl.units[,2] <- paste("[", attr(object, "unit")[2], "]", sep="")
-		tbl.units[,3] <- paste("[", attr(object, "unit")[3], "]", sep="")
-		tbl.units[,4] <- paste("[", attr(object, "unit")[4], "]", sep="")
+		tbl.units[,1] <- paste0("[", attr(object, "unit")[1], "]")
+		tbl.units[,2] <- paste0("[", attr(object, "unit")[2], "]")
+		tbl.units[,3] <- paste0("[", attr(object, "unit")[3], "]")
+		tbl.units[,4] <- paste0("[", attr(object, "unit")[4], "]")
 		obj <- as.data.frame(lapply(object, as.character))
 		names(object)[3] <- "wind speed"
 		names(tbl.units) <- names(obj) <- names(object)
 		row.names(tbl.units) <- " "
 		row.names(obj) <- c(toupper(head(row.names(object), -1)), tail(row.names(object), 1))
 		print(rbind(tbl.units, obj), quote=FALSE)
-		cat("\ncall: weibull(mast=", attr(object, "call")$mast, ", v.set=", attr(object, "call")$v.set, ", dir.set=", attr(object, "call")$dir.set, ", num.sectors=", attr(object, "call")$num.sectors, ", digits=", attr(object, "call")$digits, ", print=", attr(object, "call")$print, ")\n\n", sep="")
+		cat("\ncall: weibull(mast=", attr(object, "call")$mast, ", v.set=", attr(object, "call")$v.set, ", dir.set=", attr(object, "call")$dir.set, ", num.sectors=", attr(object, "call")$num.sectors, ", subset=c(\"", paste(attr(object, "call")$subset, collapse="\", \""), "\"), digits=", attr(object, "call")$digits, ", print=", attr(object, "call")$print, ")\n\n", sep="")
 	} else if(attr(object, "call")$func=="energy") { # energy object
 		cat("\n\tWind energy content\n\n")
 		row.names(object) <- c(toupper(head(row.names(object), -1)), tail(row.names(object), 1))
@@ -234,8 +239,8 @@ printObject <- function(object) {
 	} else if(attr(object, "call")$func=="profile") { # profile object
 		cat("\n\tWind profile\n\n")
 		tbl.units <- data.frame(t(names(object$profile)))
-		tbl.units[,1] <- paste("[", attr(object$profile, "unit")[1], "]", sep="")
-		tbl.units[,2] <- paste("[", attr(object$profile, "unit")[2], "]", sep="")
+		tbl.units[,1] <- paste0("[", attr(object$profile, "unit")[1], "]")
+		tbl.units[,2] <- paste0("[", attr(object$profile, "unit")[2], "]")
 		obj <- as.data.frame(lapply(object$profile, as.character))
 		names(object$profile)[2] <- "wind speed"
 		names(tbl.units) <- names(obj) <- names(object$profile)
@@ -243,14 +248,20 @@ printObject <- function(object) {
 		row.names(obj) <- c(toupper(head(row.names(object$profile), -1)), tail(row.names(object$profile), 1))
 		print(rbind(tbl.units, obj), quote=FALSE)
 		cat("\nreference height:", object$h.ref, attr(object$h.ref, "unit"), "\n")
-		if(is.null(attr(object, "call")$alpha)) attr(object, "call")$alpha <- "NULL"
-		cat("\ncall: profile(mast=", attr(object, "call")$mast, ", v.set=c(", paste(attr(object, "call")$v.set, collapse=", "), "), dir.set=", attr(object, "call")$dir.set, ", num.sectors=", attr(object, "call")$num.sectors, ", method=\"", attr(object, "call")$method, "\", alpha=", attr(object, "call")$alpha, ", digits=", attr(object, "call")$digits, ", print=", attr(object, "call")$print, ")\n\n", sep="")
+		if(is.null(attr(object, "call")$alpha)) alph <- ", alpha=NULL"
+		else {
+			if(length(attr(object, "call")$alpha)==1) alph <- paste0(", alpha=", attr(object, "call")$alpha)
+			else  alph <- paste0(", alpha=c(", paste0(attr(object, "call")$alpha, collapse=", "), ")")
+		}
+		if(length(attr(object, "call")$v.set)==1) vset <- paste0(", v.set=", attr(object, "call")$v.set)
+		else vset <- paste0(", v.set=c(", paste0(attr(object, "call")$v.set, collapse=", "), ")")
+		cat("\ncall: profile(mast=", attr(object, "call")$mast, vset, ", dir.set=", attr(object, "call")$dir.set, ", num.sectors=", attr(object, "call")$num.sectors, ", method=\"", attr(object, "call")$method, "\"", alph, ", subset=c(\"", paste(attr(object, "call")$subset, collapse="\", \""), "\"), digits=", attr(object, "call")$digits, ", print=", attr(object, "call")$print, ")\n\n", sep="")
 	} else if(attr(object, "call")$func=="aep") { # aep object
 		cat("\n\tAnnual energy production\n\n")
 		tbl.units <- data.frame(t(names(object$aep)))
-		tbl.units[,] <- paste("[", attr(object$aep[,3], "unit"), "]", sep="")
-		tbl.units[,1] <- paste("[", attr(object$aep[,1], "unit"), "]", sep="")
-		tbl.units[,2] <- paste("[", attr(object$aep[,2], "unit"), "]", sep="")
+		tbl.units[,] <- paste0("[", attr(object$aep[,3], "unit"), "]")
+		tbl.units[,1] <- paste0("[", attr(object$aep[,1], "unit"), "]")
+		tbl.units[,2] <- paste0("[", attr(object$aep[,2], "unit"), "]")
 		object$aep[is.na(object$aep)] <- ""
 		obj <- as.data.frame(lapply(object$aep, as.character))
 		names(object$aep)[1] <- "wind speed"
@@ -274,8 +285,8 @@ printObject <- function(object) {
 		pe <- object$prob.exceedance
 		cat("\nProbability of exceedance:\n")
 		pe.units <- data.frame(t(names(pe)))
-		pe.units[,1] <- paste("[", attr(pe$probability, "unit"), "]", sep="")
-		pe.units[,2] <- paste("[", attr(pe$aep, "unit"), "]", sep="")
+		pe.units[,1] <- paste0("[", attr(pe$probability, "unit"), "]")
+		pe.units[,2] <- paste0("[", attr(pe$aep, "unit"), "]")
 		obj <- as.data.frame(lapply(pe, as.character))
 		names(pe)[2] <- "AEP"
 		names(pe.units) <- names(obj) <- names(pe)

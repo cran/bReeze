@@ -7,10 +7,10 @@
 \usage{
 profile(mast, v.set, dir.set, num.sectors=12, 
   method=c("hellman", "loglm", "fixed"), alpha=NULL,
-  digits=3, print=TRUE)
+  subset, digits=3, print=TRUE)
 pro(mast, v.set, dir.set, num.sectors=12, 
   method=c("hellman", "loglm", "fixed"), alpha=NULL,
-  digits=3, print=TRUE)
+  subset, digits=3, print=TRUE)
 }
 \arguments{
   \item{mast}{Met mast object created by \code{\link{createMast}}.}
@@ -18,7 +18,8 @@ pro(mast, v.set, dir.set, num.sectors=12,
   \item{dir.set}{Set to be used for wind direction, specified as set number or set name.}
   \item{num.sectors}{Number of wind direction sectors as integer value greater 1. Default is \code{12}.}
   \item{method}{Method to be used for the calculation. One of \code{"hellman"}, \code{"loglm"} or \code{"fixed"} (see Details section). Optional argument: \code{"fixed"} is used if \code{v.set} is a single dataset, \code{"hellman"} is used if \code{v.set} specifies two, \code{"loglm"} if \code{v.set} specifies three datasets.}
-  \item{alpha}{Hellman exponent. Optional and only used if the choosen \code{method} is \code{"fixed"}. If \code{alpha} is \code{NULL}, \code{0.2} is used as default.}
+  \item{alpha}{Hellman exponent -- one general exponent or a vector of exponents (one per sector). Optional and only used if the choosen \code{method} is \code{"fixed"}. If \code{alpha} is \code{NULL}, \code{0.2} is used as default.}
+  \item{subset}{Optional start and end time stamp for a data subset, as string vector \code{c(start, end)}. The time stamps format shall follow the rules of ISO 8601 international standard, e.g. "2012-08-08 22:55:00".}
   \item{digits}{Number of decimal places to be used for results as numeric value. Default is \code{3}.}
   \item{print}{If \code{TRUE}, results are printed directly.}
 }
@@ -47,7 +48,7 @@ Returns a list of:
 \references{
 Bañuelos-Ruedas, F., Camacho, C.A., Rios-Marcuello, S. (2011) Methodologies Used in the Extrapolation of Wind Speed Data at Different Heights and Its Impact in the Wind Energy Resource Assessment in a Region. In: Gastón O. Suvire (Ed.), Wind Farm -- Technical Regulations, Potential Estimation and Siting Assessment, Chapter 4, p. 97--114, InTech
 
-Brower, M., Marcus, M., Taylor, M., Bernadett, D., Filippelli, M., Beaucage, P., Hale, E., Elsholz, K., Doane, J., Eberhard, M., Tensen, J., Ryan, D. (2010) Wind Resource Assessment Handbook. http://www.awstruepower.com/wp-content/uploads/2012/01/10-30_wind-resource-handbook.pdf
+Brower, M., Marcus, M., Taylor, M., Bernadett, D., Filippelli, M., Beaucage, P., Hale, E., Elsholz, K., Doane, J., Eberhard, M., Tensen, J., Ryan, D. (2010) Wind Resource Assessment Handbook. http://www.renewablenrgsystems.com/TechSupport/~/media/Files/PDFs/wind_resource_handbook.ashx
 
 International Electrotechnical Commission (2005) IEC 61400-12 Wind Turbines -- Part 12-1: Power Performance Measurements of Electricity Producing Wind Turbines. IEC Standard
 }
@@ -81,9 +82,16 @@ profile(mast=neubuerg, v.set=c(1,2,3), dir.set=1)
 # note: negative alphas!
 profile(mast=neubuerg, v.set=c(1,2), dir.set=1, method="loglm")
 
-
 # change number of direction sectors
 profile(mast=neubuerg, v.set=c(1,2), dir.set=1, num.sectors=8)
+
+# data subsets
+profile(mast=neubuerg, v.set=1, dir.set=1, 
+  subset=c("2009-12-01 00:00:00", "2009-12-31 23:50:00"))
+profile(mast=neubuerg, v.set=c(1,2), dir.set=1, 
+  subset=c("2010-01-01 00:00:00", NA)) # just 'start' time stamp
+profile(mast=neubuerg, v.set=c(1:3), dir.set=1, 
+  subset=c(NA, "2009-12-31 23:50:00")) # just 'end' time stamp
 
 # change number of digits and hide results
 profile(mast=neubuerg, v.set=1, dir.set=1, digits=2)

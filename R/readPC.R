@@ -46,7 +46,7 @@ function(file, ex=FALSE) {
 		}
 		desc <- xmlAttrs(xmlRoot(wtg))[["Description"]]
 		r <- createPC(v=v, p=p, ct=ct, rho=rho, desc=desc)
-		attr(r, "call") <- list(func="readPC", file=file)
+		attr(r, "call") <- list(func="readPC", file=file, ex=ex)
 	}
 		
 	return(r)

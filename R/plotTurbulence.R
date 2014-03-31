@@ -2,7 +2,7 @@ plotTurbulence <-
 function(turb, ...) {
 ### plotting turbulence intensity from turbulence object
 	
-	if(is.null(attr(turb, "call")$func)) stop(paste(substitute(turb), "is no turbulence object\n"))
+	if(is.null(attr(turb, "call"))) stop(paste(substitute(turb), "is no turbulence object\n"))
 	if(attr(turb, "call")$func!="turbulence") stop(paste(substitute(turb), "is no turbulence object\n"))
 	
 	num.sectors <- dim(turb)[1] - 1

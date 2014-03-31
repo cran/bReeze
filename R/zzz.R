@@ -2,11 +2,15 @@
 function(libname, pkgname) {
     ver <- read.dcf(file=system.file("DESCRIPTION", package=pkgname), fields="Version")
     packageStartupMessage(" ")
+    packageStartupMessage("********************")
     packageStartupMessage(" ")
     packageStartupMessage(paste("This is", pkgname, ver))
     packageStartupMessage(" ")
     packageStartupMessage("Type changes(\"bReeze\") to see changes/bug fixes, help(bReeze) for documentation")
     packageStartupMessage("or citation(\"bReeze\") for how to cite bReeze.")
+    packageStartupMessage(" ")
+    packageStartupMessage("********************")
+    packageStartupMessage(" ")
 }
 
 
@@ -18,8 +22,8 @@ function(pkg="bReeze") {
 
 ### short name wrapper functions
 
-avail <- function(mast, v.set, dir.set, digits=1, print=TRUE) {
-	availability(mast, v.set, dir.set, digits, print)
+avail <- function(mast, v.set, dir.set, subset, digits=1, print=TRUE) {
+	availability(mast, v.set, dir.set, subset, digits, print)
 }
 
 cln <- function(mast, set, v.avg.min=0.4, v.avg.max=50, dir.clean=TRUE, turb.clean=4, icing=FALSE, rep=NULL, n.rep=5) {
@@ -27,7 +31,7 @@ cln <- function(mast, set, v.avg.min=0.4, v.avg.max=50, dir.clean=TRUE, turb.cle
 }
 
 mast <- function(time.stamp, ..., loc=NULL, desc=NULL) {
-	createMast(time.stamp, ..., loc, desc)
+	createMast(time.stamp=time.stamp, loc=loc, desc=desc, ...)
 }
 
 pc <- function(v, p, cp, ct, rho=1.225, rated.p, desc) {
@@ -42,20 +46,20 @@ en <- function(wb, rho=1.225, bins=c(5,10,15,20), digits=0, print=TRUE) {
 	energy(wb, rho, bins, digits, print)
 }
 
-forts <- function(time.stamp, pattern) {
+fts <- function(time.stamp, pattern) {
 	formatTS(time.stamp, pattern)
 }
 
-freq <- function(mast, v.set, dir.set, num.sectors=12, bins=c(5,10,15,20), digits=3, print=TRUE) {
-	frequency(mast, v.set, dir.set, num.sectors, bins, digits, print)
+freq <- function(mast, v.set, dir.set, num.sectors=12, bins=c(5,10,15,20), subset, digits=3, print=TRUE) {
+	frequency(mast, v.set, dir.set, num.sectors, bins, subset, digits, print)
 }
 
 map <- function(mast, type=c("satellite", "terrain", "hybrid", "roadmap"), zoom, label, ...) {
 	plotMap(mast, type, zoom, label, ...)
 }
 
-ms <- function(mast, set, signal="v.avg", fun=c("mean", "median", "min", "max", "sd"), digits=3, print=TRUE) {
-	monthStats(mast, set, signal, fun, digits, print)
+ms <- function(mast, set, signal="v.avg", fun=c("mean", "median", "min", "max", "sd"), subset, digits=3, print=TRUE) {
+	monthStats(mast, set, signal, fun, subset, digits, print)
 }
 
 plaep <- function(aep, show.total=TRUE, ...) {
@@ -66,8 +70,8 @@ plavail <- function(avail, set, ...) {
 	plotAvailability(avail, set, ...)
 }
 
-plday <- function(mast, set, signal, ...) {
-	plotDay(mast, set, signal, ...)
+plday <- function(mast, set, dir.set=set, signal, num.sectors=NULL, subset, ...) {
+	plotDay(mast, set, dir.set, signal, num.sectors, subset, ...)
 }
 
 plen <- function(energy, show.total=TRUE, ...) {
@@ -86,20 +90,20 @@ plpc <- function(pc, cp=TRUE, ct=TRUE, ...) {
 	plotPC(pc, cp, ct, ...)
 }
 
-plpol <- function(mast, v.set=1, dir.set=1, ...) {
-	plotPolar(mast, v.set, dir.set, ...)
+plpol <- function(mast, v.set=1, dir.set=1, subset, ...) {
+	plotPolar(mast, v.set, dir.set, subset, ...)
 }
 
 plpro <- function(profile, sector, measured=TRUE, ...) {
 	plotProfile(profile, sector, measured, ...)
 }
 
-plts <- function(mast, set, signal=c("v.avg", "dir.avg", "turb.int"), start, end, ...) {
-	plotTimeSeries(mast, set, signal, start, end, ...)
+plts <- function(mast, set, signal=c("v.avg", "dir.avg", "turb.int"), subset, ...) {
+	plotTimeSeries(mast, set, signal, subset, ...)
 }
 
-pliec <- function(mast, set, ...) {
-	plotTurbIEC(mast, set, ...)
+pliec <- function(mast, set, subset, ...) {
+	plotTurbIEC(mast, set, subset, ...)
 }
 
 plturb <- function(turb, ...) {
@@ -122,22 +126,22 @@ probj <- function(object) {
 	printObject(object)
 }
 
-pro <- function(mast, v.set, dir.set, num.sectors=12, method=c("hellman", "loglm", "fixed"), alpha=NULL, digits=3, print=TRUE) {
-	profile(mast, v.set, dir.set, num.sectors, method, alpha, digits, print)
+pro <- function(mast, v.set, dir.set, num.sectors=12, method=c("hellman", "loglm", "fixed"), alpha=NULL, subset, digits=3, print=TRUE) {
+	profile(mast, v.set, dir.set, num.sectors, method, alpha, subset, digits, print)
 }
 
 rpc <- function(file, ex=FALSE) {
 	readPC(file, ex)
 }
 
-turb <- function(mast, turb.set, dir.set, num.sectors=12, bins=c(5,10,15,20), digits=3, print=TRUE) {
-	turbulence(mast, turb.set, dir.set, num.sectors, bins, digits, print)
+turb <- function(mast, turb.set, dir.set, num.sectors=12, bins=c(5,10,15,20), subset, digits=3, print=TRUE) {
+	turbulence(mast, turb.set, dir.set, num.sectors, bins, subset, digits, print)
 }
 
 uc <- function(aep, uc.values, uc.names, prob=seq(5,95,5), digits=c(0,0), print=TRUE) {
 	uncertainty(aep, uc.values, uc.names, prob, digits, print)
 }
 
-wb <- function(mast, v.set, dir.set, num.sectors=12, digits=3, print=TRUE) {
-	weibull(mast, v.set, dir.set, num.sectors, digits, print)
+wb <- function(mast, v.set, dir.set, num.sectors=12, subset, digits=3, print=TRUE) {
+	weibull(mast, v.set, dir.set, num.sectors, subset, digits, print)
 }

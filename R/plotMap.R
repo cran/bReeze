@@ -4,8 +4,8 @@ function(mast, type=c("satellite", "terrain", "hybrid", "roadmap"), zoom, label,
 
 	stopifnot(require(RgoogleMaps))
 
-	if(is.null(attr(mast, "call"))) stop(paste(substitute(mast), "is no mast object"))
-	if(attr(mast, "call")$func!="createMast") stop(paste(substitute(mast), "is no mast object"))
+	if(is.null(attr(mast, "call"))) stop(paste(substitute(mast), "is no mast object\n"))
+	if(attr(mast, "call")$func!="createMast") stop(paste(substitute(mast), "is no mast object\n"))
 	if(missing(type)) type <- "satellite"
 	type <- match.arg(type)
 	if(is.null(mast$location)) stop("No location found\n")
@@ -29,10 +29,10 @@ function(mast, type=c("satellite", "terrain", "hybrid", "roadmap"), zoom, label,
 	else pos.lab <- 4
 	
 	tmp.file <- gsub("[^0-9]", "", substr(Sys.time(), 1, 19))
-	tmpmap <- GetMap(center=c(lat, lon), zoom=zoom, destfile=paste("map", tmp.file, ".png", sep=""), maptype=type, format="png32", verbose=0)
-	PlotOnStaticMap(tmpmap, lat=lat, lon=lon, destfile=paste("map", tmp.file, ".png", sep=""), cex=cex, pch=pch ,col=col, NEWMAP=FALSE)
+	tmpmap <- GetMap(center=c(lat, lon), zoom=zoom, destfile=file.path(tempdir(), paste0("map", tmp.file, ".png")), maptype=type, format="png32", verbose=0)
+	PlotOnStaticMap(tmpmap, lat=lat, lon=lon, destfile=file.path(tempdir(), paste0("map", tmp.file, ".png")), cex=cex, pch=pch ,col=col, NEWMAP=FALSE)
 	if(!is.na(label)) TextOnStaticMap(tmpmap, lat=lat, lon=lon, labels=label, cex=cex.lab, col=col.lab, pos=pos.lab, add=TRUE)
 	
-	unlink(paste("map", tmp.file, ".png.rda", sep=""), recursive=FALSE, force=FALSE)
-	unlink(paste("map", tmp.file, ".png", sep=""), recursive=FALSE, force=FALSE)
+	unlink(file.path(tempdir(), paste0("map", tmp.file, ".png.rda")), recursive=FALSE, force=FALSE)
+	unlink(file.path(tempdir(), paste0("map", tmp.file, ".png")), recursive=FALSE, force=FALSE)
 }
