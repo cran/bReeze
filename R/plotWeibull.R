@@ -2,27 +2,19 @@ plotWeibull <-
 function(wb, show.ak=FALSE, ...) {
 ### plotting fitted weibull distribution from weibull object
 	
-	if(is.null(attr(wb, "call"))) stop(paste(substitute(wb), "is no weibull object\n"))
-	if(attr(wb, "call")$func!="weibull") stop(paste(substitute(wb), "is no weibull object\n"))
+	if(is.null(attr(wb, "call"))) stop(substitute(wb), " is no weibull object")
+	if(attr(wb, "call")$func!="weibull") stop(substitute(wb), " is no weibull object")
 	
-	if(is.null(attr(wb, "call")$mast)) stop(paste("Source mast object of", substitute(wb), "could not be found\n"))
+	if(is.null(attr(wb, "call")$mast)) stop("Source mast object of ", substitute(wb), " could not be found")
 	mast <- get(attr(wb, "call")$mast)
 	v.set <- attr(wb, "call")$v.set
 	subset <- attr(wb, "call")$subset
 	unit <- attr(mast$sets[[v.set]]$data$v.avg, "unit")
 	
 	# subset
-	num.samples <- length(mast$time.stamp)
-	start <- strptime(subset[1], "%Y-%m-%d %H:%M:%S")
-	end <- strptime(subset[2], "%Y-%m-%d %H:%M:%S")
-	if(is.na(start)) start <- strptime(subset[1], "%Y-%m-%d %H:%M")
-	if(is.na(end)) end <- strptime(subset[2], "%Y-%m-%d %H:%M")
-	if(is.na(start)) start <- strptime(subset[1], "%Y-%m-%d %H")
-	if(is.na(end)) end <- strptime(subset[2], "%Y-%m-%d %H")
-	match.date <- difftime(mast$time.stamp, ISOdatetime(1,1,1,0,0,0), tz="GMT", units="days") - difftime(start, ISOdatetime(1,1,1,0,0,0), tz="GMT", units="days")
-	start <- which(abs(as.numeric(match.date)) == min(abs(as.numeric(match.date))))
-	match.date <- difftime(mast$time.stamp, ISOdatetime(1,1,1,0,0,0), tz="GMT", units="days") - difftime(end, ISOdatetime(1,1,1,0,0,0), tz="GMT", units="days")
-	end <- which(abs(as.numeric(match.date)) == min(abs(as.numeric(match.date))))
+	start.end <- subsetInt(mast$time.stamp, subset)
+	start <- start.end[1]
+	end <- start.end[2]
 	
 	plot.param <- list(...)
 	if(any(names(plot.param)=="col")) col <- plot.param$col
@@ -64,7 +56,7 @@ function(wb, show.ak=FALSE, ...) {
 	if(any(names(plot.param)=="breaks")) breaks <- plot.param$breaks
 	else breaks <- seq(0, ceiling(max(mast$sets[[v.set]]$data$v.avg[start:end], na.rm=TRUE)), 1)
 	if(any(names(plot.param)=="xlab")) xlab <- plot.param$xlab
-	else xlab <- paste("Wind speed [", unit, "]", sep="")
+	else xlab <- paste0("Wind speed [", unit, "]")
 	if(any(names(plot.param)=="ylab")) ylab <- plot.param$ylab
 	else ylab <- "Frequency [%]"
 	if(any(names(plot.param)=="xlim")) xlim <- plot.param$xlim
@@ -103,7 +95,7 @@ function(wb, show.ak=FALSE, ...) {
 	curve(dweibull(x, shape=tail(wb$k, 1), scale=tail(wb$A, 1)), col=line, lty=lty, lwd=lwd, add=TRUE)
 	
 	if(legend) {
-		if(show.ak) leg <- c(leg.text[1], paste(leg.text[2], " (A:", round(tail(wb$A, 1), digits=1), ", k:", round(tail(wb$k, 1), digits=1), ")", sep=""))
+		if(show.ak) leg <- c(leg.text[1], paste0(leg.text[2], " (A:", round(tail(wb$A, 1), digits=1), ", k:", round(tail(wb$k, 1), digits=1), ")"))
 		legend(pos.leg, legend=leg.text, col=c(border, line), lty=c(NA, lty), lwd=c(NA, lwd), pch=c(22, NA), pt.bg=c(col, NA), bty=bty.leg, cex=cex.leg, text.col=col.leg, x.intersp=x.intersp, y.intersp=y.intersp)
 	}
 }

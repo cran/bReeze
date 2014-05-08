@@ -2,27 +2,19 @@ plotWbDir <-
 function(wb, show.ak=FALSE, ...) {
 ### plotting fitted weibull distribution per direction sector from weibull object
 	
-	if(is.null(attr(wb, "call"))) stop(paste(substitute(wb), "is no weibull object\n"))
-	if(attr(wb, "call")$func!="weibull") stop(paste(substitute(wb), "is no weibull object\n"))
+	if(is.null(attr(wb, "call"))) stop(substitute(wb), " is no weibull object")
+	if(attr(wb, "call")$func!="weibull") stop(substitute(wb), " is no weibull object")
 	
-	if(is.null(attr(wb, "call")$mast)) stop(paste("Source mast object of", substitute(wb), "could not be found\n"))
+	if(is.null(attr(wb, "call")$mast)) stop("Source mast object of ", substitute(wb), " could not be found")
 	mast <- get(attr(wb, "call")$mast)
 	v.set <- attr(wb, "call")$v.set
 	subset <- attr(wb, "call")$subset
 	num.sectors <- dim(wb)[1]-1
 	
 	# subset
-	num.samples <- length(mast$time.stamp)
-	start <- strptime(subset[1], "%Y-%m-%d %H:%M:%S")
-	end <- strptime(subset[2], "%Y-%m-%d %H:%M:%S")
-	if(is.na(start)) start <- strptime(subset[1], "%Y-%m-%d %H:%M")
-	if(is.na(end)) end <- strptime(subset[2], "%Y-%m-%d %H:%M")
-	if(is.na(start)) start <- strptime(subset[1], "%Y-%m-%d %H")
-	if(is.na(end)) end <- strptime(subset[2], "%Y-%m-%d %H")
-	match.date <- difftime(mast$time.stamp, ISOdatetime(1,1,1,0,0,0), tz="GMT", units="days") - difftime(start, ISOdatetime(1,1,1,0,0,0), tz="GMT", units="days")
-	start <- which(abs(as.numeric(match.date)) == min(abs(as.numeric(match.date))))
-	match.date <- difftime(mast$time.stamp, ISOdatetime(1,1,1,0,0,0), tz="GMT", units="days") - difftime(end, ISOdatetime(1,1,1,0,0,0), tz="GMT", units="days")
-	end <- which(abs(as.numeric(match.date)) == min(abs(as.numeric(match.date))))
+	start.end <- subsetInt(mast$time.stamp, subset)
+	start <- start.end[1]
+	end <- start.end[2]
 	
 	# prepare plot
 	old.par <- par(no.readonly=TRUE)
@@ -78,7 +70,7 @@ function(wb, show.ak=FALSE, ...) {
 	if(any(names(plot.param)=="pos.leg")) pos.leg <- plot.param$pos.leg
 	else pos.leg <- "topright"
 	if(any(names(plot.param)=="xlab")) xlab <- plot.param$xlab
-	else xlab <- paste("Wind speed [m/s]", sep="")
+	else xlab <- paste0("Wind speed [m/s]")
 	if(any(names(plot.param)=="ylab")) ylab <- plot.param$ylab
 	else ylab <- "Frequency [%]"
 	if(any(names(plot.param)=="mar")) mar <- plot.param$mar
@@ -115,7 +107,7 @@ function(wb, show.ak=FALSE, ...) {
 	lines(x=v, y=100*dweibull(v, shape=wb$k[num.sectors+1], scale=wb$A[num.sectors+1]), col=col[num.sectors+1], lty=lty[num.sectors+1], lwd=lwd[num.sectors+1])
 	if(legend) {
 		if(is.null(leg.text)) leg.text <- row.names(wb) 
-		if(show.ak) leg.text <- paste(leg.text, " (A:", round(wb$A, digits=1), ", k:", round(wb$k, digits=1), ")", sep="")
+		if(show.ak) leg.text <- paste0(leg.text, " (A:", round(wb$A, digits=1), ", k:", round(wb$k, digits=1), ")")
 		legend(pos.leg, legend=leg.text, col=col, lty=lty, lwd=lwd, bty=bty.leg, cex=cex.leg, text.col=col.leg, x.intersp=x.intersp, y.intersp=y.intersp)
 	}	
 }

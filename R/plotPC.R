@@ -4,11 +4,11 @@ function(pc, cp=TRUE, ct=TRUE, ...) {
 	
 	pc.list <- FALSE
 	if(is.null(attr(pc, "call"))) {
-		if(!is.list(pc)) stop(paste(substitute(pc), "is no power curve object - use createPC to create a power curve or readPC to import from file\n"))
+		if(!is.list(pc)) stop(substitute(pc), " is no power curve object - use createPC to create a power curve or readPC to import from file")
 		else {
 			pc.list <- TRUE
 			for(i in 1:length(pc)) {
-				if(attr(pc[[i]], "call")$func!="createPC" && attr(pc[[i]], "call")$func!="readPC") stop("At least one object of ", paste(substitute(pc), "is not a power curve object\n"))
+				if(attr(pc[[i]], "call")$func!="createPC" && attr(pc[[i]], "call")$func!="readPC") stop("At least one object of ", substitute(pc), " is not a power curve object")
 			}
 		}
 	}
@@ -63,9 +63,9 @@ function(pc, cp=TRUE, ct=TRUE, ...) {
 	if(any(names(plot.param)=="pos.leg")) pos.leg <- plot.param$pos.leg
 	else pos.leg <- "topleft"
 	if(any(names(plot.param)=="xlab")) xlab <- plot.param$xlab
-	else xlab <- paste("Wind speed [", unit[1], "]", sep="")
+	else xlab <- paste0("Wind speed [", unit[1], "]")
 	if(any(names(plot.param)=="ylab")) ylab <- plot.param$ylab
-	else ylab <- paste("Power [", unit[2], "]", sep="")
+	else ylab <- paste0("Power [", unit[2], "]")
 	if(any(names(plot.param)=="ylim")) ylim <- plot.param$ylim
 	else ylim <- NULL
 	if(any(names(plot.param)=="xlim")) xlim <- plot.param$xlim

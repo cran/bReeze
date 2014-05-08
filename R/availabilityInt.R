@@ -8,7 +8,7 @@ function(v.avg, dir.avg, ts, start.year, start.month, num.months, period.days, d
 	yr <- start.year
 	mon <- start.month
 	for(i in 1:num.months) {
-		if(mon<10) row.names(avail)[i] <- paste(yr, paste("0", mon, sep=""), sep="-")
+		if(mon<10) row.names(avail)[i] <- paste(yr, paste0("0", mon), sep="-")
 		if(mon>=10) row.names(avail)[i] <- paste(yr, mon, sep="-")
 		mon <- mon+1
 		if(mon==13) {
@@ -18,7 +18,7 @@ function(v.avg, dir.avg, ts, start.year, start.month, num.months, period.days, d
 	}
 	
 	interval <- ts[2]-ts[1]
-	if(attr(interval, "units")=="days" && interval>1) stop("Time interval longer than 1 day\n")
+	if(attr(interval, "units")=="days" && interval>1) stop("Time interval longer than 1 day")
 	if(attr(interval, "units")=="days") daily.samples <- interval
 	if(attr(interval, "units")=="hours") daily.samples <- 24/as.numeric(interval)
 	if(attr(interval, "units")=="mins") daily.samples <- 24*60/as.numeric(interval)
