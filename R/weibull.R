@@ -1,9 +1,8 @@
-weibull <-
+weibull <- 
 function(mast, v.set, dir.set, num.sectors=12, subset, digits=3, print=TRUE) {
 ### calculating weibull parameters for sectors
 	
-	if(is.null(attr(mast, "call"))) stop(substitute(mast), " is no mast object")
-	if(attr(mast, "call")$func!="createMast") stop(substitute(mast), " is no mast object")
+	if(class(mast)!="mast") stop(substitute(mast), " is no mast object")
 	num.sets <- length(mast$sets)
 	if(!missing(v.set) && missing(dir.set)) dir.set <- v.set
 	if(missing(v.set) && !missing(dir.set)) v.set <- dir.set
@@ -22,7 +21,7 @@ function(mast, v.set, dir.set, num.sectors=12, subset, digits=3, print=TRUE) {
 	
 	# subset
 	if(missing(subset)) subset <- c(NA, NA)
-	start.end <- subsetInt(mast$time.stamp, subset)
+	start.end <- subset.int(mast$timestamp, subset)
 	start <- start.end[1]
 	end <- start.end[2]
 	v <- mast$sets[[v.set]]$data$v.avg[start:end]
@@ -39,11 +38,11 @@ function(mast, v.set, dir.set, num.sectors=12, subset, digits=3, print=TRUE) {
 		if(low<high) sector.idx <- d>=low & d<high
 		else sector.idx <- d>=low | d<high
 
-		weibull.param <- weibullInt(v[sector.idx], FALSE)
+		weibull.param <- weibull.int(v[sector.idx], FALSE)
 		weibull.tbl[s,1] <- weibull.param$A
 		weibull.tbl[s,2] <- weibull.param$k
 	}
-	weibull.param <- weibullInt(v, TRUE)
+	weibull.param <- weibull.int(v, TRUE)
 	weibull.tbl[num.sectors+1,1] <- weibull.param$A
 	weibull.tbl[num.sectors+1,2] <- weibull.param$k
 	
@@ -63,6 +62,7 @@ function(mast, v.set, dir.set, num.sectors=12, subset, digits=3, print=TRUE) {
 	attr(weibull.tbl, "call") <- list(func="weibull", mast=deparse(substitute(mast)), v.set=v.set, dir.set=dir.set, num.sectors=num.sectors, subset=subset, digits=digits, print=print)
 	
 	weibull.tbl <- round(weibull.tbl, digits)
-	if(print) printObject(weibull.tbl)
+	class(weibull.tbl) <- "weibull"
+	if(print) print(weibull.tbl)
 	invisible(weibull.tbl)
 }

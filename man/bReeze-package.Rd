@@ -8,22 +8,15 @@
 A collection of functions to analyse, visualize and interpret wind data and to calculate the potential energy production of wind turbines.
 }
 \details{
-\tabular{lll}{
-  \tab Package: \tab bReeze\cr
-  \tab Type: \tab Package\cr
-  \tab Version: \tab 0.3-2\cr
-  \tab Date: \tab 2014-05-08\cr
-  \tab License: \tab GPL (>=2)\cr
-}
 Wind power is a global source of energy which attracts a large share of investments in renewables. Project sites with high wind potential do not only minimise the financial risk but increase the efficiency in carbon footprint reduction. Hence a thorough productivity analysis of a wind project is essential, regarding both economic and environmental aspects. The evaluation of the potential of a site requires a wind resource assessment, which is best based on data gained by a local measurement campaign. A methodology of processing the measured data has been established, resulting in a better understanding of the wind conditions of a site and therefore a more reliable estimation of energy production.
 
 \code{bReeze} is a collection of widely used methods to analyse, visualise and interpret wind data. Wind resource analyses can subsequently be combined with characteristics of wind turbines to estimate the potential energy production on the investigated site.
 
 Usually the data to be analysed are collected by meteorological masts (met masts) and averaged over ten minutes, but other time intervals are also processable. 
 
-\code{bReeze} depends on or suggests three packages, written by other developers: \code{RColorBrewer} (by Erich Neuwirth) provides nice colours for the graphics, \code{XML} (by Duncan Temple Lang) provides xml parsing for power curve import and \code{RgoogleMaps} (by Markus Loecher) provides simple site maps.
+\code{bReeze} suggests three packages, written by other developers: \code{RColorBrewer} (by Erich Neuwirth) provides nice colours for the graphics, \code{XML} (by Duncan Temple Lang) provides xml parsing for power curve import and \code{RgoogleMaps} (by Markus Loecher) provides simple site maps.
 	
-Try the examples below to check if \code{bReeze} has been correctly installed. Any question and feedback is welcome via email to <christian.graul@gmail.com>.
+Try the examples below to check if \code{bReeze} has been correctly installed. Any question and feedback is welcome via email to <christian.graul@gmail.com> or on \href{https://github.com/chgrl/bReeze}{GitHub}.
 }
 \author{
 Christian Graul and Carsten Poppinga
@@ -44,31 +37,31 @@ Further references are given under the specific functions of the package.
 data(winddata)
 
 # create two datasets
-set40 <- createSet(height=40, v.avg=winddata[,2], v.std=winddata[,5],
+set40 <- set(height=40, v.avg=winddata[,2], v.std=winddata[,5],
   dir.avg=winddata[,14])
-set30 <- createSet(height=30, v.avg=winddata[,6], v.std=winddata[,9],
+set30 <- set(height=30, v.avg=winddata[,6], v.std=winddata[,9],
   dir.avg=winddata[,16])
 
 # format time stamp
-ts <- formatTS(time.stamp=winddata[,1])
+ts <- timestamp(timestamp=winddata[,1])
 
 # create met mast object
-metmast <- createMast(time.stamp=ts, set40=set40, set30=set30)
+metmast <- mast(timestamp=ts, set40=set40, set30=set30)
 
 # plot time series of met mast signals
-plotTimeSeries(mast=metmast)
+plot(metmast)
 
 # calculate frequency and mean wind speed per wind direction sector
 freq <- frequency(mast=metmast, v.set=1)
 
 # plot frequency
-plotFrequency(freq=freq)
+plot(freq)
 
 # calculate availability of pairs of wind speed and direction
 availability(mast=metmast)
 
 # calculate monthly means of wind speed
-monthStats(mast=metmast)
+month.stats(mast=metmast)
 
 # calculate turbulence intensity
 turbulence(mast=metmast, turb.set=1)
@@ -83,12 +76,12 @@ energy(wb=wb)
 pf <- profile(mast=metmast, v.set=c(1,2), dir.set=1)
 
 # import power curve
-pc <- readPC(file="Enercon_E126_7.5MW.pow")
+pc <- pc("Enercon_E126_7.5MW.pow")
 
 # calculate annual energy production
 aep <- aep(profile=pf, pc=pc, hub.h=135)
 
 # plot AEP
-plotAep(aep)
+plot(aep)
 }
 }

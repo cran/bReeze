@@ -14,28 +14,25 @@ function(mast, set, v.avg.min=0.4, v.avg.max=50, dir.clean=TRUE, turb.clean=4, i
 	if(!is.null(rep) && is.null(n.rep)) stop("Please specify 'n.rep'")
 	if(!is.null(rep)) if(!is.null(n.rep)) if(!is.numeric(n.rep)) stop("'n.rep' must be numeric or NULL") 
 	if(missing(mast) && !missing(set)) { # set
-		if(is.null(attr(set, "call"))) stop(substitute(set), " is no set object")
-		if(attr(set, "call")$func!="createSet") stop(substitute(set), " is no set object")
-		set$data <- cleanInt(set$data, v.avg.min, v.avg.max, dir.clean, turb.clean, icing, rep, n.rep+1)
+		if(class(set)!="set") stop(substitute(set), " is no set object")
+		set$data <- clean.int(set$data, v.avg.min, v.avg.max, dir.clean, turb.clean, icing, rep, n.rep+1)
 		r <- set
 	} else if(!missing(mast) && missing(set)) { # mast
-		if(is.null(attr(mast, "call"))) stop(substitute(mast), " is no mast object")
-		if(attr(mast, "call")$func!="createMast") stop(substitute(mast), " is no mast object")
+		if(class(mast)!="mast") stop(substitute(mast), " is no mast object")
 		num.sets <- length(mast$sets)
 		for(s in 1:num.sets) {
 			message("Cleaning set ", s, "...")
-			mast$sets[[s]]$data <- cleanInt(mast$sets[[s]]$data, v.avg.min, v.avg.max, dir.clean, turb.clean, icing, rep, n.rep+1)
+			mast$sets[[s]]$data <- clean.int(mast$sets[[s]]$data, v.avg.min, v.avg.max, dir.clean, turb.clean, icing, rep, n.rep+1)
 		}
 		r <- mast
 	} else if(!is.null(mast) && !is.null(set)) { # set of mast
-		if(is.null(attr(mast, "call"))) stop(substitute(mast), " is no mast object")
-		if(attr(mast, "call")$func!="createMast") stop(substitute(mast), " is no mast object")
+		if(class(mast)!="mast") stop(substitute(mast), " is no mast object")
 		num.sets <- length(mast$sets)
 		if(!is.numeric(set)) set <- match(set, names(mast$sets))
 		if(is.na(set)) stop("Set not found")
 		if(set<0 || set>num.sets) stop("Set not found")
 		message("Cleaning set ", set, "...")
-		mast$sets[[set]]$data <- cleanInt(mast$sets[[set]]$data, v.avg.min, v.avg.max, dir.clean, turb.clean, icing, rep, n.rep+1)
+		mast$sets[[set]]$data <- clean.int(mast$sets[[set]]$data, v.avg.min, v.avg.max, dir.clean, turb.clean, icing, rep, n.rep+1)
 		r <- mast
 	}
 	

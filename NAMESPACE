@@ -6,58 +6,27 @@ export(
   changes,
   clean,
   cln,
-  createMast,
-  mast,
-  createPC,
-  pc,
-  createSet,
-  set,
   energy,
   en,
-  formatTS,
-  fts,
   frequency,
   freq,
-  monthStats,
+  mast,
+  month.stats,
   ms,
-  plotAep,
-  plaep,
-  plotAvailability,
-  plavail,
-  plotDay,
-  plday,
-  plotEnergy,
-  plen,
-  plotFrequency,
-  plfreq,
-  plotMap,
+  day.plot,
+  day,
+  map.plot,
   map,
-  plotMonthStats,
-  plms,
-  plotPC,
-  plpc,
-  plotPolar,
-  plpol,
-  plotProfile,
-  plpro,
-  plotTimeSeries,
-  plts,
-  plotTurbIEC,
-  pliec,
-  plotTurbulence,
-  plturb,
-  plotUncertainty,
-  pluc,
-  plotWbDir,
-  plwbd,
-  plotWeibull,
-  plwb,
-  printObject,
-  probj,
+  polar.plot,
+  pol,
+  turb.iec.plot,
+  iec,
+  pc,
   profile,
   pro,
-  readPC,
-  rpc,
+  set,
+  timestamp,
+  ts,
   turbulence,
   turb,
   uncertainty,
@@ -66,7 +35,29 @@ export(
   wb
 )
 
-## Import packages
-import(
-  RColorBrewer
-)
+## S3 methods
+S3method(pc, default)
+S3method(pc, read)
+S3method(plot, aep)
+S3method(plot, availability)
+S3method(plot, energy)
+S3method(plot, frequency)
+S3method(plot, mast)
+S3method(plot, month.stats)
+S3method(plot, pc)
+S3method(plot, profile)
+S3method(plot, turbulence)
+S3method(plot, uncertainty)
+S3method(plot, weibull)
+S3method(print, aep)
+S3method(print, availability)
+S3method(print, energy)
+S3method(print, frequency)
+S3method(print, mast)
+S3method(print, month.stats)
+S3method(print, pc)
+S3method(print, profile)
+S3method(print, set)
+S3method(print, turbulence)
+S3method(print, uncertainty)
+S3method(print, weibull)

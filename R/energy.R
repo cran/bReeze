@@ -2,8 +2,7 @@ energy <-
 function(wb, rho=1.225, bins=c(5,10,15,20), digits=0, print=TRUE) {
 ###	calculating wind energy per sector
 	
-	if(is.null(attr(wb, "call"))) stop(substitute(wb), " is no weibull object")
-	if(attr(wb, "call")$func!="weibull") stop(substitute(wb), " is no weibull object")
+	if(class(wb)!="weibull") stop(substitute(wb), " is no weibull object")
 	if(any(bins<0)) stop("'bins' must be NULL or a vector of positives")
 
 	if(is.null(attr(wb, "call")$mast)) stop("Source mast object of ", substitute(wb), " could not be found")
@@ -14,7 +13,7 @@ function(wb, rho=1.225, bins=c(5,10,15,20), digits=0, print=TRUE) {
 	subset <- attr(wb, "call")$subset
 	
 	# subset
-	start.end <- subsetInt(mast$time.stamp, subset)
+	start.end <- subset.int(mast$timestamp, subset)
 	start <- start.end[1]
 	end <- start.end[2]
 	
@@ -47,14 +46,17 @@ function(wb, rho=1.225, bins=c(5,10,15,20), digits=0, print=TRUE) {
 	}
 	names(energy.tbl) <- c.names
 	
-	freq <- frequency(mast, v.set, dir.set, num.sectors, bins, subset, print=FALSE)[,-1]
+	freq.l <- frequency(mast, v.set, dir.set, num.sectors, bins, subset, print=FALSE)
+	freq <- freq.l[[2]]
+	if(length(freq.l)>2) for(i in 3:length(freq.l)) freq <- cbind(freq, freq.l[[i]])
+	if(!is.null(bins)) freq <- data.frame(freq)
 	
 	for(i in 1:num.sectors) {
 		if(!is.null(bins)) {
-			for(j in 2:dim(freq)[2]) energy.tbl[i,j] <- round(energyInt(lim, wb$k[i], wb$A[i], rho)*freq[i,j]/100, digits)
-			energy.tbl[i,1] <- round(energyInt(lim, wb$k[i], wb$A[i], rho)*freq[i,1]/100, digits)
+			for(j in 2:dim(freq)[2]) energy.tbl[i,j] <- round(energy.int(lim, wb$k[i], wb$A[i], rho)*freq[i,j]/100, digits)
+			energy.tbl[i,1] <- round(energy.int(lim, wb$k[i], wb$A[i], rho)*freq[i,1]/100, digits)
 		} else {
-			energy.tbl[i,1] <- round(energyInt(lim, wb$k[i], wb$A[i], rho)*freq[i]/100, digits)
+			energy.tbl[i,1] <- round(energy.int(lim, wb$k[i], wb$A[i], rho)*freq[i]/100, digits)
 		}
 	}
 	for(i in 1:(num.classes+1)) energy.tbl[num.sectors+1,i] <- sum(energy.tbl[1:num.sectors,i], na.rm=TRUE)
@@ -65,8 +67,9 @@ function(wb, rho=1.225, bins=c(5,10,15,20), digits=0, print=TRUE) {
 	
 	attr(energy.tbl, "unit") <- "kWh/m^2/a"	
 	attr(energy.tbl, "call") <- list(func="energy", wb=deparse(substitute(wb)), rho=rho, bins=bins, digits=digits, print=print)
-	
 	energy.tbl <- round(energy.tbl, digits)
-	if(print) printObject(energy.tbl)
+	
+	class(energy.tbl) <- "energy"
+	if(print) print(energy.tbl)
 	invisible(energy.tbl)
 }
