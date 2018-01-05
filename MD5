@@ -1,6 +1,6 @@
-387c2cfd67e4f1ca7e768a3a4eb67a26 *DESCRIPTION
-fac553b2e6e1989b5660d91cb2bb9337 *LICENSE
-495577b66ebe4944258155fe2e986dc0 *NAMESPACE
+b777fc7ae27ae301ce476c54686d4592 *DESCRIPTION
+70875c9cd88d6f884d0940a6d8a97a7a *LICENSE
+97cae0906933622e6c3d5db8fe458e7c *NAMESPACE
 ad4984fd335b6ffe9cd4f0eed20fa651 *R/aep.R
 743242a10a354e252b0ea92cd6ef9c21 *R/aep.int.R
 ed7ab7b1103f748de400e164d04fec0d *R/availability.R
@@ -23,7 +23,7 @@ f9d695c9fc1a476687150cbd09282864 *R/pc.R
 c55ad7c0a2a8ea5866e2d05708a8dbe1 *R/plot.mast.R
 670a1f8ac68cdfe289e2091b59094ac1 *R/plot.month.stats.R
 4c93c750edf2344f9a713fc4146182ba *R/plot.pc.R
-9cd625fd1efe5d260e86bedd9f252889 *R/plot.profile.R
+63dbd233df9bc52446b7aafc562a81d4 *R/plot.profile.R
 c402e88af1041bde19c6e4e06df59b6f *R/plot.turbulence.R
 8de8ff1615ac211c75a22e8d4d2d33e4 *R/plot.uncertainty.R
 7d5188d990e866b3ed9533b7446f6a5f *R/plot.weibull.R
@@ -35,12 +35,12 @@ c491be93327bbcbda7feb5582e19adba *R/polar.plot.R
 1268c0f336351e88a815f36c86dd4b5f *R/print.mast.R
 7eb61e1882c46915f362e5b3e3cbacd1 *R/print.month.stats.R
 e6db5377430eab0be8de131bd219884e *R/print.pc.R
-70a1a5933f8f582f16b4d6981ea49ae6 *R/print.profile.R
+ae55ed7252c62cc7b9424ecb882fd5eb *R/print.profile.R
 d4306b1f278e85e1d6d336244e9931e5 *R/print.set.R
 556b67b327793f742c2051b943113279 *R/print.turbulence.R
 c5c8aa4a52f65cf8535b0241ce3888be *R/print.uncertainty.R
 761d4213ffc9eb007c0b937a1f53f703 *R/print.weibull.R
-0d9eced862c1bcd18fea5edd316dd44a *R/profile.R
+6186af01df5f23ae39506e9bd7f5cdd3 *R/profile.R
 8742bbb83dae4eccc05ab4e1e14302ab *R/set.R
 a7a20c63a329980666c20949f62747d1 *R/subset.int.R
 7d724b53d975c269c9c5fd172a80259a *R/timestamp.R
@@ -49,11 +49,11 @@ cfce183b61f2f88f20383b076a3cac52 *R/turbulence.R
 7234647ced9aafd17543b837fdd274a2 *R/uncertainty.R
 7cca6074bcd0a603b00e68c8372a5804 *R/weibull.R
 5ebeb44048a012730664246ef13766e8 *R/weibull.int.R
-f9bc82b246c5bafed6aa5783020ffdb7 *R/zzz.R
+938c98a84d79ff3a922dc3330bb0049a *R/zzz.R
 40eeb7581362661a2d389a62271ea347 *data/datalist
-f0717cdfc2fd292c3de18c26fa39e6a5 *data/winddata.RData
-301880ff1e810507116e8b988de6b1ab *inst/CITATION
-17e1e8d851870e56ca5436ac32ba7ebb *inst/NEWS
+999b3a606fc0850225a284ac0ba7df2c *data/winddata.RData
+a3e7b4d185438bd47c19e688ba41fda9 *inst/CITATION
+94de629858a9c2048a9a0f38865d40ab *inst/NEWS
 fddde11d95e190892aa3cc5ecc8ad150 *inst/powercurves/Bonus_82.4m_2.3MW.pow
 35af1d5b4f4aadf640172d7133969177 *inst/powercurves/Bonus_MKIV_600kW.pow
 b3726ba2e2b78fbb1718530d16a792d7 *inst/powercurves/Clipper_LibertyC100_2.5MW.pow
@@ -152,7 +152,7 @@ f6cf45003b36ed0993999b87ea3b1317 *man/aep.Rd
 165e73a669f064fe49acb863325d8b41 *man/aep.int.Rd
 a935605624ef0dd1ac4440039429cecc *man/availability.Rd
 6a18376939a59b8da1b3c298ced608c4 *man/availability.int.Rd
-701f9e1478b7d1219bb869db0bce1ee5 *man/bReeze-package.Rd
+576ff1d5b73af010c04f47903370bdd5 *man/bReeze-package.Rd
 1e086b360469cdf33f7fcdb6eac8d724 *man/changes.Rd
 7cd8b9d9697f27c58bda5c1ea2eaaebf *man/clean.Rd
 98eadcb516f3275f8f6853e92ce1337f *man/clean.int.Rd
@@ -166,7 +166,6 @@ b8c991de962fc4e06de83bec09d00ea6 *man/mast.Rd
 a9be828aa799eba1e6f60ff69123b559 *man/month.stats.int.Rd
 31aef845398b14bccb2f85077de101de *man/pc.Rd
 d70ebc90154e974d33b72c72fd645649 *man/polar.plot.Rd
-4b0cea0ecaf4fecf4b4ae6447398482e *man/profile.Rd
 f82914d2dc35d66f8d3afaad6dd9481f *man/set.Rd
 bed84931dea0da8f4d116181c1fa5c90 *man/subset.int.Rd
 b75afe798bce2d165eeb72ab8e86450e *man/timestamp.Rd
@@ -176,3 +175,4 @@ b75afe798bce2d165eeb72ab8e86450e *man/timestamp.Rd
 4b44cded2a13260377c0744ddaf0eefa *man/weibull.Rd
 49c8454374790730d857820c48fd127a *man/weibull.int.Rd
 f63942f9295e26245ad730aff845cfd5 *man/winddata.Rd
+64f2887b13e9c3e57b0e181fa6a7f295 *man/windprofile.Rd
