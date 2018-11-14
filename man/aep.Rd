@@ -93,11 +93,11 @@ International Organisation for Standardization (1975) ISO 2533:1975 Standard Atm
 Jangamshetti, S.H., Rau, V.G. (1999) Site Matching of Wind Turbine Generators: A Case Study. \emph{IEEE Transaction on Energy Conversion} \bold{14}(4), 1537--1543
 }
 \author{Christian Graul}
-\seealso{\code{\link{profile}}}
+\seealso{\code{\link{windprofile}}}
 \examples{
 \dontrun{
 ## load and prepare data
-data(winddata)
+data("winddata", package="bReeze")
 set1 <- set(height=40, v.avg=winddata[,2], v.std=winddata[,5],
   dir.avg=winddata[,14])
 set2 <- set(height=30, v.avg=winddata[,6], v.std=winddata[,9],

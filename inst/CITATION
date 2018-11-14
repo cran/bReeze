@@ -5,8 +5,8 @@ citEntry(entry = "Manual",
          author = "Christian Graul, Carsten Poppinga",
          year = "2018",
          url = "https://CRAN.R-project.org/package=bReeze",
-         note = "R package version 0.4-2",
-         textVersion = "Graul, Christian and Poppinga, Carsten (2018): bReeze: Functions for Wind Resource Assessment. R package version 0.4-2, https://CRAN.R-project.org/package=bReeze.")
+         note = "R package version 0.4-3",
+         textVersion = "Graul, Christian and Poppinga, Carsten (2018): bReeze: Functions for Wind Resource Assessment. R package version 0.4-3, https://CRAN.R-project.org/package=bReeze.")
 
 citFooter("Please cite both 'bReeze' and R when using 'bReeze' for data analysis.",
           "For R citation see ", sQuote("citation()"))
